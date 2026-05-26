@@ -15,10 +15,7 @@
 package memory
 
 import (
-	"container/list"
 	"context"
-	"fmt"
-	"strings"
 	"sync"
 
 	"github.com/google/btree"
@@ -26,8 +23,6 @@ import (
 	"github.com/google/trillian/storage/cache"
 	"github.com/google/trillian/storage/storagepb"
 	stree "github.com/google/trillian/storage/tree"
-	"google.golang.org/protobuf/proto"
-	"k8s.io/klog/v2"
 )
 
 const degree = 8
@@ -35,7 +30,8 @@ const degree = 8
 // subtreeKey formats a key for use in a tree's BTree store. The associated
 // Item value will be the SubtreeProto with the given prefix.
 func subtreeKey(treeID, rev int64, prefix []byte) btree.Item {
-	return &kv{k: fmt.Sprintf("/%d/subtree/%x/%d", treeID, prefix, rev)}
+	_ = "STUB: not implemented"
+	return *new(btree.Item)
 }
 
 // tree stores all data for a given treeID
@@ -60,24 +56,20 @@ type tree struct {
 	meta       *trillian.Tree
 }
 
-func (t *tree) Lock() {
-	t.mu.Lock()
-}
+func (t *tree) Lock() { _ = "STUB: not implemented"; return }
 
-func (t *tree) Unlock() {
-	t.mu.Unlock()
-}
+func (t *tree) Unlock() { _ = "STUB: not implemented"; return }
 
-func (t *tree) RLock() {
-	t.mu.RLock()
-}
+func (t *tree) RLock() { _ = "STUB: not implemented"; return }
 
 func (t *tree) RUnlock() {
-	t.mu.RUnlock()
+	_ = "STUB: not implemented"
+
+	// TreeStorage is shared between the memoryLog and (forthcoming) memoryMap-
+	// Storage implementations, and contains functionality which is common to both,
+	return
 }
 
-// TreeStorage is shared between the memoryLog and (forthcoming) memoryMap-
-// Storage implementations, and contains functionality which is common to both,
 type TreeStorage struct {
 	// mu only protects access to the trees map.
 	mu    sync.RWMutex
@@ -85,18 +77,10 @@ type TreeStorage struct {
 }
 
 // NewTreeStorage returns a new instance of the in-memory tree storage database.
-func NewTreeStorage() *TreeStorage {
-	return &TreeStorage{
-		trees: make(map[int64]*tree),
-	}
-}
+func NewTreeStorage() *TreeStorage { _ = "STUB: not implemented"; return nil }
 
 // getTree returns the tree associated with id, or nil if no such tree exists.
-func (m *TreeStorage) getTree(id int64) *tree {
-	m.mu.RLock()
-	defer m.mu.RUnlock()
-	return m.trees[id]
-}
+func (m *TreeStorage) getTree(id int64) *tree { _ = "STUB: not implemented"; return nil }
 
 // kv is a simple key->value type which implements btree's Item interface.
 type kv struct {
@@ -105,49 +89,18 @@ type kv struct {
 }
 
 // Less than by k's string key
-func (a kv) Less(b btree.Item) bool {
-	return strings.Compare(a.k, b.(*kv).k) < 0
-}
+func (a kv) Less(b btree.Item) bool { _ = "STUB: not implemented"; return false }
 
 // newTree creates and initializes a tree struct.
-func newTree(t *trillian.Tree) *tree {
-	ret := &tree{
-		store: btree.New(degree),
-		meta:  proto.Clone(t).(*trillian.Tree),
-	}
-	k := unseqKey(t.TreeId)
-	k.(*kv).v = list.New()
-	ret.store.ReplaceOrInsert(k)
-
-	k = hashToSeqKey(t.TreeId)
-	k.(*kv).v = make(map[string][]int64)
-	ret.store.ReplaceOrInsert(k)
-
-	return ret
-}
+func newTree(t *trillian.Tree) *tree { _ = "STUB: not implemented"; return nil }
 
 func (m *TreeStorage) beginTreeTX(ctx context.Context, treeID int64, hashSizeBytes int, cache *cache.SubtreeCache, readonly bool) (treeTX, error) {
-	tree := m.getTree(treeID)
+	_ = "STUB: not implemented"
+	return *
+
 	// Lock the tree for the duration of the TX.
 	// It will be unlocked by a call to Commit or Close.
-	var unlock func()
-	if readonly {
-		tree.RLock()
-		unlock = tree.RUnlock
-	} else {
-		tree.Lock()
-		unlock = tree.Unlock
-	}
-	return treeTX{
-		ts:            m,
-		tx:            tree.store.Clone(),
-		tree:          tree,
-		treeID:        treeID,
-		hashSizeBytes: hashSizeBytes,
-		subtreeCache:  cache,
-		writeRevision: -1,
-		unlock:        unlock,
-	}, nil
+	new(treeTX), nil
 }
 
 type treeTX struct {
@@ -163,87 +116,35 @@ type treeTX struct {
 }
 
 func (t *treeTX) getSubtrees(ctx context.Context, treeRevision int64, ids [][]byte) ([]*storagepb.SubtreeProto, error) {
-	if len(ids) == 0 {
-		return nil, nil
-	}
-
-	ret := make([]*storagepb.SubtreeProto, 0, len(ids))
-
-	for _, id := range ids {
-		// Look for a nodeID at or below treeRevision:
-		for r := treeRevision; r >= 0; r-- {
-			s := t.tx.Get(subtreeKey(t.treeID, r, id))
-			if s == nil {
-				continue
-			}
-			// Return a copy of the proto to protect against the caller modifying the stored one.
-			p := s.(*kv).v.(*storagepb.SubtreeProto)
-			v := proto.Clone(p).(*storagepb.SubtreeProto)
-			ret = append(ret, v)
-			break
-		}
-	}
-
-	// The InternalNodes cache is possibly nil here, but the SubtreeCache (which called
-	// this method) will re-populate it.
-	return ret, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (t *treeTX) storeSubtrees(ctx context.Context, subtrees []*storagepb.SubtreeProto) error {
-	if len(subtrees) == 0 {
-		klog.Warning("attempted to store 0 subtrees...")
-		return nil
-	}
+// Look for a nodeID at or below treeRevision:
 
-	for _, s := range subtrees {
-		s := s
-		if s.Prefix == nil {
-			panic(fmt.Errorf("nil prefix on %v", s))
-		}
-		k := subtreeKey(t.treeID, t.writeRevision, s.Prefix)
-		k.(*kv).v = s
-		t.tx.ReplaceOrInsert(k)
-	}
+// Return a copy of the proto to protect against the caller modifying the stored one.
+
+// The InternalNodes cache is possibly nil here, but the SubtreeCache (which called
+// this method) will re-populate it.
+
+func (t *treeTX) storeSubtrees(ctx context.Context, subtrees []*storagepb.SubtreeProto) error {
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // getSubtreesAtRev returns a GetSubtreesFunc which reads at the passed in rev.
 func (t *treeTX) getSubtreesAtRev(ctx context.Context, rev int64) cache.GetSubtreesFunc {
-	return func(ids [][]byte) ([]*storagepb.SubtreeProto, error) {
-		return t.getSubtrees(ctx, rev, ids)
-	}
+	_ = "STUB: not implemented"
+	return *new(cache.GetSubtreesFunc)
 }
 
 func (t *treeTX) SetMerkleNodes(ctx context.Context, nodes []stree.Node) error {
-	rev := t.writeRevision - 1
-	return t.subtreeCache.SetNodes(nodes, t.getSubtreesAtRev(ctx, rev))
-}
-
-func (t *treeTX) Commit(ctx context.Context) error {
-	defer t.unlock()
-
-	if t.writeRevision > -1 {
-		tiles, err := t.subtreeCache.UpdatedTiles()
-		if err != nil {
-			klog.Warningf("SubtreeCache updated tiles error: %v", err)
-			return err
-		}
-		if err := t.storeSubtrees(ctx, tiles); err != nil {
-			klog.Warningf("TX commit flush error: %v", err)
-			return err
-		}
-	}
-	t.closed = true
-	// update the shared view of the tree post TX:
-	t.tree.store = t.tx
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (t *treeTX) Close() error {
-	if t.closed {
-		return nil
-	}
-	defer t.unlock()
-	t.closed = true
-	return nil
-}
+func (t *treeTX) Commit(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
+
+// update the shared view of the tree post TX:
+
+func (t *treeTX) Close() error { _ = "STUB: not implemented"; return nil }

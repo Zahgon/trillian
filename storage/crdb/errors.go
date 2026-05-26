@@ -15,7 +15,6 @@
 package crdb
 
 import (
-	"github.com/lib/pq"
 	"github.com/lib/pq/pqerror"
 )
 
@@ -23,21 +22,9 @@ var uniqueViolationErrorCode = pqerror.Code("23505")
 
 // crdbToGRPC converts some types of CockroachDB errors to GRPC errors. This gives
 // clients more signal when the operation can be retried.
-func crdbToGRPC(err error) error {
-	_, ok := err.(*pq.Error)
-	if !ok {
-		return err
-	}
-	// TODO(jaosorior): Do we have a crdb equivalent for a deadlock
-	// error code?
-	return err
-}
+func crdbToGRPC(err error) error { _ = "STUB: not implemented"; return nil }
 
-func isDuplicateErr(err error) bool {
-	switch err := err.(type) {
-	case *pq.Error:
-		return err.Code == uniqueViolationErrorCode
-	default:
-		return false
-	}
-}
+// TODO(jaosorior): Do we have a crdb equivalent for a deadlock
+// error code?
+
+func isDuplicateErr(err error) bool { _ = "STUB: not implemented"; return false }

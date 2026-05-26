@@ -16,8 +16,6 @@ package storagetest
 
 import (
 	"context"
-	"crypto/sha256"
-	"fmt"
 	"testing"
 	"time"
 
@@ -28,54 +26,19 @@ import (
 
 // runLogTX is a helps avoid copying out "if err != nil { blah }" all over the place
 func runLogTX(s storage.LogStorage, tree *trillian.Tree, t *testing.T, f storage.LogTXFunc) {
-	t.Helper()
-	if err := s.ReadWriteTransaction(context.Background(), tree, f); err != nil {
-		t.Fatalf("Failed to run log tx: %v", err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // createTestLeaves creates some test leaves with predictable data
-func createTestLeaves(n, startSeq int64) []*trillian.LogLeaf {
-	var leaves []*trillian.LogLeaf
-	for l := int64(0); l < n; l++ {
-		lv := fmt.Sprintf("Leaf %d", l+startSeq)
-		leafHash := sha256.Sum256([]byte(lv))
-		leaf := &trillian.LogLeaf{
-			LeafIdentityHash: leafHash[:],
-			MerkleLeafHash:   leafHash[:],
-			LeafValue:        []byte(lv),
-			ExtraData:        []byte(fmt.Sprintf("Extra %d", l)),
-			LeafIndex:        int64(startSeq + l),
-		}
-		leaves = append(leaves, leaf)
-	}
-
-	return leaves
-}
+func createTestLeaves(n, startSeq int64) []*trillian.LogLeaf { _ = "STUB: not implemented"; return nil }
 
 func mustSignAndStoreLogRoot(ctx context.Context, t *testing.T, l storage.LogStorage, tree *trillian.Tree, r *types.LogRootV1) {
-	t.Helper()
-	logRoot, err := r.MarshalBinary()
-	if err != nil {
-		t.Fatalf("error marshaling new LogRootV1: %v", err)
-	}
-	root := &trillian.SignedLogRoot{LogRoot: logRoot}
-
-	if err := l.ReadWriteTransaction(ctx, tree, func(ctx context.Context, tx storage.LogTreeTX) error {
-		return tx.StoreSignedLogRoot(ctx, root)
-	}); err != nil {
-		t.Fatalf("ReadWriteTransaction() = %v", err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func dequeueLeavesInTx(ctx context.Context, ls storage.LogStorage, tree *trillian.Tree, t time.Time, limit int) ([]*trillian.LogLeaf, error) {
-	var ret []*trillian.LogLeaf
-	if err := ls.ReadWriteTransaction(ctx, tree, func(ctx context.Context, tx storage.LogTreeTX) error {
-		var err error
-		ret, err = tx.DequeueLeaves(ctx, limit, t)
-		return err
-	}); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

@@ -16,19 +16,11 @@
 package testdbpgx
 
 import (
-	"bytes"
 	"context"
-	"fmt"
-	"log"
-	"os"
-	"strings"
 	"testing"
-	"time"
 
 	"github.com/google/trillian/testonly"
 	"github.com/jackc/pgx/v5/pgxpool"
-	"golang.org/x/sys/unix"
-	"k8s.io/klog/v2"
 )
 
 const (
@@ -71,67 +63,18 @@ var driverMapping = map[DriverName]storageDriverInfo{
 // of the tests in this repo require a database and import this package. With a
 // flag, it would be necessary to distinguish "go test" invocations that need a
 // database, and those that don't. ENV allows to "blanket apply" this setting.
-func postgresqlURI(dbRef ...string) string {
-	var stringurl string
-	if e := os.Getenv(PostgreSQLURIEnv); len(e) > 0 {
-		stringurl = e
-	} else {
-		stringurl = defaultTestPostgreSQLURI
-	}
+func postgresqlURI(dbRef ...string) string { _ = "STUB: not implemented"; return "" }
 
-	for _, ref := range dbRef {
-		if strings.Contains(ref, "=") {
-			separator := "&"
-			if strings.HasSuffix(stringurl, "&") {
-				separator = ""
-			}
-			stringurl = strings.Join([]string{stringurl, ref}, separator)
-		} else {
-			// No equals character, so use this string as the database name.
-			if s1 := strings.SplitN(stringurl, "//", 2); len(s1) == 2 {
-				if s2 := strings.SplitN(stringurl, "?", 2); len(s2) == 2 {
-					stringurl = s1[0] + "///" + ref + "?" + s2[1]
-				}
-			}
-		}
-	}
-
-	return stringurl
-}
+// No equals character, so use this string as the database name.
 
 // PostgreSQLAvailable indicates whether the configured PostgreSQL database is available.
-func PostgreSQLAvailable() bool {
-	return dbAvailable(DriverPostgreSQL)
-}
+func PostgreSQLAvailable() bool { _ = "STUB: not implemented"; return false }
 
-func dbAvailable(driver DriverName) bool {
-	uri := driverMapping[driver].uriFunc()
-	db, err := pgxpool.New(context.TODO(), uri)
-	if err != nil {
-		log.Printf("pgxpool.New(): %v", err)
-		return false
-	}
-	defer db.Close()
-	if err := db.Ping(context.TODO()); err != nil {
-		log.Printf("db.Ping(): %v", err)
-		return false
-	}
-	return true
-}
+func dbAvailable(driver DriverName) bool { _ = "STUB: not implemented"; return false }
 
 // SetFDLimit sets the soft limit on the maximum number of open file descriptors.
 // See http://man7.org/linux/man-pages/man2/setrlimit.2.html
-func SetFDLimit(uLimit uint64) error {
-	var rLimit unix.Rlimit
-	if err := unix.Getrlimit(unix.RLIMIT_NOFILE, &rLimit); err != nil {
-		return err
-	}
-	if uLimit > rLimit.Max {
-		return fmt.Errorf("could not set FD limit to %v. Must be less than the hard limit %v", uLimit, rLimit.Max)
-	}
-	rLimit.Cur = uLimit
-	return unix.Setrlimit(unix.RLIMIT_NOFILE, &rLimit)
-}
+func SetFDLimit(uLimit uint64) error { _ = "STUB: not implemented"; return nil }
 
 // newEmptyDB creates a new, empty database.
 // It returns the database handle and a clean-up function, or an error.
@@ -140,96 +83,25 @@ func SetFDLimit(uLimit uint64) error {
 // calling this function as it may, for example, delete the underlying
 // instance.
 func newEmptyDB(ctx context.Context, driver DriverName) (*pgxpool.Pool, func(context.Context), error) {
-	if err := SetFDLimit(2048); err != nil {
-		return nil, nil, err
-	}
-
-	inf, gotinf := driverMapping[driver]
-	if !gotinf {
-		return nil, nil, fmt.Errorf("unknown driver %q", driver)
-	}
-
-	db, err := pgxpool.New(ctx, inf.uriFunc())
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// Create a randomly-named database and then connect using the new name.
-	name := fmt.Sprintf("trl_%v", time.Now().UnixNano())
-
-	stmt := fmt.Sprintf("CREATE DATABASE %v", name)
-	if _, err := db.Exec(ctx, stmt); err != nil {
-		return nil, nil, fmt.Errorf("error running statement %q: %v", stmt, err)
-	}
-
-	db.Close()
-	uri := inf.uriFunc(name)
-	db, err = pgxpool.New(ctx, uri)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	done := func(ctx context.Context) {
-		db.Close()
-		if db, err = pgxpool.New(ctx, inf.uriFunc()); err != nil {
-			klog.Warningf("Failed to reconnect: %v", err)
-		}
-		defer db.Close()
-		if _, err := db.Exec(ctx, fmt.Sprintf("DROP DATABASE %v", name)); err != nil {
-			klog.Warningf("Failed to drop test database %q: %v", name, err)
-		}
-	}
-
-	return db, done, db.Ping(ctx)
+	_ = "STUB: not implemented"
+	return nil, nil, nil
 }
+
+// Create a randomly-named database and then connect using the new name.
 
 // NewTrillianDB creates an empty database with the Trillian schema. The database name is randomly
 // generated.
 // NewTrillianDB is equivalent to Default().NewTrillianDB(ctx).
 func NewTrillianDB(ctx context.Context, driver DriverName) (*pgxpool.Pool, func(context.Context), error) {
-	db, done, err := newEmptyDB(ctx, driver)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	schema := driverMapping[driver].schema
-
-	sqlBytes, err := os.ReadFile(schema)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// Execute each statement in the schema file.  Each statement must end with a semicolon, and there must be a blank line before the next statement.
-	for _, stmt := range strings.Split(sanitize(string(sqlBytes)), ";\n\n") {
-		stmt = strings.TrimSpace(stmt)
-		if stmt == "" {
-			continue
-		}
-		if _, err := db.Exec(ctx, stmt); err != nil {
-			return nil, nil, fmt.Errorf("error running statement %q: %v", stmt, err)
-		}
-	}
-	return db, done, nil
+	_ = "STUB: not implemented"
+	return nil, nil, nil
 }
 
-func sanitize(script string) string {
-	buf := &bytes.Buffer{}
-	for _, line := range strings.Split(string(script), "\n") {
-		line = strings.TrimSpace(line)
-		if line == "" || line[0] == '#' || strings.Index(line, "--") == 0 {
-			continue // skip empty lines and comments
-		}
-		buf.WriteString(line)
-		buf.WriteString("\n")
-	}
-	return buf.String()
-}
+// Execute each statement in the schema file.  Each statement must end with a semicolon, and there must be a blank line before the next statement.
+
+func sanitize(script string) string { _ = "STUB: not implemented"; return "" }
+
+// skip empty lines and comments
 
 // SkipIfNoPostgreSQL is a test helper that skips tests that require a local PostgreSQL.
-func SkipIfNoPostgreSQL(t *testing.T) {
-	t.Helper()
-	if !PostgreSQLAvailable() {
-		t.Skip("Skipping test as PostgreSQL not available")
-	}
-	t.Logf("Test PostgreSQL available at %q", postgresqlURI())
-}
+func SkipIfNoPostgreSQL(t *testing.T) { _ = "STUB: not implemented"; return }

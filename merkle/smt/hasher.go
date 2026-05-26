@@ -33,10 +33,9 @@ type mapHasher struct {
 
 // bindHasher returns a mapHasher binding the given hasher to a tree ID.
 func bindHasher(hasher Hasher, treeID int64) mapHasher {
-	return mapHasher{mh: hasher, treeID: treeID}
+	_ = "STUB: not implemented"
+	return *new(mapHasher)
 }
 
 // hashEmpty returns the hash of an empty subtree with the given root ID.
-func (h mapHasher) hashEmpty(id node.ID) []byte {
-	return h.mh.HashEmpty(h.treeID, id)
-}
+func (h mapHasher) hashEmpty(id node.ID) []byte { _ = "STUB: not implemented"; return nil }

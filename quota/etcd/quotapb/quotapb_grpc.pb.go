@@ -22,9 +22,8 @@ package quotapb
 
 import (
 	context "context"
+
 	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -67,57 +66,33 @@ type quotaClient struct {
 }
 
 func NewQuotaClient(cc grpc.ClientConnInterface) QuotaClient {
-	return &quotaClient{cc}
+	_ = "STUB: not implemented"
+	return *new(QuotaClient)
 }
 
 func (c *quotaClient) CreateConfig(ctx context.Context, in *CreateConfigRequest, opts ...grpc.CallOption) (*Config, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Config)
-	err := c.cc.Invoke(ctx, Quota_CreateConfig_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *quotaClient) DeleteConfig(ctx context.Context, in *DeleteConfigRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, Quota_DeleteConfig_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *quotaClient) GetConfig(ctx context.Context, in *GetConfigRequest, opts ...grpc.CallOption) (*Config, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Config)
-	err := c.cc.Invoke(ctx, Quota_GetConfig_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *quotaClient) ListConfigs(ctx context.Context, in *ListConfigsRequest, opts ...grpc.CallOption) (*ListConfigsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListConfigsResponse)
-	err := c.cc.Invoke(ctx, Quota_ListConfigs_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *quotaClient) UpdateConfig(ctx context.Context, in *UpdateConfigRequest, opts ...grpc.CallOption) (*Config, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Config)
-	err := c.cc.Invoke(ctx, Quota_UpdateConfig_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // QuotaServer is the server API for Quota service.
@@ -149,128 +124,75 @@ type QuotaServer interface {
 type UnimplementedQuotaServer struct{}
 
 func (UnimplementedQuotaServer) CreateConfig(context.Context, *CreateConfigRequest) (*Config, error) {
-	return nil, status.Error(codes.Unimplemented, "method CreateConfig not implemented")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (UnimplementedQuotaServer) DeleteConfig(context.Context, *DeleteConfigRequest) (*emptypb.Empty, error) {
-	return nil, status.Error(codes.Unimplemented, "method DeleteConfig not implemented")
-}
-func (UnimplementedQuotaServer) GetConfig(context.Context, *GetConfigRequest) (*Config, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetConfig not implemented")
-}
-func (UnimplementedQuotaServer) ListConfigs(context.Context, *ListConfigsRequest) (*ListConfigsResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method ListConfigs not implemented")
-}
-func (UnimplementedQuotaServer) UpdateConfig(context.Context, *UpdateConfigRequest) (*Config, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateConfig not implemented")
-}
-func (UnimplementedQuotaServer) testEmbeddedByValue() {}
 
-// UnsafeQuotaServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to QuotaServer will
-// result in compilation errors.
+func (UnimplementedQuotaServer) DeleteConfig(context.Context, *DeleteConfigRequest) (*emptypb.Empty, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedQuotaServer) GetConfig(context.Context, *GetConfigRequest) (*Config, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedQuotaServer) ListConfigs(context.Context, *ListConfigsRequest) (*ListConfigsResponse, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedQuotaServer) UpdateConfig(context.Context, *UpdateConfigRequest) (*Config, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedQuotaServer) testEmbeddedByValue() {
+	_ = "STUB: not implemented"
+
+	// UnsafeQuotaServer may be embedded to opt out of forward compatibility for this service.
+	// Use of this interface is not recommended, as added methods to QuotaServer will
+	// result in compilation errors.
+	return
+}
+
 type UnsafeQuotaServer interface {
 	mustEmbedUnimplementedQuotaServer()
 }
 
 func RegisterQuotaServer(s grpc.ServiceRegistrar, srv QuotaServer) {
+	_ = "STUB: not implemented"
 	// If the following call panics, it indicates UnimplementedQuotaServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&Quota_ServiceDesc, srv)
+	return
 }
 
 func _Quota_CreateConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateConfigRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QuotaServer).CreateConfig(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Quota_CreateConfig_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QuotaServer).CreateConfig(ctx, req.(*CreateConfigRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _Quota_DeleteConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteConfigRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QuotaServer).DeleteConfig(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Quota_DeleteConfig_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QuotaServer).DeleteConfig(ctx, req.(*DeleteConfigRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _Quota_GetConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetConfigRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QuotaServer).GetConfig(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Quota_GetConfig_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QuotaServer).GetConfig(ctx, req.(*GetConfigRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _Quota_ListConfigs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListConfigsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QuotaServer).ListConfigs(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Quota_ListConfigs_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QuotaServer).ListConfigs(ctx, req.(*ListConfigsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _Quota_UpdateConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateConfigRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QuotaServer).UpdateConfig(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Quota_UpdateConfig_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QuotaServer).UpdateConfig(ctx, req.(*UpdateConfigRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Quota_ServiceDesc is the grpc.ServiceDesc for Quota service.

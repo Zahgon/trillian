@@ -7,12 +7,11 @@
 package spannerpb
 
 import (
+	sync "sync"
+
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	anypb "google.golang.org/protobuf/types/known/anypb"
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
 )
 
 const (
@@ -46,32 +45,27 @@ var (
 	}
 )
 
-func (x TreeState) Enum() *TreeState {
-	p := new(TreeState)
-	*p = x
-	return p
-}
+func (x TreeState) Enum() *TreeState { _ = "STUB: not implemented"; return nil }
 
-func (x TreeState) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
+func (x TreeState) String() string { _ = "STUB: not implemented"; return "" }
 
 func (TreeState) Descriptor() protoreflect.EnumDescriptor {
-	return file_spanner_proto_enumTypes[0].Descriptor()
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumDescriptor)
 }
 
 func (TreeState) Type() protoreflect.EnumType {
-	return &file_spanner_proto_enumTypes[0]
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumType)
 }
 
 func (x TreeState) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumNumber)
 }
 
 // Deprecated: Use TreeState.Descriptor instead.
-func (TreeState) EnumDescriptor() ([]byte, []int) {
-	return file_spanner_proto_rawDescGZIP(), []int{0}
-}
+func (TreeState) EnumDescriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
 // Type of the Tree.
 // Mirrors trillian.TreeType.
@@ -97,32 +91,27 @@ var (
 	}
 )
 
-func (x TreeType) Enum() *TreeType {
-	p := new(TreeType)
-	*p = x
-	return p
-}
+func (x TreeType) Enum() *TreeType { _ = "STUB: not implemented"; return nil }
 
-func (x TreeType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
+func (x TreeType) String() string { _ = "STUB: not implemented"; return "" }
 
 func (TreeType) Descriptor() protoreflect.EnumDescriptor {
-	return file_spanner_proto_enumTypes[1].Descriptor()
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumDescriptor)
 }
 
 func (TreeType) Type() protoreflect.EnumType {
-	return &file_spanner_proto_enumTypes[1]
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumType)
 }
 
 func (x TreeType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumNumber)
 }
 
 // Deprecated: Use TreeType.Descriptor instead.
-func (TreeType) EnumDescriptor() ([]byte, []int) {
-	return file_spanner_proto_rawDescGZIP(), []int{1}
-}
+func (TreeType) EnumDescriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
 // Defines the preimage protection used for tree leaves / nodes.
 // Eg, RFC6962 dictates a 0x00 prefix for leaves and 0x01 for nodes.
@@ -158,32 +147,27 @@ var (
 	}
 )
 
-func (x HashStrategy) Enum() *HashStrategy {
-	p := new(HashStrategy)
-	*p = x
-	return p
-}
+func (x HashStrategy) Enum() *HashStrategy { _ = "STUB: not implemented"; return nil }
 
-func (x HashStrategy) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
+func (x HashStrategy) String() string { _ = "STUB: not implemented"; return "" }
 
 func (HashStrategy) Descriptor() protoreflect.EnumDescriptor {
-	return file_spanner_proto_enumTypes[2].Descriptor()
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumDescriptor)
 }
 
 func (HashStrategy) Type() protoreflect.EnumType {
-	return &file_spanner_proto_enumTypes[2]
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumType)
 }
 
 func (x HashStrategy) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumNumber)
 }
 
 // Deprecated: Use HashStrategy.Descriptor instead.
-func (HashStrategy) EnumDescriptor() ([]byte, []int) {
-	return file_spanner_proto_rawDescGZIP(), []int{2}
-}
+func (HashStrategy) EnumDescriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
 // Supported hash algorithms.
 // The numbering space is the same as for TLS, given in RFC 5246 s7.4.1.4.1. See
@@ -210,32 +194,27 @@ var (
 	}
 )
 
-func (x HashAlgorithm) Enum() *HashAlgorithm {
-	p := new(HashAlgorithm)
-	*p = x
-	return p
-}
+func (x HashAlgorithm) Enum() *HashAlgorithm { _ = "STUB: not implemented"; return nil }
 
-func (x HashAlgorithm) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
+func (x HashAlgorithm) String() string { _ = "STUB: not implemented"; return "" }
 
 func (HashAlgorithm) Descriptor() protoreflect.EnumDescriptor {
-	return file_spanner_proto_enumTypes[3].Descriptor()
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumDescriptor)
 }
 
 func (HashAlgorithm) Type() protoreflect.EnumType {
-	return &file_spanner_proto_enumTypes[3]
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumType)
 }
 
 func (x HashAlgorithm) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumNumber)
 }
 
 // Deprecated: Use HashAlgorithm.Descriptor instead.
-func (HashAlgorithm) EnumDescriptor() ([]byte, []int) {
-	return file_spanner_proto_rawDescGZIP(), []int{3}
-}
+func (HashAlgorithm) EnumDescriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
 // Supported signature algorithms.
 // The numbering space is the same as for TLS, given in RFC 5246 s7.4.1.4.1. See
@@ -266,31 +245,29 @@ var (
 	}
 )
 
-func (x SignatureAlgorithm) Enum() *SignatureAlgorithm {
-	p := new(SignatureAlgorithm)
-	*p = x
-	return p
-}
+func (x SignatureAlgorithm) Enum() *SignatureAlgorithm { _ = "STUB: not implemented"; return nil }
 
-func (x SignatureAlgorithm) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
+func (x SignatureAlgorithm) String() string { _ = "STUB: not implemented"; return "" }
 
 func (SignatureAlgorithm) Descriptor() protoreflect.EnumDescriptor {
-	return file_spanner_proto_enumTypes[4].Descriptor()
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumDescriptor)
 }
 
 func (SignatureAlgorithm) Type() protoreflect.EnumType {
-	return &file_spanner_proto_enumTypes[4]
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumType)
 }
 
 func (x SignatureAlgorithm) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumNumber)
 }
 
 // Deprecated: Use SignatureAlgorithm.Descriptor instead.
 func (SignatureAlgorithm) EnumDescriptor() ([]byte, []int) {
-	return file_spanner_proto_rawDescGZIP(), []int{4}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // LogStorageConfig holds settings which tune the storage implementation for
@@ -315,49 +292,23 @@ type LogStorageConfig struct {
 	sizeCache        protoimpl.SizeCache
 }
 
-func (x *LogStorageConfig) Reset() {
-	*x = LogStorageConfig{}
-	mi := &file_spanner_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *LogStorageConfig) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *LogStorageConfig) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *LogStorageConfig) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*LogStorageConfig) ProtoMessage() {}
+func (*LogStorageConfig) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *LogStorageConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_spanner_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use LogStorageConfig.ProtoReflect.Descriptor instead.
-func (*LogStorageConfig) Descriptor() ([]byte, []int) {
-	return file_spanner_proto_rawDescGZIP(), []int{0}
-}
+func (*LogStorageConfig) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *LogStorageConfig) GetNumUnseqBuckets() int64 {
-	if x != nil {
-		return x.NumUnseqBuckets
-	}
-	return 0
-}
+func (x *LogStorageConfig) GetNumUnseqBuckets() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *LogStorageConfig) GetNumMerkleBuckets() int64 {
-	if x != nil {
-		return x.NumMerkleBuckets
-	}
-	return 0
-}
+func (x *LogStorageConfig) GetNumMerkleBuckets() int64 { _ = "STUB: not implemented"; return 0 }
 
 // MapStorageConfig holds settings which tune the storage implementation for
 // a given map tree.
@@ -367,35 +318,19 @@ type MapStorageConfig struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *MapStorageConfig) Reset() {
-	*x = MapStorageConfig{}
-	mi := &file_spanner_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *MapStorageConfig) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *MapStorageConfig) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *MapStorageConfig) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*MapStorageConfig) ProtoMessage() {}
+func (*MapStorageConfig) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *MapStorageConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_spanner_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use MapStorageConfig.ProtoReflect.Descriptor instead.
-func (*MapStorageConfig) Descriptor() ([]byte, []int) {
-	return file_spanner_proto_rawDescGZIP(), []int{1}
-}
+func (*MapStorageConfig) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
 // TreeInfo stores information about a Trillian tree.
 type TreeInfo struct {
@@ -448,172 +383,69 @@ type TreeInfo struct {
 	sizeCache       protoimpl.SizeCache
 }
 
-func (x *TreeInfo) Reset() {
-	*x = TreeInfo{}
-	mi := &file_spanner_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *TreeInfo) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *TreeInfo) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *TreeInfo) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*TreeInfo) ProtoMessage() {}
+func (*TreeInfo) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *TreeInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_spanner_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use TreeInfo.ProtoReflect.Descriptor instead.
-func (*TreeInfo) Descriptor() ([]byte, []int) {
-	return file_spanner_proto_rawDescGZIP(), []int{2}
-}
+func (*TreeInfo) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *TreeInfo) GetTreeId() int64 {
-	if x != nil {
-		return x.TreeId
-	}
-	return 0
-}
+func (x *TreeInfo) GetTreeId() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *TreeInfo) GetKeyId() int64 {
-	if x != nil {
-		return x.KeyId
-	}
-	return 0
-}
+func (x *TreeInfo) GetKeyId() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *TreeInfo) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
+func (x *TreeInfo) GetName() string { _ = "STUB: not implemented"; return "" }
 
-func (x *TreeInfo) GetDescription() string {
-	if x != nil {
-		return x.Description
-	}
-	return ""
-}
+func (x *TreeInfo) GetDescription() string { _ = "STUB: not implemented"; return "" }
 
-func (x *TreeInfo) GetTreeType() TreeType {
-	if x != nil {
-		return x.TreeType
-	}
-	return TreeType_UNKNOWN
-}
+func (x *TreeInfo) GetTreeType() TreeType { _ = "STUB: not implemented"; return *new(TreeType) }
 
-func (x *TreeInfo) GetTreeState() TreeState {
-	if x != nil {
-		return x.TreeState
-	}
-	return TreeState_UNKNOWN_TREE_STATE
-}
+func (x *TreeInfo) GetTreeState() TreeState { _ = "STUB: not implemented"; return *new(TreeState) }
 
 func (x *TreeInfo) GetHashStrategy() HashStrategy {
-	if x != nil {
-		return x.HashStrategy
-	}
-	return HashStrategy_UNKNOWN_HASH_STRATEGY
+	_ = "STUB: not implemented"
+	return *new(HashStrategy)
 }
 
 func (x *TreeInfo) GetHashAlgorithm() HashAlgorithm {
-	if x != nil {
-		return x.HashAlgorithm
-	}
-	return HashAlgorithm_NONE
+	_ = "STUB: not implemented"
+	return *new(HashAlgorithm)
 }
 
 func (x *TreeInfo) GetSignatureAlgorithm() SignatureAlgorithm {
-	if x != nil {
-		return x.SignatureAlgorithm
-	}
-	return SignatureAlgorithm_ANONYMOUS
+	_ = "STUB: not implemented"
+	return *new(SignatureAlgorithm)
 }
 
-func (x *TreeInfo) GetCreateTimeNanos() int64 {
-	if x != nil {
-		return x.CreateTimeNanos
-	}
-	return 0
-}
+func (x *TreeInfo) GetCreateTimeNanos() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *TreeInfo) GetUpdateTimeNanos() int64 {
-	if x != nil {
-		return x.UpdateTimeNanos
-	}
-	return 0
-}
+func (x *TreeInfo) GetUpdateTimeNanos() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *TreeInfo) GetPrivateKey() *anypb.Any {
-	if x != nil {
-		return x.PrivateKey
-	}
-	return nil
-}
+func (x *TreeInfo) GetPrivateKey() *anypb.Any { _ = "STUB: not implemented"; return nil }
 
-func (x *TreeInfo) GetPublicKeyDer() []byte {
-	if x != nil {
-		return x.PublicKeyDer
-	}
-	return nil
-}
+func (x *TreeInfo) GetPublicKeyDer() []byte { _ = "STUB: not implemented"; return nil }
 
 func (x *TreeInfo) GetStorageConfig() isTreeInfo_StorageConfig {
-	if x != nil {
-		return x.StorageConfig
-	}
-	return nil
+	_ = "STUB: not implemented"
+	return *new(isTreeInfo_StorageConfig)
 }
 
-func (x *TreeInfo) GetLogStorageConfig() *LogStorageConfig {
-	if x != nil {
-		if x, ok := x.StorageConfig.(*TreeInfo_LogStorageConfig); ok {
-			return x.LogStorageConfig
-		}
-	}
-	return nil
-}
+func (x *TreeInfo) GetLogStorageConfig() *LogStorageConfig { _ = "STUB: not implemented"; return nil }
 
-func (x *TreeInfo) GetMapStorageConfig() *MapStorageConfig {
-	if x != nil {
-		if x, ok := x.StorageConfig.(*TreeInfo_MapStorageConfig); ok {
-			return x.MapStorageConfig
-		}
-	}
-	return nil
-}
+func (x *TreeInfo) GetMapStorageConfig() *MapStorageConfig { _ = "STUB: not implemented"; return nil }
 
-func (x *TreeInfo) GetMaxRootDurationMillis() int64 {
-	if x != nil {
-		return x.MaxRootDurationMillis
-	}
-	return 0
-}
+func (x *TreeInfo) GetMaxRootDurationMillis() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *TreeInfo) GetDeleted() bool {
-	if x != nil {
-		return x.Deleted
-	}
-	return false
-}
+func (x *TreeInfo) GetDeleted() bool { _ = "STUB: not implemented"; return false }
 
-func (x *TreeInfo) GetDeleteTimeNanos() int64 {
-	if x != nil {
-		return x.DeleteTimeNanos
-	}
-	return 0
-}
+func (x *TreeInfo) GetDeleteTimeNanos() int64 { _ = "STUB: not implemented"; return 0 }
 
 type isTreeInfo_StorageConfig interface {
 	isTreeInfo_StorageConfig()
@@ -627,12 +459,16 @@ type TreeInfo_MapStorageConfig struct {
 	MapStorageConfig *MapStorageConfig `protobuf:"bytes,7,opt,name=map_storage_config,json=mapStorageConfig,proto3,oneof"`
 }
 
-func (*TreeInfo_LogStorageConfig) isTreeInfo_StorageConfig() {}
+func (*TreeInfo_LogStorageConfig) isTreeInfo_StorageConfig() { _ = "STUB: not implemented"; return }
 
-func (*TreeInfo_MapStorageConfig) isTreeInfo_StorageConfig() {}
+func (*TreeInfo_MapStorageConfig) isTreeInfo_StorageConfig() {
+	_ = "STUB: not implemented"
 
-// TreeHead is the storage format for Trillian's commitment to a particular
-// tree state.
+	// TreeHead is the storage format for Trillian's commitment to a particular
+	// tree state.
+	return
+}
+
 type TreeHead struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// tree_id identifies the tree this TreeHead is built from.
@@ -654,84 +490,33 @@ type TreeHead struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TreeHead) Reset() {
-	*x = TreeHead{}
-	mi := &file_spanner_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *TreeHead) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *TreeHead) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *TreeHead) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*TreeHead) ProtoMessage() {}
+func (*TreeHead) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *TreeHead) ProtoReflect() protoreflect.Message {
-	mi := &file_spanner_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use TreeHead.ProtoReflect.Descriptor instead.
-func (*TreeHead) Descriptor() ([]byte, []int) {
-	return file_spanner_proto_rawDescGZIP(), []int{3}
-}
+func (*TreeHead) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *TreeHead) GetTreeId() int64 {
-	if x != nil {
-		return x.TreeId
-	}
-	return 0
-}
+func (x *TreeHead) GetTreeId() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *TreeHead) GetTsNanos() int64 {
-	if x != nil {
-		return x.TsNanos
-	}
-	return 0
-}
+func (x *TreeHead) GetTsNanos() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *TreeHead) GetTreeSize() int64 {
-	if x != nil {
-		return x.TreeSize
-	}
-	return 0
-}
+func (x *TreeHead) GetTreeSize() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *TreeHead) GetRootHash() []byte {
-	if x != nil {
-		return x.RootHash
-	}
-	return nil
-}
+func (x *TreeHead) GetRootHash() []byte { _ = "STUB: not implemented"; return nil }
 
-func (x *TreeHead) GetSignature() []byte {
-	if x != nil {
-		return x.Signature
-	}
-	return nil
-}
+func (x *TreeHead) GetSignature() []byte { _ = "STUB: not implemented"; return nil }
 
-func (x *TreeHead) GetTreeRevision() int64 {
-	if x != nil {
-		return x.TreeRevision
-	}
-	return 0
-}
+func (x *TreeHead) GetTreeRevision() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *TreeHead) GetMetadata() []byte {
-	if x != nil {
-		return x.Metadata
-	}
-	return nil
-}
+func (x *TreeHead) GetMetadata() []byte { _ = "STUB: not implemented"; return nil }
 
 var File_spanner_proto protoreflect.FileDescriptor
 
@@ -805,12 +590,7 @@ var (
 	file_spanner_proto_rawDescData []byte
 )
 
-func file_spanner_proto_rawDescGZIP() []byte {
-	file_spanner_proto_rawDescOnce.Do(func() {
-		file_spanner_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_spanner_proto_rawDesc), len(file_spanner_proto_rawDesc)))
-	})
-	return file_spanner_proto_rawDescData
-}
+func file_spanner_proto_rawDescGZIP() []byte { _ = "STUB: not implemented"; return nil }
 
 var file_spanner_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
 var file_spanner_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
@@ -842,31 +622,5 @@ var file_spanner_proto_depIdxs = []int32{
 	0, // [0:8] is the sub-list for field type_name
 }
 
-func init() { file_spanner_proto_init() }
-func file_spanner_proto_init() {
-	if File_spanner_proto != nil {
-		return
-	}
-	file_spanner_proto_msgTypes[2].OneofWrappers = []any{
-		(*TreeInfo_LogStorageConfig)(nil),
-		(*TreeInfo_MapStorageConfig)(nil),
-	}
-	type x struct{}
-	out := protoimpl.TypeBuilder{
-		File: protoimpl.DescBuilder{
-			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_spanner_proto_rawDesc), len(file_spanner_proto_rawDesc)),
-			NumEnums:      5,
-			NumMessages:   4,
-			NumExtensions: 0,
-			NumServices:   0,
-		},
-		GoTypes:           file_spanner_proto_goTypes,
-		DependencyIndexes: file_spanner_proto_depIdxs,
-		EnumInfos:         file_spanner_proto_enumTypes,
-		MessageInfos:      file_spanner_proto_msgTypes,
-	}.Build()
-	File_spanner_proto = out.File
-	file_spanner_proto_goTypes = nil
-	file_spanner_proto_depIdxs = nil
-}
+func init()                    { file_spanner_proto_init() }
+func file_spanner_proto_init() { _ = "STUB: not implemented"; return }

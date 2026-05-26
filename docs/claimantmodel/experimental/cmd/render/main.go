@@ -18,9 +18,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"os"
-	"strings"
 
 	claimant "github.com/google/trillian/docs/claimantmodel/experimental/cmd/render/internal"
 	"gopkg.in/yaml.v2"
@@ -64,35 +62,8 @@ func main() {
 	}
 }
 
-func handleSingleModel(domain claimant.Model) {
-	fmt.Printf("Domain Model as markdown:\n%s\n\n", domain.Markdown())
+func handleSingleModel(domain claimant.Model) { _ = "STUB: not implemented"; return }
 
-	models := claimant.Models{
-		Domain: domain,
-		Log:    claimant.LogModelForDomain(domain),
-	}
+func handleMultiModels(models claimant.Models) { _ = "STUB: not implemented"; return }
 
-	mbs, err := yaml.Marshal(models)
-	if err != nil {
-		klog.Exitf("failed to marshal models: %v", err)
-	}
-	fmt.Printf("Complete model template as yaml:\n%s\n\n", string(mbs))
-}
-
-func handleMultiModels(models claimant.Models) {
-	generateCommand := getGenerateDocs()
-	fmt.Printf("All actors:\n%s\n\n", strings.Join(models.Actors(), "\n"))
-	fmt.Printf("Models as markdown:\n%s\n%s\n\n", generateCommand, models.Markdown())
-	fmt.Printf("Sequence diagrams:\n%s\n%s\n\n", generateCommand, models.SequenceDiagram())
-}
-
-func getGenerateDocs() string {
-	builder := &strings.Builder{}
-	builder.WriteString("<!--- This content generated with:\n")
-	builder.WriteString("go run github.com/google/trillian/docs/claimantmodel/experimental/cmd/render@master")
-	for _, a := range os.Args[1:] {
-		fmt.Fprintf(builder, " %s", a)
-	}
-	builder.WriteString("\n-->")
-	return builder.String()
-}
+func getGenerateDocs() string { _ = "STUB: not implemented"; return "" }

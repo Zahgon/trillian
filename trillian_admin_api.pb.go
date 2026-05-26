@@ -21,12 +21,11 @@
 package trillian
 
 import (
+	sync "sync"
+
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
 )
 
 const (
@@ -46,42 +45,21 @@ type ListTreesRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ListTreesRequest) Reset() {
-	*x = ListTreesRequest{}
-	mi := &file_trillian_admin_api_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *ListTreesRequest) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *ListTreesRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *ListTreesRequest) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*ListTreesRequest) ProtoMessage() {}
+func (*ListTreesRequest) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *ListTreesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_admin_api_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use ListTreesRequest.ProtoReflect.Descriptor instead.
-func (*ListTreesRequest) Descriptor() ([]byte, []int) {
-	return file_trillian_admin_api_proto_rawDescGZIP(), []int{0}
-}
+func (*ListTreesRequest) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *ListTreesRequest) GetShowDeleted() bool {
-	if x != nil {
-		return x.ShowDeleted
-	}
-	return false
-}
+func (x *ListTreesRequest) GetShowDeleted() bool { _ = "STUB: not implemented"; return false }
 
 // ListTrees response.
 // No pagination is provided, all trees the requester has access to are
@@ -94,42 +72,21 @@ type ListTreesResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ListTreesResponse) Reset() {
-	*x = ListTreesResponse{}
-	mi := &file_trillian_admin_api_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *ListTreesResponse) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *ListTreesResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *ListTreesResponse) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*ListTreesResponse) ProtoMessage() {}
+func (*ListTreesResponse) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *ListTreesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_admin_api_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use ListTreesResponse.ProtoReflect.Descriptor instead.
-func (*ListTreesResponse) Descriptor() ([]byte, []int) {
-	return file_trillian_admin_api_proto_rawDescGZIP(), []int{1}
-}
+func (*ListTreesResponse) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *ListTreesResponse) GetTree() []*Tree {
-	if x != nil {
-		return x.Tree
-	}
-	return nil
-}
+func (x *ListTreesResponse) GetTree() []*Tree { _ = "STUB: not implemented"; return nil }
 
 // GetTree request.
 type GetTreeRequest struct {
@@ -140,42 +97,21 @@ type GetTreeRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetTreeRequest) Reset() {
-	*x = GetTreeRequest{}
-	mi := &file_trillian_admin_api_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *GetTreeRequest) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *GetTreeRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *GetTreeRequest) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*GetTreeRequest) ProtoMessage() {}
+func (*GetTreeRequest) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *GetTreeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_admin_api_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use GetTreeRequest.ProtoReflect.Descriptor instead.
-func (*GetTreeRequest) Descriptor() ([]byte, []int) {
-	return file_trillian_admin_api_proto_rawDescGZIP(), []int{2}
-}
+func (*GetTreeRequest) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *GetTreeRequest) GetTreeId() int64 {
-	if x != nil {
-		return x.TreeId
-	}
-	return 0
-}
+func (x *GetTreeRequest) GetTreeId() int64 { _ = "STUB: not implemented"; return 0 }
 
 // CreateTree request.
 type CreateTreeRequest struct {
@@ -186,42 +122,21 @@ type CreateTreeRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateTreeRequest) Reset() {
-	*x = CreateTreeRequest{}
-	mi := &file_trillian_admin_api_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *CreateTreeRequest) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *CreateTreeRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *CreateTreeRequest) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*CreateTreeRequest) ProtoMessage() {}
+func (*CreateTreeRequest) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *CreateTreeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_admin_api_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use CreateTreeRequest.ProtoReflect.Descriptor instead.
-func (*CreateTreeRequest) Descriptor() ([]byte, []int) {
-	return file_trillian_admin_api_proto_rawDescGZIP(), []int{3}
-}
+func (*CreateTreeRequest) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *CreateTreeRequest) GetTree() *Tree {
-	if x != nil {
-		return x.Tree
-	}
-	return nil
-}
+func (x *CreateTreeRequest) GetTree() *Tree { _ = "STUB: not implemented"; return nil }
 
 // UpdateTree request.
 type UpdateTreeRequest struct {
@@ -235,47 +150,24 @@ type UpdateTreeRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *UpdateTreeRequest) Reset() {
-	*x = UpdateTreeRequest{}
-	mi := &file_trillian_admin_api_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *UpdateTreeRequest) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *UpdateTreeRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *UpdateTreeRequest) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*UpdateTreeRequest) ProtoMessage() {}
+func (*UpdateTreeRequest) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *UpdateTreeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_admin_api_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use UpdateTreeRequest.ProtoReflect.Descriptor instead.
-func (*UpdateTreeRequest) Descriptor() ([]byte, []int) {
-	return file_trillian_admin_api_proto_rawDescGZIP(), []int{4}
-}
+func (*UpdateTreeRequest) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *UpdateTreeRequest) GetTree() *Tree {
-	if x != nil {
-		return x.Tree
-	}
-	return nil
-}
+func (x *UpdateTreeRequest) GetTree() *Tree { _ = "STUB: not implemented"; return nil }
 
 func (x *UpdateTreeRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.UpdateMask
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -288,42 +180,21 @@ type DeleteTreeRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DeleteTreeRequest) Reset() {
-	*x = DeleteTreeRequest{}
-	mi := &file_trillian_admin_api_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *DeleteTreeRequest) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *DeleteTreeRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *DeleteTreeRequest) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*DeleteTreeRequest) ProtoMessage() {}
+func (*DeleteTreeRequest) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *DeleteTreeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_admin_api_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use DeleteTreeRequest.ProtoReflect.Descriptor instead.
-func (*DeleteTreeRequest) Descriptor() ([]byte, []int) {
-	return file_trillian_admin_api_proto_rawDescGZIP(), []int{5}
-}
+func (*DeleteTreeRequest) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *DeleteTreeRequest) GetTreeId() int64 {
-	if x != nil {
-		return x.TreeId
-	}
-	return 0
-}
+func (x *DeleteTreeRequest) GetTreeId() int64 { _ = "STUB: not implemented"; return 0 }
 
 // UndeleteTree request.
 type UndeleteTreeRequest struct {
@@ -334,42 +205,24 @@ type UndeleteTreeRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *UndeleteTreeRequest) Reset() {
-	*x = UndeleteTreeRequest{}
-	mi := &file_trillian_admin_api_proto_msgTypes[6]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *UndeleteTreeRequest) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *UndeleteTreeRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *UndeleteTreeRequest) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*UndeleteTreeRequest) ProtoMessage() {}
+func (*UndeleteTreeRequest) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *UndeleteTreeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_admin_api_proto_msgTypes[6]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use UndeleteTreeRequest.ProtoReflect.Descriptor instead.
 func (*UndeleteTreeRequest) Descriptor() ([]byte, []int) {
-	return file_trillian_admin_api_proto_rawDescGZIP(), []int{6}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (x *UndeleteTreeRequest) GetTreeId() int64 {
-	if x != nil {
-		return x.TreeId
-	}
-	return 0
-}
+func (x *UndeleteTreeRequest) GetTreeId() int64 { _ = "STUB: not implemented"; return 0 }
 
 var File_trillian_admin_api_proto protoreflect.FileDescriptor
 
@@ -409,12 +262,7 @@ var (
 	file_trillian_admin_api_proto_rawDescData []byte
 )
 
-func file_trillian_admin_api_proto_rawDescGZIP() []byte {
-	file_trillian_admin_api_proto_rawDescOnce.Do(func() {
-		file_trillian_admin_api_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_trillian_admin_api_proto_rawDesc), len(file_trillian_admin_api_proto_rawDesc)))
-	})
-	return file_trillian_admin_api_proto_rawDescData
-}
+func file_trillian_admin_api_proto_rawDescGZIP() []byte { _ = "STUB: not implemented"; return nil }
 
 var file_trillian_admin_api_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_trillian_admin_api_proto_goTypes = []any{
@@ -452,27 +300,5 @@ var file_trillian_admin_api_proto_depIdxs = []int32{
 	0,  // [0:4] is the sub-list for field type_name
 }
 
-func init() { file_trillian_admin_api_proto_init() }
-func file_trillian_admin_api_proto_init() {
-	if File_trillian_admin_api_proto != nil {
-		return
-	}
-	file_trillian_proto_init()
-	type x struct{}
-	out := protoimpl.TypeBuilder{
-		File: protoimpl.DescBuilder{
-			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_trillian_admin_api_proto_rawDesc), len(file_trillian_admin_api_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   7,
-			NumExtensions: 0,
-			NumServices:   1,
-		},
-		GoTypes:           file_trillian_admin_api_proto_goTypes,
-		DependencyIndexes: file_trillian_admin_api_proto_depIdxs,
-		MessageInfos:      file_trillian_admin_api_proto_msgTypes,
-	}.Build()
-	File_trillian_admin_api_proto = out.File
-	file_trillian_admin_api_proto_goTypes = nil
-	file_trillian_admin_api_proto_depIdxs = nil
-}
+func init()                               { file_trillian_admin_api_proto_init() }
+func file_trillian_admin_api_proto_init() { _ = "STUB: not implemented"; return }

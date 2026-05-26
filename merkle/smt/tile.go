@@ -15,9 +15,6 @@
 package smt
 
 import (
-	"errors"
-	"fmt"
-
 	"github.com/google/trillian/merkle/smt/node"
 )
 
@@ -44,55 +41,24 @@ type Tile struct {
 // updates. The resulting tile contains all the nodes from the updates, and all
 // the nodes from the original tile not present in the updates.
 func (t Tile) Merge(updates NodesRow) (Tile, error) {
-	if len(updates) == 0 {
-		return t, nil
-	} else if len(t.Leaves) == 0 {
-		return Tile{ID: t.ID, Leaves: updates}, nil
-	}
-	if at, want := updates[0].ID.BitLen(), t.Leaves[0].ID.BitLen(); at != want {
-		return Tile{}, fmt.Errorf("updates are at depth %d, want %d", at, want)
-	}
-	if !updates.inSubtree(t.ID) {
-		return Tile{}, errors.New("updates are not entirely in this tile")
-	}
-	return Tile{ID: t.ID, Leaves: merge(t.Leaves, updates)}, nil
+	_ = "STUB: not implemented"
+	return *new(Tile), nil
 }
 
 // merge merges two sorted slices of nodes into one sorted slice. If a node ID
 // exists in both slices, then the one from the updates slice is taken, i.e. it
 // overrides the node from the nodes slice.
-func merge(nodes, updates NodesRow) NodesRow {
-	res := make([]Node, 0, len(nodes)+len(updates))
-	i := 0
-	for _, u := range updates {
-		for ; i < len(nodes); i++ {
-			if c := compareHorizontal(nodes[i].ID, u.ID); c < 0 {
-				res = append(res, nodes[i])
-			} else if c > 0 {
-				break
-			}
-		}
-		res = append(res, u)
-	}
-	return append(res, nodes[i:]...)
-}
+func merge(nodes, updates NodesRow) NodesRow { _ = "STUB: not implemented"; return *new(NodesRow) }
 
 // scan visits all non-empty nodes of the tile except the root. The order of
 // node visits is arbitrary.
 func (t Tile) scan(l Layout, h mapHasher, visit func(Node)) error {
-	top := t.ID.BitLen()
-	_, height := l.Locate(top + 1)
-	// TODO(pavelkalinnikov): Remove HStar3 side effects, to avoid copying here.
-	// Currently, the Update method modifies the nodes given to NewHStar3.
-	leaves := make([]Node, len(t.Leaves))
-	copy(leaves, t.Leaves)
-	hs, err := NewHStar3(leaves, h.mh.HashChildren, top+height, top)
-	if err != nil {
-		return err
-	}
-	_, err = hs.Update(emptyHashes{h: h, visit: visit})
-	return err
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// TODO(pavelkalinnikov): Remove HStar3 side effects, to avoid copying here.
+// Currently, the Update method modifies the nodes given to NewHStar3.
 
 // emptyHashes is a NodeAccessor used for computing node hashes of a tile.
 type emptyHashes struct {
@@ -101,11 +67,7 @@ type emptyHashes struct {
 }
 
 // Get returns an empty hash for the given root node ID.
-func (e emptyHashes) Get(id node.ID) ([]byte, error) {
-	return e.h.hashEmpty(id), nil
-}
+func (e emptyHashes) Get(id node.ID) ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Set calls the visitor callback for the given node and hash.
-func (e emptyHashes) Set(id node.ID, hash []byte) {
-	e.visit(Node{ID: id, Hash: hash})
-}
+func (e emptyHashes) Set(id node.ID, hash []byte) { _ = "STUB: not implemented"; return }

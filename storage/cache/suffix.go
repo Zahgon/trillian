@@ -15,8 +15,6 @@
 package cache
 
 import (
-	"encoding/base64"
-	"errors"
 	"fmt"
 )
 
@@ -60,64 +58,37 @@ type suffix struct {
 //
 // TODO(pavelkalinnikov): Mask the last byte of path.
 func newSuffix(bits uint8, path []byte) *suffix {
+	_ = "STUB: not implemented"
 	// Use a shared value for a short suffix if we have one, they're immutable.
-	if bits <= 8 {
-		if sfx, ok := fromRaw[key{depth: bits, value: path[0]}]; ok {
-			return sfx
-		}
-	}
-
-	r := make([]byte, 1, len(path)+1)
-	r[0] = bits
-	r = append(r, path...)
-	s := base64.StdEncoding.EncodeToString(r)
-
-	return &suffix{bits: bits, path: r[1:], asString: s}
+	return nil
 }
 
 // Bits returns the number of significant bits in the suffix path.
 func (s suffix) Bits() uint8 {
-	return s.bits
+	_ = "STUB: not implemented"
+
+	// Path returns a copy of the suffix path.
+	return 0
 }
 
-// Path returns a copy of the suffix path.
-func (s suffix) Path() []byte {
-	return append(make([]byte, 0, len(s.path)), s.path...)
-}
+func (s suffix) Path() []byte { _ = "STUB: not implemented"; return nil }
 
 // String returns a string that represents suffix.
 // This is a base64 encoding of the following format:
 // [ 1 byte for depth || path bytes ]
 func (s suffix) String() string {
-	return s.asString
+	_ = "STUB: not implemented"
+
+	// parseSuffix converts a suffix string back into a suffix.
+	return ""
 }
 
-// parseSuffix converts a suffix string back into a suffix.
-func parseSuffix(s string) (*suffix, error) {
-	if sfx, ok := fromString[s]; ok {
-		// Matches a precalculated value, use that.
-		return sfx, nil
-	}
+func parseSuffix(s string) (*suffix, error) { _ = "STUB: not implemented"; return nil, nil }
 
-	b, err := base64.StdEncoding.DecodeString(s)
-	if err != nil {
-		return nil, err
-	}
-	if len(b) == 0 {
-		return nil, errors.New("empty bytes")
-	}
-	bits, b := b[0], b[1:]
-	if got, want := len(b), bytesForBits(int(bits)); got != want {
-		return nil, fmt.Errorf("unexpected length %d, need %d", got, want)
-	}
-
-	return newSuffix(bits, b), nil
-}
+// Matches a precalculated value, use that.
 
 // bytesForBits returns the number of bytes required to store numBits bits.
-func bytesForBits(numBits int) int {
-	return (numBits + 7) >> 3
-}
+func bytesForBits(numBits int) int { _ = "STUB: not implemented"; return 0 }
 
 // Precalculate all the one byte suffix values (from depths 1-8) so they can be
 // reused either on construction or parsing.

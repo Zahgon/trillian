@@ -6,7 +6,6 @@ package storage
 
 import (
 	context "context"
-	reflect "reflect"
 	time "time"
 
 	gomock "github.com/golang/mock/gomock"
@@ -28,57 +27,51 @@ type MockAdminStorageMockRecorder struct {
 
 // NewMockAdminStorage creates a new mock instance.
 func NewMockAdminStorage(ctrl *gomock.Controller) *MockAdminStorage {
-	mock := &MockAdminStorage{ctrl: ctrl}
-	mock.recorder = &MockAdminStorageMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockAdminStorage) EXPECT() *MockAdminStorageMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// CheckDatabaseAccessible mocks base method.
+	return nil
 }
 
-// CheckDatabaseAccessible mocks base method.
 func (m *MockAdminStorage) CheckDatabaseAccessible(arg0 context.Context) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CheckDatabaseAccessible", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CheckDatabaseAccessible indicates an expected call of CheckDatabaseAccessible.
 func (mr *MockAdminStorageMockRecorder) CheckDatabaseAccessible(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CheckDatabaseAccessible", reflect.TypeOf((*MockAdminStorage)(nil).CheckDatabaseAccessible), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReadWriteTransaction mocks base method.
 func (m *MockAdminStorage) ReadWriteTransaction(arg0 context.Context, arg1 AdminTXFunc) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReadWriteTransaction", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReadWriteTransaction indicates an expected call of ReadWriteTransaction.
 func (mr *MockAdminStorageMockRecorder) ReadWriteTransaction(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadWriteTransaction", reflect.TypeOf((*MockAdminStorage)(nil).ReadWriteTransaction), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Snapshot mocks base method.
 func (m *MockAdminStorage) Snapshot(arg0 context.Context) (ReadOnlyAdminTX, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Snapshot", arg0)
-	ret0, _ := ret[0].(ReadOnlyAdminTX)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(ReadOnlyAdminTX), nil
 }
 
 // Snapshot indicates an expected call of Snapshot.
 func (mr *MockAdminStorageMockRecorder) Snapshot(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Snapshot", reflect.TypeOf((*MockAdminStorage)(nil).Snapshot), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockAdminTX is a mock of AdminTX interface.
@@ -93,147 +86,109 @@ type MockAdminTXMockRecorder struct {
 }
 
 // NewMockAdminTX creates a new mock instance.
-func NewMockAdminTX(ctrl *gomock.Controller) *MockAdminTX {
-	mock := &MockAdminTX{ctrl: ctrl}
-	mock.recorder = &MockAdminTXMockRecorder{mock}
-	return mock
-}
+func NewMockAdminTX(ctrl *gomock.Controller) *MockAdminTX { _ = "STUB: not implemented"; return nil }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockAdminTX) EXPECT() *MockAdminTXMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Close mocks base method.
+	return nil
 }
 
-// Close mocks base method.
-func (m *MockAdminTX) Close() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Close")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockAdminTX) Close() error { _ = "STUB: not implemented"; return nil }
 
 // Close indicates an expected call of Close.
-func (mr *MockAdminTXMockRecorder) Close() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockAdminTX)(nil).Close))
-}
+func (mr *MockAdminTXMockRecorder) Close() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // Commit mocks base method.
-func (m *MockAdminTX) Commit() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Commit")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockAdminTX) Commit() error { _ = "STUB: not implemented"; return nil }
 
 // Commit indicates an expected call of Commit.
-func (mr *MockAdminTXMockRecorder) Commit() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Commit", reflect.TypeOf((*MockAdminTX)(nil).Commit))
-}
+func (mr *MockAdminTXMockRecorder) Commit() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // CreateTree mocks base method.
 func (m *MockAdminTX) CreateTree(arg0 context.Context, arg1 *trillian.Tree) (*trillian.Tree, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateTree", arg0, arg1)
-	ret0, _ := ret[0].(*trillian.Tree)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateTree indicates an expected call of CreateTree.
 func (mr *MockAdminTXMockRecorder) CreateTree(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTree", reflect.TypeOf((*MockAdminTX)(nil).CreateTree), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetTree mocks base method.
 func (m *MockAdminTX) GetTree(arg0 context.Context, arg1 int64) (*trillian.Tree, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetTree", arg0, arg1)
-	ret0, _ := ret[0].(*trillian.Tree)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetTree indicates an expected call of GetTree.
 func (mr *MockAdminTXMockRecorder) GetTree(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTree", reflect.TypeOf((*MockAdminTX)(nil).GetTree), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // HardDeleteTree mocks base method.
 func (m *MockAdminTX) HardDeleteTree(arg0 context.Context, arg1 int64) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "HardDeleteTree", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // HardDeleteTree indicates an expected call of HardDeleteTree.
 func (mr *MockAdminTXMockRecorder) HardDeleteTree(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HardDeleteTree", reflect.TypeOf((*MockAdminTX)(nil).HardDeleteTree), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ListTrees mocks base method.
 func (m *MockAdminTX) ListTrees(arg0 context.Context, arg1 bool) ([]*trillian.Tree, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListTrees", arg0, arg1)
-	ret0, _ := ret[0].([]*trillian.Tree)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListTrees indicates an expected call of ListTrees.
 func (mr *MockAdminTXMockRecorder) ListTrees(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTrees", reflect.TypeOf((*MockAdminTX)(nil).ListTrees), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SoftDeleteTree mocks base method.
 func (m *MockAdminTX) SoftDeleteTree(arg0 context.Context, arg1 int64) (*trillian.Tree, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SoftDeleteTree", arg0, arg1)
-	ret0, _ := ret[0].(*trillian.Tree)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // SoftDeleteTree indicates an expected call of SoftDeleteTree.
 func (mr *MockAdminTXMockRecorder) SoftDeleteTree(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SoftDeleteTree", reflect.TypeOf((*MockAdminTX)(nil).SoftDeleteTree), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UndeleteTree mocks base method.
 func (m *MockAdminTX) UndeleteTree(arg0 context.Context, arg1 int64) (*trillian.Tree, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UndeleteTree", arg0, arg1)
-	ret0, _ := ret[0].(*trillian.Tree)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UndeleteTree indicates an expected call of UndeleteTree.
 func (mr *MockAdminTXMockRecorder) UndeleteTree(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UndeleteTree", reflect.TypeOf((*MockAdminTX)(nil).UndeleteTree), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpdateTree mocks base method.
 func (m *MockAdminTX) UpdateTree(arg0 context.Context, arg1 int64, arg2 func(*trillian.Tree)) (*trillian.Tree, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateTree", arg0, arg1, arg2)
-	ret0, _ := ret[0].(*trillian.Tree)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateTree indicates an expected call of UpdateTree.
 func (mr *MockAdminTXMockRecorder) UpdateTree(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateTree", reflect.TypeOf((*MockAdminTX)(nil).UpdateTree), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockLogStorage is a mock of LogStorage interface.
@@ -249,102 +204,87 @@ type MockLogStorageMockRecorder struct {
 
 // NewMockLogStorage creates a new mock instance.
 func NewMockLogStorage(ctrl *gomock.Controller) *MockLogStorage {
-	mock := &MockLogStorage{ctrl: ctrl}
-	mock.recorder = &MockLogStorageMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockLogStorage) EXPECT() *MockLogStorageMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// AddSequencedLeaves mocks base method.
+	return nil
 }
 
-// AddSequencedLeaves mocks base method.
 func (m *MockLogStorage) AddSequencedLeaves(arg0 context.Context, arg1 *trillian.Tree, arg2 []*trillian.LogLeaf, arg3 time.Time) ([]*trillian.QueuedLogLeaf, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AddSequencedLeaves", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].([]*trillian.QueuedLogLeaf)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddSequencedLeaves indicates an expected call of AddSequencedLeaves.
 func (mr *MockLogStorageMockRecorder) AddSequencedLeaves(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddSequencedLeaves", reflect.TypeOf((*MockLogStorage)(nil).AddSequencedLeaves), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CheckDatabaseAccessible mocks base method.
 func (m *MockLogStorage) CheckDatabaseAccessible(arg0 context.Context) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CheckDatabaseAccessible", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CheckDatabaseAccessible indicates an expected call of CheckDatabaseAccessible.
 func (mr *MockLogStorageMockRecorder) CheckDatabaseAccessible(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CheckDatabaseAccessible", reflect.TypeOf((*MockLogStorage)(nil).CheckDatabaseAccessible), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetActiveLogIDs mocks base method.
 func (m *MockLogStorage) GetActiveLogIDs(arg0 context.Context) ([]int64, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetActiveLogIDs", arg0)
-	ret0, _ := ret[0].([]int64)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetActiveLogIDs indicates an expected call of GetActiveLogIDs.
 func (mr *MockLogStorageMockRecorder) GetActiveLogIDs(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetActiveLogIDs", reflect.TypeOf((*MockLogStorage)(nil).GetActiveLogIDs), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // QueueLeaves mocks base method.
 func (m *MockLogStorage) QueueLeaves(arg0 context.Context, arg1 *trillian.Tree, arg2 []*trillian.LogLeaf, arg3 time.Time) ([]*trillian.QueuedLogLeaf, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "QueueLeaves", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].([]*trillian.QueuedLogLeaf)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // QueueLeaves indicates an expected call of QueueLeaves.
 func (mr *MockLogStorageMockRecorder) QueueLeaves(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueLeaves", reflect.TypeOf((*MockLogStorage)(nil).QueueLeaves), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReadWriteTransaction mocks base method.
 func (m *MockLogStorage) ReadWriteTransaction(arg0 context.Context, arg1 *trillian.Tree, arg2 LogTXFunc) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReadWriteTransaction", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReadWriteTransaction indicates an expected call of ReadWriteTransaction.
 func (mr *MockLogStorageMockRecorder) ReadWriteTransaction(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadWriteTransaction", reflect.TypeOf((*MockLogStorage)(nil).ReadWriteTransaction), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SnapshotForTree mocks base method.
 func (m *MockLogStorage) SnapshotForTree(arg0 context.Context, arg1 *trillian.Tree) (ReadOnlyLogTreeTX, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SnapshotForTree", arg0, arg1)
-	ret0, _ := ret[0].(ReadOnlyLogTreeTX)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(ReadOnlyLogTreeTX), nil
 }
 
 // SnapshotForTree indicates an expected call of SnapshotForTree.
 func (mr *MockLogStorageMockRecorder) SnapshotForTree(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SnapshotForTree", reflect.TypeOf((*MockLogStorage)(nil).SnapshotForTree), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockLogTreeTX is a mock of LogTreeTX interface.
@@ -360,159 +300,126 @@ type MockLogTreeTXMockRecorder struct {
 
 // NewMockLogTreeTX creates a new mock instance.
 func NewMockLogTreeTX(ctrl *gomock.Controller) *MockLogTreeTX {
-	mock := &MockLogTreeTX{ctrl: ctrl}
-	mock.recorder = &MockLogTreeTXMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockLogTreeTX) EXPECT() *MockLogTreeTXMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Close mocks base method.
+	return nil
 }
 
-// Close mocks base method.
-func (m *MockLogTreeTX) Close() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Close")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockLogTreeTX) Close() error { _ = "STUB: not implemented"; return nil }
 
 // Close indicates an expected call of Close.
-func (mr *MockLogTreeTXMockRecorder) Close() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockLogTreeTX)(nil).Close))
-}
+func (mr *MockLogTreeTXMockRecorder) Close() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // Commit mocks base method.
-func (m *MockLogTreeTX) Commit(arg0 context.Context) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Commit", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockLogTreeTX) Commit(arg0 context.Context) error { _ = "STUB: not implemented"; return nil }
 
 // Commit indicates an expected call of Commit.
 func (mr *MockLogTreeTXMockRecorder) Commit(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Commit", reflect.TypeOf((*MockLogTreeTX)(nil).Commit), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DequeueLeaves mocks base method.
 func (m *MockLogTreeTX) DequeueLeaves(arg0 context.Context, arg1 int, arg2 time.Time) ([]*trillian.LogLeaf, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DequeueLeaves", arg0, arg1, arg2)
-	ret0, _ := ret[0].([]*trillian.LogLeaf)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // DequeueLeaves indicates an expected call of DequeueLeaves.
 func (mr *MockLogTreeTXMockRecorder) DequeueLeaves(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DequeueLeaves", reflect.TypeOf((*MockLogTreeTX)(nil).DequeueLeaves), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetLeavesByHash mocks base method.
 func (m *MockLogTreeTX) GetLeavesByHash(arg0 context.Context, arg1 [][]byte, arg2 bool) ([]*trillian.LogLeaf, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetLeavesByHash", arg0, arg1, arg2)
-	ret0, _ := ret[0].([]*trillian.LogLeaf)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetLeavesByHash indicates an expected call of GetLeavesByHash.
 func (mr *MockLogTreeTXMockRecorder) GetLeavesByHash(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLeavesByHash", reflect.TypeOf((*MockLogTreeTX)(nil).GetLeavesByHash), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetLeavesByRange mocks base method.
 func (m *MockLogTreeTX) GetLeavesByRange(arg0 context.Context, arg1, arg2 int64) ([]*trillian.LogLeaf, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetLeavesByRange", arg0, arg1, arg2)
-	ret0, _ := ret[0].([]*trillian.LogLeaf)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetLeavesByRange indicates an expected call of GetLeavesByRange.
 func (mr *MockLogTreeTXMockRecorder) GetLeavesByRange(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLeavesByRange", reflect.TypeOf((*MockLogTreeTX)(nil).GetLeavesByRange), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetMerkleNodes mocks base method.
 func (m *MockLogTreeTX) GetMerkleNodes(arg0 context.Context, arg1 []compact.NodeID) ([]tree.Node, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetMerkleNodes", arg0, arg1)
-	ret0, _ := ret[0].([]tree.Node)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetMerkleNodes indicates an expected call of GetMerkleNodes.
 func (mr *MockLogTreeTXMockRecorder) GetMerkleNodes(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetMerkleNodes", reflect.TypeOf((*MockLogTreeTX)(nil).GetMerkleNodes), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // LatestSignedLogRoot mocks base method.
 func (m *MockLogTreeTX) LatestSignedLogRoot(arg0 context.Context) (*trillian.SignedLogRoot, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "LatestSignedLogRoot", arg0)
-	ret0, _ := ret[0].(*trillian.SignedLogRoot)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // LatestSignedLogRoot indicates an expected call of LatestSignedLogRoot.
 func (mr *MockLogTreeTXMockRecorder) LatestSignedLogRoot(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LatestSignedLogRoot", reflect.TypeOf((*MockLogTreeTX)(nil).LatestSignedLogRoot), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetMerkleNodes mocks base method.
 func (m *MockLogTreeTX) SetMerkleNodes(arg0 context.Context, arg1 []tree.Node) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SetMerkleNodes", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetMerkleNodes indicates an expected call of SetMerkleNodes.
 func (mr *MockLogTreeTXMockRecorder) SetMerkleNodes(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetMerkleNodes", reflect.TypeOf((*MockLogTreeTX)(nil).SetMerkleNodes), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // StoreSignedLogRoot mocks base method.
 func (m *MockLogTreeTX) StoreSignedLogRoot(arg0 context.Context, arg1 *trillian.SignedLogRoot) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "StoreSignedLogRoot", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // StoreSignedLogRoot indicates an expected call of StoreSignedLogRoot.
 func (mr *MockLogTreeTXMockRecorder) StoreSignedLogRoot(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StoreSignedLogRoot", reflect.TypeOf((*MockLogTreeTX)(nil).StoreSignedLogRoot), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpdateSequencedLeaves mocks base method.
 func (m *MockLogTreeTX) UpdateSequencedLeaves(arg0 context.Context, arg1 []*trillian.LogLeaf) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateSequencedLeaves", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpdateSequencedLeaves indicates an expected call of UpdateSequencedLeaves.
 func (mr *MockLogTreeTXMockRecorder) UpdateSequencedLeaves(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateSequencedLeaves", reflect.TypeOf((*MockLogTreeTX)(nil).UpdateSequencedLeaves), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockReadOnlyAdminTX is a mock of ReadOnlyAdminTX interface.
@@ -528,72 +435,57 @@ type MockReadOnlyAdminTXMockRecorder struct {
 
 // NewMockReadOnlyAdminTX creates a new mock instance.
 func NewMockReadOnlyAdminTX(ctrl *gomock.Controller) *MockReadOnlyAdminTX {
-	mock := &MockReadOnlyAdminTX{ctrl: ctrl}
-	mock.recorder = &MockReadOnlyAdminTXMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockReadOnlyAdminTX) EXPECT() *MockReadOnlyAdminTXMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Close mocks base method.
+	return nil
 }
 
-// Close mocks base method.
-func (m *MockReadOnlyAdminTX) Close() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Close")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockReadOnlyAdminTX) Close() error { _ = "STUB: not implemented"; return nil }
 
 // Close indicates an expected call of Close.
 func (mr *MockReadOnlyAdminTXMockRecorder) Close() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockReadOnlyAdminTX)(nil).Close))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Commit mocks base method.
-func (m *MockReadOnlyAdminTX) Commit() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Commit")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockReadOnlyAdminTX) Commit() error { _ = "STUB: not implemented"; return nil }
 
 // Commit indicates an expected call of Commit.
 func (mr *MockReadOnlyAdminTXMockRecorder) Commit() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Commit", reflect.TypeOf((*MockReadOnlyAdminTX)(nil).Commit))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetTree mocks base method.
 func (m *MockReadOnlyAdminTX) GetTree(arg0 context.Context, arg1 int64) (*trillian.Tree, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetTree", arg0, arg1)
-	ret0, _ := ret[0].(*trillian.Tree)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetTree indicates an expected call of GetTree.
 func (mr *MockReadOnlyAdminTXMockRecorder) GetTree(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTree", reflect.TypeOf((*MockReadOnlyAdminTX)(nil).GetTree), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ListTrees mocks base method.
 func (m *MockReadOnlyAdminTX) ListTrees(arg0 context.Context, arg1 bool) ([]*trillian.Tree, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListTrees", arg0, arg1)
-	ret0, _ := ret[0].([]*trillian.Tree)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListTrees indicates an expected call of ListTrees.
 func (mr *MockReadOnlyAdminTXMockRecorder) ListTrees(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTrees", reflect.TypeOf((*MockReadOnlyAdminTX)(nil).ListTrees), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockReadOnlyLogTreeTX is a mock of ReadOnlyLogTreeTX interface.
@@ -609,100 +501,82 @@ type MockReadOnlyLogTreeTXMockRecorder struct {
 
 // NewMockReadOnlyLogTreeTX creates a new mock instance.
 func NewMockReadOnlyLogTreeTX(ctrl *gomock.Controller) *MockReadOnlyLogTreeTX {
-	mock := &MockReadOnlyLogTreeTX{ctrl: ctrl}
-	mock.recorder = &MockReadOnlyLogTreeTXMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockReadOnlyLogTreeTX) EXPECT() *MockReadOnlyLogTreeTXMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Close mocks base method.
+	return nil
 }
 
-// Close mocks base method.
-func (m *MockReadOnlyLogTreeTX) Close() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Close")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockReadOnlyLogTreeTX) Close() error { _ = "STUB: not implemented"; return nil }
 
 // Close indicates an expected call of Close.
 func (mr *MockReadOnlyLogTreeTXMockRecorder) Close() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockReadOnlyLogTreeTX)(nil).Close))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Commit mocks base method.
 func (m *MockReadOnlyLogTreeTX) Commit(arg0 context.Context) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Commit", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Commit indicates an expected call of Commit.
 func (mr *MockReadOnlyLogTreeTXMockRecorder) Commit(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Commit", reflect.TypeOf((*MockReadOnlyLogTreeTX)(nil).Commit), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetLeavesByHash mocks base method.
 func (m *MockReadOnlyLogTreeTX) GetLeavesByHash(arg0 context.Context, arg1 [][]byte, arg2 bool) ([]*trillian.LogLeaf, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetLeavesByHash", arg0, arg1, arg2)
-	ret0, _ := ret[0].([]*trillian.LogLeaf)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetLeavesByHash indicates an expected call of GetLeavesByHash.
 func (mr *MockReadOnlyLogTreeTXMockRecorder) GetLeavesByHash(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLeavesByHash", reflect.TypeOf((*MockReadOnlyLogTreeTX)(nil).GetLeavesByHash), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetLeavesByRange mocks base method.
 func (m *MockReadOnlyLogTreeTX) GetLeavesByRange(arg0 context.Context, arg1, arg2 int64) ([]*trillian.LogLeaf, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetLeavesByRange", arg0, arg1, arg2)
-	ret0, _ := ret[0].([]*trillian.LogLeaf)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetLeavesByRange indicates an expected call of GetLeavesByRange.
 func (mr *MockReadOnlyLogTreeTXMockRecorder) GetLeavesByRange(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLeavesByRange", reflect.TypeOf((*MockReadOnlyLogTreeTX)(nil).GetLeavesByRange), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetMerkleNodes mocks base method.
 func (m *MockReadOnlyLogTreeTX) GetMerkleNodes(arg0 context.Context, arg1 []compact.NodeID) ([]tree.Node, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetMerkleNodes", arg0, arg1)
-	ret0, _ := ret[0].([]tree.Node)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetMerkleNodes indicates an expected call of GetMerkleNodes.
 func (mr *MockReadOnlyLogTreeTXMockRecorder) GetMerkleNodes(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetMerkleNodes", reflect.TypeOf((*MockReadOnlyLogTreeTX)(nil).GetMerkleNodes), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // LatestSignedLogRoot mocks base method.
 func (m *MockReadOnlyLogTreeTX) LatestSignedLogRoot(arg0 context.Context) (*trillian.SignedLogRoot, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "LatestSignedLogRoot", arg0)
-	ret0, _ := ret[0].(*trillian.SignedLogRoot)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // LatestSignedLogRoot indicates an expected call of LatestSignedLogRoot.
 func (mr *MockReadOnlyLogTreeTXMockRecorder) LatestSignedLogRoot(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LatestSignedLogRoot", reflect.TypeOf((*MockReadOnlyLogTreeTX)(nil).LatestSignedLogRoot), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }

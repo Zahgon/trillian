@@ -25,35 +25,14 @@ type Election struct {
 }
 
 // IsMaster indicates whether the given name is master.
-func (e *Election) IsMaster(who string) bool {
-	e.mu.RLock()
-	defer e.mu.RUnlock()
-	for _, m := range e.masters {
-		if m == who {
-			return true
-		}
-	}
-	return false
-}
+func (e *Election) IsMaster(who string) bool { _ = "STUB: not implemented"; return false }
 
 // Masters returns the current set of masters.  There should be only one, but
 // bugs happen...
-func (e *Election) Masters() []string {
-	e.mu.RLock()
-	defer e.mu.RUnlock()
-	return e.masters
-}
+func (e *Election) Masters() []string { _ = "STUB: not implemented"; return nil }
 
 // SetMaster sets a single master.
-func (e *Election) SetMaster(who string) {
-	e.mu.Lock()
-	defer e.mu.Unlock()
-	e.masters = []string{who}
-}
+func (e *Election) SetMaster(who string) { _ = "STUB: not implemented"; return }
 
 // SetMasters sets multiple masters.
-func (e *Election) SetMasters(who []string) {
-	e.mu.Lock()
-	defer e.mu.Unlock()
-	e.masters = who
-}
+func (e *Election) SetMasters(who []string) { _ = "STUB: not implemented"; return }

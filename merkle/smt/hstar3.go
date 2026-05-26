@@ -16,8 +16,6 @@
 package smt
 
 import (
-	"fmt"
-
 	"github.com/google/trillian/merkle/smt/node"
 )
 
@@ -52,12 +50,8 @@ type HStar3 struct {
 // Warning: This call and other HStar3 methods modify the nodes slice in-place,
 // so the caller must ensure to not reuse it.
 func NewHStar3(nodes []Node, hash HashChildrenFn, depth, top uint) (HStar3, error) {
-	if err := Prepare(nodes, depth); err != nil {
-		return HStar3{}, err
-	} else if top > depth {
-		return HStar3{}, fmt.Errorf("top > depth: %d vs. %d", top, depth)
-	}
-	return HStar3{nodes: nodes, hash: hash, depth: depth, top: top}, nil
+	_ = "STUB: not implemented"
+	return *new(HStar3), nil
 }
 
 // Prepare returns the list of all the node IDs that the Update method will
@@ -68,50 +62,32 @@ func NewHStar3(nodes []Node, hash HashChildrenFn, depth, top uint) (HStar3, erro
 //
 // TODO(pavelkalinnikov): Return only tile IDs.
 func (h HStar3) Prepare() []node.ID {
+	_ = "STUB: not implemented"
 	// Start with a single "sentinel" empty ID, which helps maintaining the loop
 	// invariants below. Preallocate enough memory to store all the node IDs.
-	ids := make([]node.ID, 1, len(h.nodes)*int(h.depth-h.top)+1)
-	pos := make([]int, h.depth-h.top)
-	// Note: This variable compares equal to ids[0].
-	empty := node.ID{}
-
-	// For each node, add all its ancestors' siblings, down to the given depth.
-	// Avoid duplicate IDs, and possibly remove already added ones if they become
-	// unnecessary as more updates are added.
-	//
-	// Loop invariants:
-	// 1. pos[idx] < len(ids), for each idx.
-	// 2. ids[pos[idx]] is the ID of the rightmost sibling at depth idx+h.top+1
-	//    added so far, or an empty ID if there is none at this depth yet.
-	//
-	// Note: The algorithm works because the list of updates is sorted.
-	for _, n := range h.nodes {
-		for id, d := n.ID, h.depth; d > h.top; d-- {
-			pref := id.Prefix(d)
-			idx := d - h.top - 1
-			if p := pos[idx]; ids[p] == pref {
-				// Delete that node because its original hash will be overridden, so it
-				// does not contribute to hash updates anymore.
-				ids[p] = empty
-				// Skip the upper siblings as they have been added already.
-				break
-			}
-			pos[idx] = len(ids)
-			ids = append(ids, pref.Sibling())
-		}
-	}
-
-	// Delete all empty IDs, which include the 0-th "sentinel" ID and the ones
-	// that were marked as such in the loop above.
-	newLen := 0
-	for i := range ids {
-		if ids[i] != empty {
-			ids[newLen] = ids[i]
-			newLen++
-		}
-	}
-	return ids[:newLen]
+	return nil
 }
+
+// Note: This variable compares equal to ids[0].
+
+// For each node, add all its ancestors' siblings, down to the given depth.
+// Avoid duplicate IDs, and possibly remove already added ones if they become
+// unnecessary as more updates are added.
+//
+// Loop invariants:
+// 1. pos[idx] < len(ids), for each idx.
+// 2. ids[pos[idx]] is the ID of the rightmost sibling at depth idx+h.top+1
+//    added so far, or an empty ID if there is none at this depth yet.
+//
+// Note: The algorithm works because the list of updates is sorted.
+
+// Delete that node because its original hash will be overridden, so it
+// does not contribute to hash updates anymore.
+
+// Skip the upper siblings as they have been added already.
+
+// Delete all empty IDs, which include the 0-th "sentinel" ID and the ones
+// that were marked as such in the loop above.
 
 // Update applies the updates to the sparse Merkle tree. Returns an error if
 // any of the NodeAccessor.Get calls does so, e.g. if a node is undefined.
@@ -130,54 +106,25 @@ func (h HStar3) Prepare() []node.ID {
 //
 // For that reason, Update doesn't invoke NodeAccessor.Set for the topmost
 // nodes. If it did then chained Updates would Set the borderline nodes twice.
-func (h HStar3) Update(na NodeAccessor) ([]Node, error) {
-	for d := h.depth; d > h.top; d-- {
-		var err error
-		if h.nodes, err = h.updateAt(h.nodes, d, na); err != nil {
-			return nil, fmt.Errorf("depth %d: %v", d, err)
-		}
-	}
-	return h.nodes, nil
-}
+func (h HStar3) Update(na NodeAccessor) ([]Node, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // updateAt applies the given node updates at the specified tree level.
 // Returns the updates that propagated to the level above.
 func (h HStar3) updateAt(nodes []Node, depth uint, na NodeAccessor) ([]Node, error) {
+	_ = "STUB: not implemented"
 	// Apply the updates.
-	for _, n := range nodes {
-		na.Set(n.ID, n.Hash)
-	}
-	// Calculate the updates that propagate to one level above. The result of
-	// this is a slice of newLen items, between len/2 and len. The length shrinks
-	// whenever two updated nodes share the same parent.
-	newLen := 0
-	for i, ln := 0, len(nodes); i < ln; i++ {
-		sib := nodes[i].ID.Sibling()
-		var left, right []byte
-		if next := i + 1; next < ln && nodes[next].ID == sib {
-			// The sibling is the right child here, as nodes are sorted.
-			left, right = nodes[i].Hash, nodes[next].Hash
-			i = next // Skip the next update in the outer loop.
-		} else {
-			// The sibling is not updated, so fetch the original from NodeAccessor.
-			hash, err := na.Get(sib)
-			if err != nil {
-				return nil, err
-			}
-			left, right = nodes[i].Hash, hash
-			if isLeftChild(sib) {
-				left, right = right, left
-			}
-		}
-		hash := h.hash(left, right)
-		nodes[newLen] = Node{ID: sib.Prefix(depth - 1), Hash: hash}
-		newLen++
-	}
-	return nodes[:newLen], nil
+	return nil, nil
 }
 
+// Calculate the updates that propagate to one level above. The result of
+// this is a slice of newLen items, between len/2 and len. The length shrinks
+// whenever two updated nodes share the same parent.
+
+// The sibling is the right child here, as nodes are sorted.
+
+// Skip the next update in the outer loop.
+
+// The sibling is not updated, so fetch the original from NodeAccessor.
+
 // isLeftChild returns whether the given node is a left child.
-func isLeftChild(id node.ID) bool {
-	last, bits := id.LastByte()
-	return last&(1<<(8-bits)) == 0
-}
+func isLeftChild(id node.ID) bool { _ = "STUB: not implemented"; return false }

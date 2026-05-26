@@ -22,22 +22,6 @@ import (
 // TempFile creates a temporary file to be used in a test, and returns its
 // *os.File handler, as well as a cleanup function.
 func TempFile(t *testing.T, prefix string) (*os.File, func()) {
-	t.Helper()
-
-	file, err := os.CreateTemp("", prefix)
-	if err != nil {
-		t.Fatalf("Failed to generate a temporary file: %v", err)
-	}
-
-	cleanup := func() {
-		if err := os.Remove(file.Name()); err != nil {
-			t.Fatalf("Failed to remove temporary file '%s': %v", file.Name(), err)
-		}
-
-		if err := file.Close(); err != nil {
-			t.Fatalf("Failed to close temporary file handler '%v': %v", file, err)
-		}
-	}
-
-	return file, cleanup
+	_ = "STUB: not implemented"
+	return nil, nil
 }

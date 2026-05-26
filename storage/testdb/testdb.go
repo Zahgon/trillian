@@ -16,20 +16,12 @@
 package testdb
 
 import (
-	"bytes"
 	"context"
 	"database/sql"
-	"fmt"
-	"log"
 	"net/url"
-	"os"
-	"strings"
 	"testing"
-	"time"
 
 	"github.com/google/trillian/testonly"
-	"golang.org/x/sys/unix"
-	"k8s.io/klog/v2"
 
 	_ "github.com/go-sql-driver/mysql" // mysql driver
 	_ "github.com/lib/pq"              // postgres driver
@@ -92,102 +84,34 @@ var driverMapping = map[DriverName]storageDriverInfo{
 // of the tests in this repo require a database and import this package. With a
 // flag, it would be necessary to distinguish "go test" invocations that need a
 // database, and those that don't. ENV allows to "blanket apply" this setting.
-func mysqlURI(dbRef ...string) string {
-	var stringurl string
-	if e := os.Getenv(MySQLURIEnv); len(e) > 0 {
-		stringurl = e
-	} else {
-		stringurl = defaultTestMySQLURI
-	}
-
-	for _, ref := range dbRef {
-		separator := "/"
-		if strings.HasSuffix(stringurl, "/") {
-			separator = ""
-		}
-		stringurl = strings.Join([]string{stringurl, ref}, separator)
-	}
-
-	return stringurl
-}
+func mysqlURI(dbRef ...string) string { _ = "STUB: not implemented"; return "" }
 
 // crdbURI returns the CockroachDB connection URI to use for tests. It returns the
 // value in the ENV variable defined by CockroachDBURIEnv. If the value is empty,
 // returns defaultTestCockroachDBURI.
-func crdbURI(dbRef ...string) string {
-	var uri *url.URL
-	if e := os.Getenv(CockroachDBURIEnv); len(e) > 0 {
-		uri = getURL(e)
-	} else {
-		uri = getURL(defaultTestCockroachDBURI)
-	}
+func crdbURI(dbRef ...string) string { _ = "STUB: not implemented"; return "" }
 
-	return addPathToURI(uri, dbRef...)
-}
+func addPathToURI(uri *url.URL, paths ...string) string { _ = "STUB: not implemented"; return "" }
 
-func addPathToURI(uri *url.URL, paths ...string) string {
-	if len(paths) > 0 {
-		for _, ref := range paths {
-			currentPaths := uri.Path
-			// If the path is the root path, we don't want to append a slash.
-			if currentPaths == "/" {
-				currentPaths = ""
-			}
-			uri.Path = strings.Join([]string{currentPaths, ref}, "/")
-		}
-	}
-	return uri.String()
-}
+// If the path is the root path, we don't want to append a slash.
 
 func getURL(unparsedurl string) *url.URL {
+	_ = "STUB: not implemented"
 	//nolint:errcheck // We're not expecting an error here.
-	u, _ := url.Parse(unparsedurl)
-	return u
+	return nil
 }
 
 // MySQLAvailable indicates whether the configured MySQL database is available.
-func MySQLAvailable() bool {
-	return dbAvailable(DriverMySQL)
-}
+func MySQLAvailable() bool { _ = "STUB: not implemented"; return false }
 
 // CockroachDBAvailable indicates whether the configured CockroachDB database is available.
-func CockroachDBAvailable() bool {
-	return dbAvailable(DriverCockroachDB)
-}
+func CockroachDBAvailable() bool { _ = "STUB: not implemented"; return false }
 
-func dbAvailable(driver DriverName) bool {
-	driverName := driverMapping[driver].sqlDriverName
-	uri := driverMapping[driver].uriFunc()
-	db, err := sql.Open(driverName, uri)
-	if err != nil {
-		log.Printf("sql.Open(): %v", err)
-		return false
-	}
-	defer func() {
-		if err := db.Close(); err != nil {
-			log.Printf("db.Close(): %v", err)
-		}
-	}()
-	if err := db.Ping(); err != nil {
-		log.Printf("db.Ping(): %v", err)
-		return false
-	}
-	return true
-}
+func dbAvailable(driver DriverName) bool { _ = "STUB: not implemented"; return false }
 
 // SetFDLimit sets the soft limit on the maximum number of open file descriptors.
 // See http://man7.org/linux/man-pages/man2/setrlimit.2.html
-func SetFDLimit(uLimit uint64) error {
-	var rLimit unix.Rlimit
-	if err := unix.Getrlimit(unix.RLIMIT_NOFILE, &rLimit); err != nil {
-		return err
-	}
-	if uLimit > rLimit.Max {
-		return fmt.Errorf("could not set FD limit to %v. Must be less than the hard limit %v", uLimit, rLimit.Max)
-	}
-	rLimit.Cur = uLimit
-	return unix.Setrlimit(unix.RLIMIT_NOFILE, &rLimit)
-}
+func SetFDLimit(uLimit uint64) error { _ = "STUB: not implemented"; return nil }
 
 // newEmptyDB creates a new, empty database.
 // It returns the database handle and a clean-up function, or an error.
@@ -196,106 +120,26 @@ func SetFDLimit(uLimit uint64) error {
 // calling this function as it may, for example, delete the underlying
 // instance.
 func newEmptyDB(ctx context.Context, driver DriverName) (*sql.DB, func(context.Context), error) {
-	if err := SetFDLimit(2048); err != nil {
-		return nil, nil, err
-	}
-
-	inf, gotinf := driverMapping[driver]
-	if !gotinf {
-		return nil, nil, fmt.Errorf("unknown driver %q", driver)
-	}
-
-	db, err := sql.Open(inf.sqlDriverName, inf.uriFunc())
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// Create a randomly-named database and then connect using the new name.
-	name := fmt.Sprintf("trl_%v", time.Now().UnixNano())
-
-	stmt := fmt.Sprintf("CREATE DATABASE %v", name)
-	if _, err := db.ExecContext(ctx, stmt); err != nil {
-		return nil, nil, fmt.Errorf("error running statement %q: %v", stmt, err)
-	}
-
-	if err := db.Close(); err != nil {
-		return nil, nil, fmt.Errorf("failed to close DB: %v", err)
-	}
-	uri := inf.uriFunc(name)
-	db, err = sql.Open(inf.sqlDriverName, uri)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	done := func(ctx context.Context) {
-		defer func() {
-			if err := db.Close(); err != nil {
-				klog.Errorf("db.Close(): %v", err)
-			}
-		}()
-		if _, err := db.ExecContext(ctx, fmt.Sprintf("DROP DATABASE %v", name)); err != nil {
-			klog.Warningf("Failed to drop test database %q: %v", name, err)
-		}
-	}
-
-	return db, done, db.Ping()
+	_ = "STUB: not implemented"
+	return nil, nil, nil
 }
+
+// Create a randomly-named database and then connect using the new name.
 
 // NewTrillianDB creates an empty database with the Trillian schema. The database name is randomly
 // generated.
 // NewTrillianDB is equivalent to Default().NewTrillianDB(ctx).
 func NewTrillianDB(ctx context.Context, driver DriverName) (*sql.DB, func(context.Context), error) {
-	db, done, err := newEmptyDB(ctx, driver)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	schema := driverMapping[driver].schema
-
-	sqlBytes, err := os.ReadFile(schema)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	for _, stmt := range strings.Split(sanitize(string(sqlBytes)), ";") {
-		stmt = strings.TrimSpace(stmt)
-		if stmt == "" {
-			continue
-		}
-		if _, err := db.ExecContext(ctx, stmt); err != nil {
-			return nil, nil, fmt.Errorf("error running statement %q: %v", stmt, err)
-		}
-	}
-	return db, done, nil
+	_ = "STUB: not implemented"
+	return nil, nil, nil
 }
 
-func sanitize(script string) string {
-	buf := &bytes.Buffer{}
-	for _, line := range strings.Split(string(script), "\n") {
-		line = strings.TrimSpace(line)
-		if line == "" || line[0] == '#' || strings.Index(line, "--") == 0 {
-			continue // skip empty lines and comments
-		}
-		buf.WriteString(line)
-		buf.WriteString("\n")
-	}
-	return buf.String()
-}
+func sanitize(script string) string { _ = "STUB: not implemented"; return "" }
+
+// skip empty lines and comments
 
 // SkipIfNoMySQL is a test helper that skips tests that require a local MySQL.
-func SkipIfNoMySQL(t *testing.T) {
-	t.Helper()
-	if !MySQLAvailable() {
-		t.Skip("Skipping test as MySQL not available")
-	}
-	t.Logf("Test MySQL available at %q", mysqlURI())
-}
+func SkipIfNoMySQL(t *testing.T) { _ = "STUB: not implemented"; return }
 
 // SkipIfNoCockroachDB is a test helper that skips tests that require a local CockroachDB.
-func SkipIfNoCockroachDB(t *testing.T) {
-	t.Helper()
-	if !CockroachDBAvailable() {
-		t.Skip("Skipping test as CockroachDB not available")
-	}
-	t.Logf("Test CockroachDB available at %q", crdbURI())
-}
+func SkipIfNoCockroachDB(t *testing.T) { _ = "STUB: not implemented"; return }

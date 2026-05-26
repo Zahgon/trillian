@@ -20,7 +20,6 @@ import (
 	"k8s.io/klog/v2"
 
 	"github.com/google/trillian/quota"
-	"github.com/google/trillian/storage/crdb"
 )
 
 // QuotaManagerName identifies the CockroachDB quota implementation.
@@ -36,15 +35,6 @@ func init() {
 }
 
 func newCockroachDBQuotaManager() (quota.Manager, error) {
-	db, err := crdb.GetDatabase()
-	if err != nil {
-		return nil, err
-	}
-	qm := &QuotaManager{
-		DB:                 db,
-		MaxUnsequencedRows: *maxUnsequencedRows,
-	}
-
-	klog.Info("Using CockroachDB QuotaManager")
-	return qm, nil
+	_ = "STUB: not implemented"
+	return *new(quota.Manager), nil
 }

@@ -32,20 +32,18 @@ type memProvider struct {
 }
 
 func newMemoryStorageProvider(mf monitoring.MetricFactory) (storage.Provider, error) {
-	return &memProvider{
-		mf: mf,
-		ts: NewTreeStorage(),
-	}, nil
+	_ = "STUB: not implemented"
+	return *new(storage.Provider), nil
 }
 
 func (s *memProvider) LogStorage() storage.LogStorage {
-	return NewLogStorage(s.ts, s.mf)
+	_ = "STUB: not implemented"
+	return *new(storage.LogStorage)
 }
 
 func (s *memProvider) AdminStorage() storage.AdminStorage {
-	return NewAdminStorage(s.ts)
+	_ = "STUB: not implemented"
+	return *new(storage.AdminStorage)
 }
 
-func (s *memProvider) Close() error {
-	return nil
-}
+func (s *memProvider) Close() error { _ = "STUB: not implemented"; return nil }

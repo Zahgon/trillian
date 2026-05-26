@@ -16,7 +16,6 @@ package quota
 
 import (
 	"context"
-	"fmt"
 
 	"k8s.io/klog/v2"
 )
@@ -35,45 +34,28 @@ func init() {
 }
 
 // Noop returns a noop implementation of Manager. It allows all requests without restriction.
-func Noop() Manager {
-	return &noopManager{}
-}
+func Noop() Manager { _ = "STUB: not implemented"; return *new(Manager) }
 
 func (n noopManager) GetTokens(ctx context.Context, numTokens int, specs []Spec) error {
-	if err := validateNumTokens(numTokens); err != nil {
-		return err
-	}
-	return validateSpecs(specs)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (n noopManager) PutTokens(ctx context.Context, numTokens int, specs []Spec) error {
-	if err := validateNumTokens(numTokens); err != nil {
-		return err
-	}
-	return validateSpecs(specs)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (n noopManager) ResetQuota(ctx context.Context, specs []Spec) error {
-	return validateSpecs(specs)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (n noopManager) SetupInitialQuota(ctx context.Context, treeID int64) error {
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func validateNumTokens(numTokens int) error {
-	if numTokens <= 0 {
-		return fmt.Errorf("invalid numTokens: %v (>0 required)", numTokens)
-	}
-	return nil
-}
+func validateNumTokens(numTokens int) error { _ = "STUB: not implemented"; return nil }
 
-func validateSpecs(specs []Spec) error {
-	for _, spec := range specs {
-		switch {
-		case spec.Group == Tree && spec.TreeID <= 0:
-			return fmt.Errorf("invalid tree ID: %v (expected >=0)", spec.TreeID)
-		}
-	}
-	return nil
-}
+func validateSpecs(specs []Spec) error { _ = "STUB: not implemented"; return nil }

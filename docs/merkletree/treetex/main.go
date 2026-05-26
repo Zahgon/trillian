@@ -113,214 +113,80 @@ type nodeTextFunc func(id compact.NodeID) string
 
 // String returns a string containing Forest attributes suitable for
 // rendering the node, given its type.
-func (n nodeInfo) String() string {
-	attr := make([]string, 0, 4)
+func (n nodeInfo) String() string { _ = "STUB: not implemented"; return "" }
 
-	// Figure out which colour to fill with:
-	fill := "white"
-	if n.perfectRoot {
-		attr = append(attr, *attrPerfectRoot)
-	}
+// Figure out which colour to fill with:
 
-	if n.proof {
-		fill = "proof"
-		if n.ephemeral {
-			fill = "proof_ephemeral"
-		}
-	}
-
-	if n.leaf {
-		if l := len(n.dataRangeIndices); l == 1 {
-			fill = fmt.Sprintf("target%d!50", n.dataRangeIndices[0])
-		} else if l > 1 {
-			// Otherwise, we need to be a bit cleverer, and use the shading feature.
-			for i, ri := range n.dataRangeIndices {
-				pos := []string{"left", "right", "middle"}[i]
-				attr = append(attr, fmt.Sprintf("%s color=target%d!50", pos, ri))
-			}
-		}
-	} else {
-		if l := len(n.rangeIndices); l == 1 {
-			fill = fmt.Sprintf("range%d!50", n.rangeIndices[0])
-		} else if l > 1 {
-			for i, pi := range n.rangeIndices {
-				pos := []string{"left", "right", "middle"}[i]
-				attr = append(attr, fmt.Sprintf("%s color=range%d!50", pos, pi))
-			}
-		}
-	}
-	if n.target {
-		fill = "target"
-	}
-	if n.incPath {
-		fill = "target_path"
-	}
-
-	attr = append(attr, "fill="+fill)
-
-	if !n.ephemeral {
-		attr = append(attr, "draw")
-	} else {
-		attr = append(attr, *attrEphemeralNode)
-	}
-	if !n.leaf {
-		attr = append(attr, "circle, minimum size=3em, align=center")
-	} else {
-		attr = append(attr, "minimum size=1.5em, align=center, base=bottom")
-	}
-	return strings.Join(attr, ", ")
-}
+// Otherwise, we need to be a bit cleverer, and use the shading feature.
 
 // modifyNodeInfo applies f to the nodeInfo associated with node id.
 func modifyNodeInfo(id compact.NodeID, f func(*nodeInfo)) {
-	n := nInfo[id] // Note: Returns an empty nodeInfo if id is not found.
-	f(&n)
-	nInfo[id] = n
+	_ = "STUB: not implemented"
+	// Note: Returns an empty nodeInfo if id is not found.
+	return
 }
 
 // perfectMega renders a large perfect subtree as a single entity.
-func perfectMega(prefix string, id compact.NodeID) {
-	begin, end := id.Coverage()
-	size := end - begin
+func perfectMega(prefix string, id compact.NodeID) { _ = "STUB: not implemented"; return }
 
-	stWidth := float32(size) / float32(*treeSize)
-	fmt.Printf("%s [%d\\dots%d, edge label={node[midway, above]{%d}}, perfect, tier=leaf, minimum width=%f\\linewidth ]\n", prefix, begin, end, size, stWidth)
-
-	// Create some hidden nodes to preseve the tier spacings:
-	fmt.Printf("%s", prefix)
-	for i := int(id.Level) - 2; i > 0; i-- {
-		fmt.Printf(" [, no edge, tier=%d ", i)
-		defer fmt.Printf(" ] ")
-	}
-}
+// Create some hidden nodes to preseve the tier spacings:
 
 // perfect renders a perfect subtree.
 func perfect(prefix string, id compact.NodeID, nodeText, dataText nodeTextFunc) {
-	perfectInner(prefix, id, true, nodeText, dataText)
+	_ = "STUB: not implemented"
+	return
 }
 
 // drawLeaf emits TeX code to render a leaf.
 func drawLeaf(prefix string, index uint64, leafText, dataText nodeTextFunc) {
-	id := compact.NewNodeID(0, index)
-	a := nInfo[id]
-
-	// First render the leaf node of the Merkle tree.
-	if len(a.dataRangeIndices) > 0 {
-		a.incPath = false
-	}
-	fmt.Printf("%s [%s, %s, align=center, tier=leaf\n", prefix, leafText(id), a.String())
-
-	// and then a child-node representing the leaf data itself:
-	a = nInfo[id]
-	a.leaf = true
-	a.proof = false                        // proofs don't include leafdata (just the leaf hash above)
-	a.incPath, a.target = false, a.incPath // draw the target leaf darker if necessary.
-	fmt.Printf("  %s [%s, %s, align=center, tier=leafdata]\n]\n", prefix, dataText(id), a.String())
+	_ = "STUB: not implemented"
+	return
 }
+
+// First render the leaf node of the Merkle tree.
+
+// and then a child-node representing the leaf data itself:
+
+// proofs don't include leafdata (just the leaf hash above)
+// draw the target leaf darker if necessary.
 
 // openInnerNode renders TeX code to open an internal node.
 // The caller may emit any number of child nodes before calling the returned
 // func to close the node.
 // Returns a func to be called to close the node.
 func openInnerNode(prefix string, id compact.NodeID, nodeText nodeTextFunc) func() {
-	attr := nInfo[id].String()
-	fmt.Printf("%s [%s, %s, tier=%d\n", prefix, nodeText(id), attr, id.Level)
-	return func() { fmt.Printf("%s ]\n", prefix) }
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // perfectInner renders the nodes of a perfect internal subtree.
 func perfectInner(prefix string, id compact.NodeID, top bool, nodeText nodeTextFunc, dataText nodeTextFunc) {
-	modifyNodeInfo(id, func(n *nodeInfo) {
-		n.perfectRoot = top
-	})
-
-	if id.Level == 0 {
-		drawLeaf(prefix, id.Index, nodeText, dataText)
-		return
-	}
-	defer openInnerNode(prefix, id, nodeText)()
-
-	if id.Level > *megaMode {
-		perfectMega(prefix, id)
-	} else {
-		left := compact.NewNodeID(id.Level-1, id.Index*2)
-		perfectInner(prefix+" ", left, false, nodeText, dataText)
-		perfectInner(prefix+" ", left.Sibling(), false, nodeText, dataText)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // renderTree renders a tree node and recurses if necessary.
 func renderTree(prefix string, size uint64, nodeText, dataText nodeTextFunc) {
+	_ = "STUB: not implemented"
 	// Get root IDs of all perfect subtrees.
-	ids := compact.RangeNodes(0, size, nil)
-	for i, id := range ids {
-		if i+1 < len(ids) {
-			ephem := id.Parent()
-			modifyNodeInfo(ephem, func(n *nodeInfo) { n.ephemeral = true })
-			defer openInnerNode(prefix, ephem, nodeText)()
-		}
-		prefix += " "
-		perfect(prefix, id, nodeText, dataText)
-	}
+	return
 }
 
 // parseRanges parses and validates a string of comma-separates open-closed
 // ranges of the form L:R.
 // Returns the parsed ranges, or an error if there's a problem.
 func parseRanges(ranges string, treeSize uint64) ([][2]uint64, error) {
-	rangePairs := strings.Split(ranges, ",")
-	numRanges := len(rangePairs)
-	if num, max := numRanges, maxRanges; num > max {
-		return nil, fmt.Errorf("too many ranges %d, must be %d or fewer", num, max)
-	}
-	ret := make([][2]uint64, 0, numRanges)
-	for _, rng := range rangePairs {
-		lr := strings.Split(rng, ":")
-		if len(lr) != 2 {
-			return nil, fmt.Errorf("specified range %q is invalid", rng)
-		}
-		var l, r uint64
-		if _, err := fmt.Sscanf(rng, "%d:%d", &l, &r); err != nil {
-			return nil, fmt.Errorf("range %q is malformed: %s", rng, err)
-		}
-		switch {
-		case r > treeSize:
-			return nil, fmt.Errorf("range %q extends past end of tree (%d)", lr, treeSize)
-		case l > r:
-			return nil, fmt.Errorf("range elements in %q are out of order", rng)
-		}
-		ret = append(ret, [2]uint64{l, r})
-	}
-	return ret, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // modifyRangeNodeInfo sets style info for nodes affected by ranges.
 // This includes leaves and perfect subtree roots.
 // TODO(al): Figure out what, if anything, to do to make this show ranges
 // which are inside the perfect meganodes.
-func modifyRangeNodeInfo() error {
-	rng, err := parseRanges(*ranges, *treeSize)
-	if err != nil {
-		return err
-	}
-	for ri, lr := range rng {
-		l, r := lr[0], lr[1]
-		// Set leaves:
-		for i := l; i < r; i++ {
-			id := compact.NewNodeID(0, i)
-			modifyNodeInfo(id, func(n *nodeInfo) {
-				n.dataRangeIndices = append(n.dataRangeIndices, ri)
-			})
-		}
+func modifyRangeNodeInfo() error { _ = "STUB: not implemented"; return nil }
 
-		for _, id := range compact.RangeNodes(l, r, nil) {
-			modifyNodeInfo(id, func(n *nodeInfo) {
-				n.rangeIndices = append(n.rangeIndices, ri)
-			})
-		}
-	}
-	return nil
-}
+// Set leaves:
 
 var dataFormat = func(id compact.NodeID) string {
 	return fmt.Sprintf("{$leaf_{%d}$}", id.Index)

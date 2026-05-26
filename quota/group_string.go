@@ -2,25 +2,15 @@
 
 package quota
 
-import "strconv"
-
 func _() {
+	_ = "STUB: not implemented"
 	// An "invalid array index" compiler error signifies that the constant values have changed.
 	// Re-run the stringer command to generate them again.
-	var x [1]struct{}
-	_ = x[Global-0]
-	_ = x[Tree-1]
-	_ = x[User-2]
+	return
 }
 
 const _Group_name = "GlobalTreeUser"
 
 var _Group_index = [...]uint8{0, 6, 10, 14}
 
-func (i Group) String() string {
-	idx := int(i) - 0
-	if i < 0 || idx >= len(_Group_index)-1 {
-		return "Group(" + strconv.FormatInt(int64(i), 10) + ")"
-	}
-	return _Group_name[_Group_index[idx]:_Group_index[idx+1]]
-}
+func (i Group) String() string { _ = "STUB: not implemented"; return "" }

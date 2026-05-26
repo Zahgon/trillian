@@ -21,14 +21,13 @@
 package trillian
 
 import (
+	sync "sync"
+
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	anypb "google.golang.org/protobuf/types/known/anypb"
 	durationpb "google.golang.org/protobuf/types/known/durationpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
 )
 
 const (
@@ -59,32 +58,27 @@ var (
 	}
 )
 
-func (x LogRootFormat) Enum() *LogRootFormat {
-	p := new(LogRootFormat)
-	*p = x
-	return p
-}
+func (x LogRootFormat) Enum() *LogRootFormat { _ = "STUB: not implemented"; return nil }
 
-func (x LogRootFormat) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
+func (x LogRootFormat) String() string { _ = "STUB: not implemented"; return "" }
 
 func (LogRootFormat) Descriptor() protoreflect.EnumDescriptor {
-	return file_trillian_proto_enumTypes[0].Descriptor()
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumDescriptor)
 }
 
 func (LogRootFormat) Type() protoreflect.EnumType {
-	return &file_trillian_proto_enumTypes[0]
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumType)
 }
 
 func (x LogRootFormat) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumNumber)
 }
 
 // Deprecated: Use LogRootFormat.Descriptor instead.
-func (LogRootFormat) EnumDescriptor() ([]byte, []int) {
-	return file_trillian_proto_rawDescGZIP(), []int{0}
-}
+func (LogRootFormat) EnumDescriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
 // Defines the way empty / node / leaf hashes are constructed incorporating
 // preimage protection, which can be application specific.
@@ -130,32 +124,27 @@ var (
 	}
 )
 
-func (x HashStrategy) Enum() *HashStrategy {
-	p := new(HashStrategy)
-	*p = x
-	return p
-}
+func (x HashStrategy) Enum() *HashStrategy { _ = "STUB: not implemented"; return nil }
 
-func (x HashStrategy) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
+func (x HashStrategy) String() string { _ = "STUB: not implemented"; return "" }
 
 func (HashStrategy) Descriptor() protoreflect.EnumDescriptor {
-	return file_trillian_proto_enumTypes[1].Descriptor()
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumDescriptor)
 }
 
 func (HashStrategy) Type() protoreflect.EnumType {
-	return &file_trillian_proto_enumTypes[1]
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumType)
 }
 
 func (x HashStrategy) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumNumber)
 }
 
 // Deprecated: Use HashStrategy.Descriptor instead.
-func (HashStrategy) EnumDescriptor() ([]byte, []int) {
-	return file_trillian_proto_rawDescGZIP(), []int{1}
-}
+func (HashStrategy) EnumDescriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
 // State of the tree.
 type TreeState int32
@@ -204,32 +193,27 @@ var (
 	}
 )
 
-func (x TreeState) Enum() *TreeState {
-	p := new(TreeState)
-	*p = x
-	return p
-}
+func (x TreeState) Enum() *TreeState { _ = "STUB: not implemented"; return nil }
 
-func (x TreeState) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
+func (x TreeState) String() string { _ = "STUB: not implemented"; return "" }
 
 func (TreeState) Descriptor() protoreflect.EnumDescriptor {
-	return file_trillian_proto_enumTypes[2].Descriptor()
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumDescriptor)
 }
 
 func (TreeState) Type() protoreflect.EnumType {
-	return &file_trillian_proto_enumTypes[2]
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumType)
 }
 
 func (x TreeState) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumNumber)
 }
 
 // Deprecated: Use TreeState.Descriptor instead.
-func (TreeState) EnumDescriptor() ([]byte, []int) {
-	return file_trillian_proto_rawDescGZIP(), []int{2}
-}
+func (TreeState) EnumDescriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
 // Type of the tree.
 type TreeType int32
@@ -259,32 +243,27 @@ var (
 	}
 )
 
-func (x TreeType) Enum() *TreeType {
-	p := new(TreeType)
-	*p = x
-	return p
-}
+func (x TreeType) Enum() *TreeType { _ = "STUB: not implemented"; return nil }
 
-func (x TreeType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
+func (x TreeType) String() string { _ = "STUB: not implemented"; return "" }
 
 func (TreeType) Descriptor() protoreflect.EnumDescriptor {
-	return file_trillian_proto_enumTypes[3].Descriptor()
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumDescriptor)
 }
 
 func (TreeType) Type() protoreflect.EnumType {
-	return &file_trillian_proto_enumTypes[3]
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumType)
 }
 
 func (x TreeType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumNumber)
 }
 
 // Deprecated: Use TreeType.Descriptor instead.
-func (TreeType) EnumDescriptor() ([]byte, []int) {
-	return file_trillian_proto_rawDescGZIP(), []int{3}
-}
+func (TreeType) EnumDescriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
 // Represents a tree.
 // Readonly attributes are assigned at tree creation, after which they may not
@@ -336,112 +315,41 @@ type Tree struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Tree) Reset() {
-	*x = Tree{}
-	mi := &file_trillian_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *Tree) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *Tree) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *Tree) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*Tree) ProtoMessage() {}
+func (*Tree) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *Tree) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use Tree.ProtoReflect.Descriptor instead.
-func (*Tree) Descriptor() ([]byte, []int) {
-	return file_trillian_proto_rawDescGZIP(), []int{0}
-}
+func (*Tree) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *Tree) GetTreeId() int64 {
-	if x != nil {
-		return x.TreeId
-	}
-	return 0
-}
+func (x *Tree) GetTreeId() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *Tree) GetTreeState() TreeState {
-	if x != nil {
-		return x.TreeState
-	}
-	return TreeState_UNKNOWN_TREE_STATE
-}
+func (x *Tree) GetTreeState() TreeState { _ = "STUB: not implemented"; return *new(TreeState) }
 
-func (x *Tree) GetTreeType() TreeType {
-	if x != nil {
-		return x.TreeType
-	}
-	return TreeType_UNKNOWN_TREE_TYPE
-}
+func (x *Tree) GetTreeType() TreeType { _ = "STUB: not implemented"; return *new(TreeType) }
 
-func (x *Tree) GetDisplayName() string {
-	if x != nil {
-		return x.DisplayName
-	}
-	return ""
-}
+func (x *Tree) GetDisplayName() string { _ = "STUB: not implemented"; return "" }
 
-func (x *Tree) GetDescription() string {
-	if x != nil {
-		return x.Description
-	}
-	return ""
-}
+func (x *Tree) GetDescription() string { _ = "STUB: not implemented"; return "" }
 
-func (x *Tree) GetStorageSettings() *anypb.Any {
-	if x != nil {
-		return x.StorageSettings
-	}
-	return nil
-}
+func (x *Tree) GetStorageSettings() *anypb.Any { _ = "STUB: not implemented"; return nil }
 
-func (x *Tree) GetMaxRootDuration() *durationpb.Duration {
-	if x != nil {
-		return x.MaxRootDuration
-	}
-	return nil
-}
+func (x *Tree) GetMaxRootDuration() *durationpb.Duration { _ = "STUB: not implemented"; return nil }
 
-func (x *Tree) GetCreateTime() *timestamppb.Timestamp {
-	if x != nil {
-		return x.CreateTime
-	}
-	return nil
-}
+func (x *Tree) GetCreateTime() *timestamppb.Timestamp { _ = "STUB: not implemented"; return nil }
 
-func (x *Tree) GetUpdateTime() *timestamppb.Timestamp {
-	if x != nil {
-		return x.UpdateTime
-	}
-	return nil
-}
+func (x *Tree) GetUpdateTime() *timestamppb.Timestamp { _ = "STUB: not implemented"; return nil }
 
-func (x *Tree) GetDeleted() bool {
-	if x != nil {
-		return x.Deleted
-	}
-	return false
-}
+func (x *Tree) GetDeleted() bool { _ = "STUB: not implemented"; return false }
 
-func (x *Tree) GetDeleteTime() *timestamppb.Timestamp {
-	if x != nil {
-		return x.DeleteTime
-	}
-	return nil
-}
+func (x *Tree) GetDeleteTime() *timestamppb.Timestamp { _ = "STUB: not implemented"; return nil }
 
 // SignedLogRoot represents a commitment by a Log to a particular tree.
 //
@@ -492,42 +400,21 @@ type SignedLogRoot struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SignedLogRoot) Reset() {
-	*x = SignedLogRoot{}
-	mi := &file_trillian_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *SignedLogRoot) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *SignedLogRoot) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *SignedLogRoot) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*SignedLogRoot) ProtoMessage() {}
+func (*SignedLogRoot) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *SignedLogRoot) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use SignedLogRoot.ProtoReflect.Descriptor instead.
-func (*SignedLogRoot) Descriptor() ([]byte, []int) {
-	return file_trillian_proto_rawDescGZIP(), []int{1}
-}
+func (*SignedLogRoot) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *SignedLogRoot) GetLogRoot() []byte {
-	if x != nil {
-		return x.LogRoot
-	}
-	return nil
-}
+func (x *SignedLogRoot) GetLogRoot() []byte { _ = "STUB: not implemented"; return nil }
 
 // Proof holds a consistency or inclusion proof for a Merkle tree, as returned
 // by the API.
@@ -542,49 +429,23 @@ type Proof struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Proof) Reset() {
-	*x = Proof{}
-	mi := &file_trillian_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *Proof) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *Proof) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *Proof) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*Proof) ProtoMessage() {}
+func (*Proof) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *Proof) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use Proof.ProtoReflect.Descriptor instead.
-func (*Proof) Descriptor() ([]byte, []int) {
-	return file_trillian_proto_rawDescGZIP(), []int{2}
-}
+func (*Proof) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *Proof) GetLeafIndex() int64 {
-	if x != nil {
-		return x.LeafIndex
-	}
-	return 0
-}
+func (x *Proof) GetLeafIndex() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *Proof) GetHashes() [][]byte {
-	if x != nil {
-		return x.Hashes
-	}
-	return nil
-}
+func (x *Proof) GetHashes() [][]byte { _ = "STUB: not implemented"; return nil }
 
 var File_trillian_proto protoreflect.FileDescriptor
 
@@ -647,12 +508,7 @@ var (
 	file_trillian_proto_rawDescData []byte
 )
 
-func file_trillian_proto_rawDescGZIP() []byte {
-	file_trillian_proto_rawDescOnce.Do(func() {
-		file_trillian_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_trillian_proto_rawDesc), len(file_trillian_proto_rawDesc)))
-	})
-	return file_trillian_proto_rawDescData
-}
+func file_trillian_proto_rawDescGZIP() []byte { _ = "STUB: not implemented"; return nil }
 
 var file_trillian_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
 var file_trillian_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
@@ -683,27 +539,5 @@ var file_trillian_proto_depIdxs = []int32{
 	0, // [0:7] is the sub-list for field type_name
 }
 
-func init() { file_trillian_proto_init() }
-func file_trillian_proto_init() {
-	if File_trillian_proto != nil {
-		return
-	}
-	type x struct{}
-	out := protoimpl.TypeBuilder{
-		File: protoimpl.DescBuilder{
-			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_trillian_proto_rawDesc), len(file_trillian_proto_rawDesc)),
-			NumEnums:      4,
-			NumMessages:   3,
-			NumExtensions: 0,
-			NumServices:   0,
-		},
-		GoTypes:           file_trillian_proto_goTypes,
-		DependencyIndexes: file_trillian_proto_depIdxs,
-		EnumInfos:         file_trillian_proto_enumTypes,
-		MessageInfos:      file_trillian_proto_msgTypes,
-	}.Build()
-	File_trillian_proto = out.File
-	file_trillian_proto_goTypes = nil
-	file_trillian_proto_depIdxs = nil
-}
+func init()                     { file_trillian_proto_init() }
+func file_trillian_proto_init() { _ = "STUB: not implemented"; return }

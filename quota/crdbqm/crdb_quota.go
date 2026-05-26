@@ -21,7 +21,6 @@ import (
 	"errors"
 
 	"github.com/google/trillian/quota"
-	"k8s.io/klog/v2"
 )
 
 const (
@@ -54,54 +53,29 @@ type QuotaManager struct {
 // It doesn't actually reserve or retrieve tokens, instead it allows access based on the number of
 // rows in the Unsequenced table.
 func (m *QuotaManager) GetTokens(ctx context.Context, numTokens int, specs []quota.Spec) error {
-	for _, spec := range specs {
-		if spec.Group != quota.Global || spec.Kind != quota.Write {
-			continue
-		}
-		// Only allow global writes if Unsequenced is under the expected limit
-		count, err := m.countUnsequenced(ctx)
-		if err != nil {
-			return err
-		}
-		if count+numTokens > m.MaxUnsequencedRows {
-			return ErrTooManyUnsequencedRows
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
+
+// Only allow global writes if Unsequenced is under the expected limit
 
 // PutTokens implements quota.Manager.PutTokens.
 // It's a noop for QuotaManager.
 func (m *QuotaManager) PutTokens(ctx context.Context, numTokens int, specs []quota.Spec) error {
+	_ = "STUB: not implemented"
+
+	// ResetQuota implements quota.Manager.ResetQuota.
+	// It's a noop for QuotaManager.
 	return nil
 }
 
-// ResetQuota implements quota.Manager.ResetQuota.
-// It's a noop for QuotaManager.
 func (m *QuotaManager) ResetQuota(ctx context.Context, specs []quota.Spec) error {
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *QuotaManager) countUnsequenced(ctx context.Context) (int, error) {
+	_ = "STUB: not implemented"
 	// table names are lowercase for some reason
-	rows, err := m.DB.QueryContext(ctx, countFromUnsequencedTable)
-	if err != nil {
-		return 0, err
-	}
-	defer func() {
-		if err := rows.Close(); err != nil {
-			klog.Errorf("Close(): %v", err)
-		}
-	}()
-	if !rows.Next() {
-		return 0, errors.New("cursor has no rows after quota limit determination query")
-	}
-	var count int
-	if err := rows.Scan(&count); err != nil {
-		return 0, err
-	}
-	if rows.Next() {
-		return 0, errors.New("too many rows returned from quota limit determination query")
-	}
-	return count, nil
+	return 0, nil
 }

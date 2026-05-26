@@ -34,18 +34,10 @@ type CounterSnapshot struct {
 // by the given labels. This value can be compared to future values to determine
 // how it has changed over time.
 func NewCounterSnapshot(c monitoring.Counter, labels ...string) CounterSnapshot {
-	if c == nil {
-		panic("can't take snapshot of nil counter")
-	}
-	return CounterSnapshot{
-		c:      c,
-		labels: labels,
-		value:  c.Value(labels...),
-	}
+	_ = "STUB: not implemented"
+	return *new(CounterSnapshot)
 }
 
 // Delta returns the difference between the latest value of the time series
 // and the value when the CounterSnapshot was created.
-func (s CounterSnapshot) Delta() float64 {
-	return s.c.Value(s.labels...) - s.value
-}
+func (s CounterSnapshot) Delta() float64 { _ = "STUB: not implemented"; return 0 }

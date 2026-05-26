@@ -32,11 +32,13 @@ type systemTimer struct {
 }
 
 func (t systemTimer) Chan() <-chan time.Time {
-	return t.C
+	_ = "STUB: not implemented"
+
+	// fakeTimer implements Timer interface for testing. Event firing is controlled
+	// by FakeTimeSource which creates and owns fakeTimer instances.
+	return nil
 }
 
-// fakeTimer implements Timer interface for testing. Event firing is controlled
-// by FakeTimeSource which creates and owns fakeTimer instances.
 type fakeTimer struct {
 	ts   *FakeTimeSource
 	id   int
@@ -45,25 +47,12 @@ type fakeTimer struct {
 }
 
 func newFakeTimer(ts *FakeTimeSource, id int, when time.Time) *fakeTimer {
-	ch := make(chan time.Time, 1)
-	return &fakeTimer{ts: ts, id: id, when: when, ch: ch}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (t *fakeTimer) Chan() <-chan time.Time {
-	return t.ch
-}
+func (t *fakeTimer) Chan() <-chan time.Time { _ = "STUB: not implemented"; return nil }
 
-func (t *fakeTimer) Stop() bool {
-	return t.ts.unsubscribe(t.id)
-}
+func (t *fakeTimer) Stop() bool { _ = "STUB: not implemented"; return false }
 
-func (t *fakeTimer) tryFire(now time.Time) bool {
-	if t.when.Before(now) || t.when.Equal(now) {
-		select {
-		case t.ch <- now:
-			return true
-		default:
-		}
-	}
-	return false
-}
+func (t *fakeTimer) tryFire(now time.Time) bool { _ = "STUB: not implemented"; return false }

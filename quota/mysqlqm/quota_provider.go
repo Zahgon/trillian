@@ -18,7 +18,6 @@ import (
 	"flag"
 
 	"github.com/google/trillian/quota"
-	"github.com/google/trillian/storage/mysql"
 	"k8s.io/klog/v2"
 )
 
@@ -35,14 +34,6 @@ func init() {
 }
 
 func newMySQLQuotaManager() (quota.Manager, error) {
-	db, err := mysql.GetDatabase()
-	if err != nil {
-		return nil, err
-	}
-	qm := &QuotaManager{
-		DB:                 db,
-		MaxUnsequencedRows: *maxUnsequencedRows,
-	}
-	klog.Info("Using MySQL QuotaManager")
-	return qm, nil
+	_ = "STUB: not implemented"
+	return *new(quota.Manager), nil
 }

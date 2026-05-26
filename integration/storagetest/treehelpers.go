@@ -24,10 +24,6 @@ import (
 
 // mustCreateTree creates the specified tree using AdminStorage.
 func mustCreateTree(ctx context.Context, t *testing.T, s storage.AdminStorage, tree *trillian.Tree) *trillian.Tree {
-	t.Helper()
-	tree, err := storage.CreateTree(ctx, s, tree)
-	if err != nil {
-		t.Fatalf("storage.CreateTree(): %v", err)
-	}
-	return tree
+	_ = "STUB: not implemented"
+	return nil
 }

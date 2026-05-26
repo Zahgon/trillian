@@ -19,10 +19,8 @@ package main
 import (
 	"bytes"
 	"crypto"
-	"encoding/json"
 	"flag"
 	"fmt"
-	"os"
 	"path/filepath"
 
 	"github.com/google/trillian/experimental/batchmap"
@@ -135,35 +133,15 @@ func main() {
 
 // getTilesForKey loads the tiles on the path from the root to the given leaf.
 func getTilesForKey(mapDir string, key []byte) ([]*batchmap.Tile, error) {
-	tiles := make([]*batchmap.Tile, *prefixStrata+1)
-	for i := 0; i <= *prefixStrata; i++ {
-		tilePath := key[0:i]
-		tileFile := fmt.Sprintf("%s/path_%x", mapDir, tilePath)
-		in, err := os.ReadFile(tileFile)
-		if err != nil {
-			return nil, fmt.Errorf("failed to read file %s: %v", tileFile, err)
-		}
-		tile := &batchmap.Tile{}
-		if err := json.Unmarshal(in, tile); err != nil {
-			return nil, fmt.Errorf("failed to parse tile in %s: %v", tileFile, err)
-		}
-		tiles[i] = tile
-	}
-	return tiles, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // toNode converts a TileLeaf into the equivalent Node for HStar3.
 func toNode(prefix []byte, l *batchmap.TileLeaf) smt.Node {
+	_ = "STUB: not implemented"
 	// CodeQL mollification:
-	if pLen := len(prefix) + len(l.Path); pLen > 1*1024*1024 {
-		panic(fmt.Sprintf("absurd path length %d", pLen))
-	}
-	path := make([]byte, 0, len(prefix)+len(l.Path))
-	path = append(append(path, prefix...), l.Path...)
-	return smt.Node{
-		ID:   node.NewID(string(path), uint(len(path))*8),
-		Hash: l.Hash,
-	}
+	return *new(smt.Node)
 }
 
 // emptyTree is a NodeAccessor for an empty tree with the given ID.
@@ -171,8 +149,6 @@ type emptyTree struct {
 	treeID int64
 }
 
-func (e emptyTree) Get(id node.ID) ([]byte, error) {
-	return coniks.Default.HashEmpty(e.treeID, id), nil
-}
+func (e emptyTree) Get(id node.ID) ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (e emptyTree) Set(id node.ID, hash []byte) {}
+func (e emptyTree) Set(id node.ID, hash []byte) { _ = "STUB: not implemented"; return }

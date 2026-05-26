@@ -18,14 +18,7 @@ package pem
 import (
 	"context"
 	"crypto"
-	"crypto/x509"
-	"encoding/pem"
-	"errors"
-	"fmt"
-	"os"
 
-	"github.com/google/trillian/crypto/keys/der"
-	"github.com/google/trillian/crypto/keyspb"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -33,46 +26,21 @@ import (
 // The key may be protected by a password. If password is empty, the key is
 // assumed to be unencrypted.
 func ReadPrivateKeyFile(file, password string) (crypto.Signer, error) {
-	keyPEM, err := os.ReadFile(file)
-	if err != nil {
-		return nil, fmt.Errorf("pemfile: error reading file %q: %v", file, err)
-	}
-
-	k, err := UnmarshalPrivateKey(string(keyPEM), password)
-	if err != nil {
-		return nil, fmt.Errorf("pemfile: error decoding private key from file %q: %v", file, err)
-	}
-
-	return k, nil
+	_ = "STUB: not implemented"
+	return *new(crypto.Signer), nil
 }
 
 // UnmarshalPrivateKey reads a PEM-encoded private key from a string.
 // The key may be protected by a password.
 func UnmarshalPrivateKey(keyPEM, password string) (crypto.Signer, error) {
-	block, rest := pem.Decode([]byte(keyPEM))
-	if block == nil {
-		return nil, errors.New("pemfile: invalid private key PEM")
-	}
-	if len(rest) > 0 {
-		return nil, errors.New("pemfile: extra data found after first PEM block")
-	}
-
-	keyDER := block.Bytes
-	if password != "" {
-		pwdDer, err := x509.DecryptPEMBlock(block, []byte(password)) //nolint:staticcheck
-		if err != nil {
-			return nil, fmt.Errorf("pemfile: failed to decrypt: %v", err)
-		}
-		keyDER = pwdDer
-	}
-
-	return der.UnmarshalPrivateKey(keyDER)
+	_ = "STUB: not implemented"
+	return *new(crypto.Signer), nil
 }
+
+//nolint:staticcheck
 
 // FromProto builds a crypto.Signer from a proto.Message, which must be of type PEMKeyFile.
 func FromProto(_ context.Context, pb proto.Message) (crypto.Signer, error) {
-	if pb, ok := pb.(*keyspb.PEMKeyFile); ok {
-		return ReadPrivateKeyFile(pb.GetPath(), pb.GetPassword())
-	}
-	return nil, fmt.Errorf("pemfile: got %T, want *keyspb.PEMKeyFile", pb)
+	_ = "STUB: not implemented"
+	return *new(crypto.Signer), nil
 }

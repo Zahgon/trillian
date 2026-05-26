@@ -15,8 +15,6 @@
 package matchers
 
 import (
-	"fmt"
-
 	"github.com/golang/mock/gomock"
 	"google.golang.org/protobuf/proto"
 )
@@ -27,18 +25,11 @@ type protoEqual struct {
 
 // ProtoEqual returns a matcher that compares protobuf messages.
 func ProtoEqual(m proto.Message) gomock.Matcher {
-	return protoEqual{msg: m}
+	_ = "STUB: not implemented"
+	return *new(gomock.Matcher)
 }
 
 // Matches implements the gomock.Matcher API.
-func (pe protoEqual) Matches(msg interface{}) bool {
-	m, ok := msg.(proto.Message)
-	if !ok {
-		return false
-	}
-	return proto.Equal(m, pe.msg)
-}
+func (pe protoEqual) Matches(msg interface{}) bool { _ = "STUB: not implemented"; return false }
 
-func (pe protoEqual) String() string {
-	return fmt.Sprintf("is equal to %s", pe.msg)
-}
+func (pe protoEqual) String() string { _ = "STUB: not implemented"; return "" }

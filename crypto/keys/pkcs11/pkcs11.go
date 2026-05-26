@@ -19,32 +19,12 @@ package pkcs11
 
 import (
 	"crypto"
-	"crypto/x509"
-	"encoding/pem"
-	"errors"
-	"fmt"
 
 	"github.com/google/trillian/crypto/keyspb"
-
-	pkcs11key "github.com/letsencrypt/pkcs11key/v4"
 )
 
 // FromConfig returns a crypto.Signer that uses a PKCS#11 interface.
 func FromConfig(modulePath string, config *keyspb.PKCS11Config) (crypto.Signer, error) {
-	if modulePath == "" {
-		return nil, errors.New("pkcs11: No module path")
-	}
-
-	pubKeyPEM := config.GetPublicKey()
-	block, rest := pem.Decode([]byte(pubKeyPEM))
-	if len(rest) > 0 {
-		return nil, fmt.Errorf("pkcs11: extra data found after first PEM block from %q", pubKeyPEM)
-	}
-
-	pubKey, err := x509.ParsePKIXPublicKey(block.Bytes)
-	if err != nil {
-		return nil, fmt.Errorf("pkcs11: error loading public key from %q: %v", pubKeyPEM, err)
-	}
-
-	return pkcs11key.New(modulePath, config.GetTokenLabel(), config.GetPin(), pubKey)
+	_ = "STUB: not implemented"
+	return *new(crypto.Signer), nil
 }

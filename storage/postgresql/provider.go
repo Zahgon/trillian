@@ -16,9 +16,6 @@ package postgresql
 
 import (
 	"flag"
-	"fmt"
-	"net/url"
-	"os"
 	"sync"
 
 	"github.com/google/trillian/monitoring"
@@ -42,11 +39,7 @@ var (
 //
 // TODO(robstradling): Make the dependency of PostgreSQL quota provider from
 // PostgreSQL storage provider explicit.
-func GetDatabase() (*pgxpool.Pool, error) {
-	postgresqlMu.Lock()
-	defer postgresqlMu.Unlock()
-	return getPostgreSQLDatabaseLocked()
-}
+func GetDatabase() (*pgxpool.Pool, error) { _ = "STUB: not implemented"; return nil, nil }
 
 func init() {
 	if err := storage.RegisterProvider("postgresql", newPostgreSQLStorageProvider); err != nil {
@@ -60,80 +53,29 @@ type postgresqlProvider struct {
 }
 
 func newPostgreSQLStorageProvider(mf monitoring.MetricFactory) (storage.Provider, error) {
-	postgresqlMu.Lock()
-	defer postgresqlMu.Unlock()
-	if postgresqlStorageInstance == nil {
-		db, err := getPostgreSQLDatabaseLocked()
-		if err != nil {
-			return nil, err
-		}
-		postgresqlStorageInstance = &postgresqlProvider{
-			db: db,
-			mf: mf,
-		}
-	}
-	return postgresqlStorageInstance, nil
+	_ = "STUB: not implemented"
+	return *new(storage.Provider), nil
 }
 
 // getPostgreSQLDatabaseLocked returns an instance of PostgreSQL database, or creates
 // one. Requires postgresqlMu to be locked.
 func getPostgreSQLDatabaseLocked() (*pgxpool.Pool, error) {
-	if postgresqlDB != nil || postgresqlErr != nil {
-		return postgresqlDB, postgresqlErr
-	}
-	uri := *postgreSQLURI
-	var err error
-	uri, err = BuildPostgresTLSURI(uri)
-	if err != nil {
-		postgresqlErr = err
-		return nil, err
-	}
-	db, err := OpenDB(uri)
-	if err != nil {
-		postgresqlErr = err
-		return nil, err
-	}
-	postgresqlDB, postgresqlErr = db, nil
-	return db, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (s *postgresqlProvider) LogStorage() storage.LogStorage {
-	return NewLogStorage(s.db, s.mf)
+	_ = "STUB: not implemented"
+	return *new(storage.LogStorage)
 }
 
 func (s *postgresqlProvider) AdminStorage() storage.AdminStorage {
-	return NewAdminStorage(s.db)
+	_ = "STUB: not implemented"
+	return *new(storage.AdminStorage)
 }
 
-func (s *postgresqlProvider) Close() error {
-	s.db.Close()
-	return nil
-}
+func (s *postgresqlProvider) Close() error { _ = "STUB: not implemented"; return nil }
 
 // BuildPostgresTLSURI modifies the given PostgreSQL URI to include TLS parameters based on flags.
 // It returns the modified URI and any error encountered.
-func BuildPostgresTLSURI(uri string) (string, error) {
-	if *postgresqlTLSCA == "" {
-		return uri, nil
-	}
-	if _, err := os.Stat(*postgresqlTLSCA); err != nil {
-		postgresqlErr = fmt.Errorf("postgresql CA file error: %w", err)
-		return "", postgresqlErr
-	}
-	u, err := url.Parse(uri)
-	if err != nil {
-		postgresqlErr = fmt.Errorf("invalid postgresql URI %q: %w", uri, err)
-		return "", postgresqlErr
-	}
-	q := u.Query()
-	q.Set("sslrootcert", *postgresqlTLSCA)
-	if *postgresqlVerifyFull {
-		q.Set("sslmode", "verify-full")
-	} else {
-		if q.Get("sslmode") == "" {
-			q.Set("sslmode", "verify-ca")
-		}
-	}
-	u.RawQuery = q.Encode()
-	return u.String(), nil
-}
+func BuildPostgresTLSURI(uri string) (string, error) { _ = "STUB: not implemented"; return "", nil }

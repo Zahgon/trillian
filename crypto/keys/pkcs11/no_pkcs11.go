@@ -19,12 +19,12 @@ package pkcs11
 
 import (
 	"crypto"
-	"errors"
 
 	"github.com/google/trillian/crypto/keyspb"
 )
 
 // FromConfig returns an error indicating that PKCS11 is not supported.
 func FromConfig(_ string, _ *keyspb.PKCS11Config) (crypto.Signer, error) {
-	return nil, errors.New("pkcs11: Not supported in this binary")
+	_ = "STUB: not implemented"
+	return *new(crypto.Signer), nil
 }

@@ -15,52 +15,14 @@
 package setup
 
 import (
-	"crypto/rand"
-	"crypto/rsa"
 	"crypto/tls"
-	"crypto/x509"
-	"encoding/pem"
-	"math/big"
 	"testing"
-	"time"
 )
 
 // NewTLSCertificate returns a random TLS Certificate for testing.
 func NewTLSCertificate(t *testing.T) tls.Certificate {
-	t.Helper()
-
-	priv, err := rsa.GenerateKey(rand.Reader, 2048)
-	if err != nil {
-		t.Errorf("failed to generate RSA key: %s", err)
-	}
-
-	privBytes := x509.MarshalPKCS1PrivateKey(priv)
-	key := pem.EncodeToMemory(&pem.Block{Type: "PRIVATE KEY", Bytes: privBytes})
-
-	// Generate public certificate.
-	serialNumberLimit := new(big.Int).Lsh(big.NewInt(1), 128)
-	serialNumber, err := rand.Int(rand.Reader, serialNumberLimit)
-	if err != nil {
-		t.Errorf("failed to generate serial number: %s", err)
-	}
-
-	template := x509.Certificate{
-		SerialNumber: serialNumber,
-		NotBefore:    time.Time{},
-		NotAfter:     time.Now().Add(time.Hour),
-		DNSNames:     []string{"localhost"},
-	}
-	pubBytes, err := x509.CreateCertificate(rand.Reader, &template, &template, &priv.PublicKey, priv)
-	if err != nil {
-		t.Errorf("failed to generate TLS public certificate: %s", err)
-	}
-
-	crt := pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: pubBytes})
-
-	c, err := tls.X509KeyPair(crt, key)
-	if err != nil {
-		t.Errorf("failed to parse the public/private key pair: %s", err)
-	}
-
-	return c
+	_ = "STUB: not implemented"
+	return *new(tls.Certificate)
 }
+
+// Generate public certificate.

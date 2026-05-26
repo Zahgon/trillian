@@ -14,19 +14,6 @@
 
 package errors
 
-import (
-	"database/sql"
-
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
-)
-
 // WrapError wraps err as a gRPC error if err is a well-known error instance
 // (such as canonical SQL errors), else err is returned unmodified.
-func WrapError(err error) error {
-	if err == sql.ErrNoRows {
-		return status.Error(codes.NotFound, err.Error())
-	}
-
-	return err
-}
+func WrapError(err error) error { _ = "STUB: not implemented"; return nil }

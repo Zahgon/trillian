@@ -15,20 +15,11 @@
 package integration
 
 import (
-	"fmt"
 	"net"
 )
 
 // listen opens a random high numbered port for listening.
 func listen() (string, net.Listener, error) {
-	lis, err := net.Listen("tcp", "127.0.0.1:0")
-	if err != nil {
-		return "", nil, fmt.Errorf("failed to listen: %v", err)
-	}
-	_, port, err := net.SplitHostPort(lis.Addr().String())
-	if err != nil {
-		return "", nil, fmt.Errorf("unrecognized format for listen address %v: %v", lis.Addr().String(), err)
-	}
-	addr := "localhost:" + port
-	return addr, lis, nil
+	_ = "STUB: not implemented"
+	return "", *new(net.Listener), nil
 }

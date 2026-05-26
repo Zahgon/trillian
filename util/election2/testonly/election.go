@@ -34,78 +34,38 @@ type Election struct {
 }
 
 // NewElection returns a new initialized Election for testing.
-func NewElection() *Election {
-	e := &Election{}
-	e.cond = sync.NewCond(&e.mu)
-	return e
-}
+func NewElection() *Election { _ = "STUB: not implemented"; return nil }
 
 // update updates this instance's mastership status. Must be called under lock.
-func (e *Election) update(isMaster bool) {
-	e.isMaster = isMaster
-	e.revision++
-	e.cond.Broadcast()
-}
+func (e *Election) update(isMaster bool) { _ = "STUB: not implemented"; return }
 
 // Await sets this instance to be the master. It always succeeds. To imitate
 // errors and/or blocking behavior use the Decorator type.
-func (e *Election) Await(ctx context.Context) error {
-	e.mu.Lock()
-	defer e.mu.Unlock()
-	if !e.isMaster {
-		e.update(true)
-	}
-	return nil
-}
+func (e *Election) Await(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
 // WithMastership returns mastership context, which gets canceled if / when
 // this instance is not / stops being the master.
 func (e *Election) WithMastership(ctx context.Context) (context.Context, error) {
-	e.mu.Lock()
-	defer e.mu.Unlock()
-	if !e.isMaster {
-		cctx, cancel := context.WithCancel(ctx)
-		cancel()
-		return cctx, nil
-	}
-
-	cctx, cancel := watchContext(ctx, &e.mu, e.cond) // Notify e.cond on ctx cancelation.
-	rev := e.revision
-	go func() { // Watch mastership and the context in the background.
-		defer cancel()
-		e.mu.Lock()
-		defer e.mu.Unlock()
-		for e.isMaster && e.revision == rev && ctx.Err() == nil {
-			e.cond.Wait()
-		}
-	}()
-	return cctx, nil
+	_ = "STUB: not implemented"
+	return *new(context.Context), nil
 }
+
+// Notify e.cond on ctx cancelation.
+
+// Watch mastership and the context in the background.
 
 // Resign resets mastership.
-func (e *Election) Resign(ctx context.Context) error {
-	e.mu.Lock()
-	defer e.mu.Unlock()
-	e.update(false)
-	return nil
-}
+func (e *Election) Resign(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
 // Close resets mastership permanently.
-func (e *Election) Close(ctx context.Context) error {
-	return e.Resign(ctx)
-}
+func (e *Election) Close(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
 func watchContext(ctx context.Context, l sync.Locker, cond *sync.Cond) (context.Context, context.CancelFunc) {
-	cctx, cancel := context.WithCancel(ctx)
-	go func() {
-		defer cancel()
-		<-cctx.Done()
-		l.Lock() // Avoid racing with cond waiters on ctx status.
-		defer l.Unlock()
-		cond.Broadcast()
-	}()
-	return cctx, cancel
+	_ = "STUB: not implemented"
+	return *new(context.Context), *new(context.CancelFunc)
 }
+
+// Avoid racing with cond waiters on ctx status.
 
 // factory allows creating Election instances.
 type factory struct{}
@@ -113,5 +73,6 @@ type factory struct{}
 // NewElection creates a new Election instance.
 // TODO(pavelkalinnikov): Use resourceID in tests with multiple resources.
 func (f factory) NewElection(ctx context.Context, resourceID string) (election2.Election, error) {
-	return NewElection(), nil
+	_ = "STUB: not implemented"
+	return *new(election2.Election), nil
 }

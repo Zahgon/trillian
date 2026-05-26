@@ -16,15 +16,11 @@
 package matchers
 
 import (
-	"fmt"
-
 	"github.com/golang/mock/gomock"
 )
 
 // AtLeast returns a matcher that requires a number >= n.
-func AtLeast(n int) gomock.Matcher {
-	return &atLeastMatcher{n}
-}
+func AtLeast(n int) gomock.Matcher { _ = "STUB: not implemented"; return *new(gomock.Matcher) }
 
 type atLeastMatcher struct {
 	num int
@@ -32,13 +28,6 @@ type atLeastMatcher struct {
 
 // Matches tests whether a supplied value, which must be of an int type is
 // at least the value the AtLeast matcher expects. If so then it returns true.
-func (m atLeastMatcher) Matches(x interface{}) bool {
-	if x, ok := x.(int); ok {
-		return x >= m.num
-	}
-	return false
-}
+func (m atLeastMatcher) Matches(x interface{}) bool { _ = "STUB: not implemented"; return false }
 
-func (m atLeastMatcher) String() string {
-	return fmt.Sprintf("at least %v", m.num)
-}
+func (m atLeastMatcher) String() string { _ = "STUB: not implemented"; return "" }

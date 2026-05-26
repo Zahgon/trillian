@@ -39,71 +39,25 @@ type Decorator struct {
 }
 
 // NewDecorator returns a Decorator wrapping the passed in Election object.
-func NewDecorator(e election2.Election) *Decorator {
-	d := &Decorator{e: e}
-	d.cond = sync.NewCond(&d.mu)
-	return d
-}
+func NewDecorator(e election2.Election) *Decorator { _ = "STUB: not implemented"; return nil }
 
 // Update updates errors returned by interface methods.
-func (d *Decorator) Update(errs Errs) {
-	d.mu.Lock()
-	defer d.mu.Unlock()
-	d.errs = errs
-}
+func (d *Decorator) Update(errs Errs) { _ = "STUB: not implemented"; return }
 
 // BlockAwait enables or disables Await method blocking.
-func (d *Decorator) BlockAwait(block bool) {
-	d.mu.Lock()
-	defer d.mu.Unlock()
-	d.block = block
-	d.cond.Broadcast()
-}
+func (d *Decorator) BlockAwait(block bool) { _ = "STUB: not implemented"; return }
 
 // Await blocks until the instance captures mastership.
-func (d *Decorator) Await(ctx context.Context) error {
-	d.mu.Lock()
-	defer d.mu.Unlock()
-	if err := d.errs.Await; err != nil {
-		return err
-	}
-	_, cancel := watchContext(ctx, &d.mu, d.cond)
-	defer cancel()
-	for d.block && ctx.Err() == nil {
-		d.cond.Wait()
-	}
-	if err := ctx.Err(); err != nil {
-		return err
-	}
-	return d.e.Await(ctx)
-}
+func (d *Decorator) Await(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
 // WithMastership returns a mastership context.
 func (d *Decorator) WithMastership(ctx context.Context) (context.Context, error) {
-	d.mu.Lock()
-	defer d.mu.Unlock()
-	if err := d.errs.WithMastership; err != nil {
-		return nil, err
-	}
-	return d.e.WithMastership(ctx)
+	_ = "STUB: not implemented"
+	return *new(context.Context), nil
 }
 
 // Resign releases mastership for this instance.
-func (d *Decorator) Resign(ctx context.Context) error {
-	d.mu.Lock()
-	defer d.mu.Unlock()
-	if err := d.errs.Resign; err != nil {
-		return err
-	}
-	return d.e.Resign(ctx)
-}
+func (d *Decorator) Resign(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
 // Close permanently stops participating in election.
-func (d *Decorator) Close(ctx context.Context) error {
-	d.mu.Lock()
-	defer d.mu.Unlock()
-	if err := d.errs.Close; err != nil {
-		return err
-	}
-	return d.e.Close(ctx)
-}
+func (d *Decorator) Close(ctx context.Context) error { _ = "STUB: not implemented"; return nil }

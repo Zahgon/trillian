@@ -5,8 +5,6 @@
 package cache
 
 import (
-	reflect "reflect"
-
 	gomock "github.com/golang/mock/gomock"
 	storagepb "github.com/google/trillian/storage/storagepb"
 )
@@ -24,27 +22,25 @@ type MockNodeStorageMockRecorder struct {
 
 // NewMockNodeStorage creates a new mock instance.
 func NewMockNodeStorage(ctrl *gomock.Controller) *MockNodeStorage {
-	mock := &MockNodeStorage{ctrl: ctrl}
-	mock.recorder = &MockNodeStorageMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockNodeStorage) EXPECT() *MockNodeStorageMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// GetSubtree mocks base method.
+	return nil
 }
 
-// GetSubtree mocks base method.
 func (m *MockNodeStorage) GetSubtree(arg0 []byte) (*storagepb.SubtreeProto, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetSubtree", arg0)
-	ret0, _ := ret[0].(*storagepb.SubtreeProto)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetSubtree indicates an expected call of GetSubtree.
 func (mr *MockNodeStorageMockRecorder) GetSubtree(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSubtree", reflect.TypeOf((*MockNodeStorage)(nil).GetSubtree), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }

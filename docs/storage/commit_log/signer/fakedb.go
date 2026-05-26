@@ -21,16 +21,11 @@ type FakeDatabase struct {
 }
 
 // Size returns the tree size of the local database
-func (f *FakeDatabase) Size() int {
-	return len(f.leaves)
-}
+func (f *FakeDatabase) Size() int { _ = "STUB: not implemented"; return 0 }
 
 // AddLeaves simulates adding leaves to the local database.  It returns
 // the STH in the database.
 func (f *FakeDatabase) AddLeaves(when int64, offset int, leaves []string) STH {
-	f.leaves = append(f.leaves, leaves...)
-	f.sth.TimeStamp = when
-	f.sth.Offset = offset
-	f.sth.TreeSize = f.Size()
-	return f.sth
+	_ = "STUB: not implemented"
+	return *new(STH)
 }

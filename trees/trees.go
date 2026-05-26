@@ -18,13 +18,10 @@ package trees
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/trillian"
-	"github.com/google/trillian/monitoring"
 	"github.com/google/trillian/storage"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 )
 
 const traceSpanRoot = "/trillian/trees"
@@ -100,73 +97,43 @@ var rules = map[OpType]accessRule{
 
 // NewContext returns a ctx with the given tree.
 func NewContext(ctx context.Context, tree *trillian.Tree) context.Context {
-	return context.WithValue(ctx, treeKey{}, tree)
+	_ = "STUB: not implemented"
+	return *new(context.Context)
 }
 
 // FromContext returns the tree within ctx if present, together with an indication of whether a
 // tree was present.
 func FromContext(ctx context.Context) (*trillian.Tree, bool) {
-	tree, ok := ctx.Value(treeKey{}).(*trillian.Tree)
-	return tree, ok && tree != nil
+	_ = "STUB: not implemented"
+	return nil, false
 }
 
 func validate(o GetOpts, tree *trillian.Tree) error {
+	_ = "STUB: not implemented"
 	// Do the special case checks first
-	if len(o.TreeTypes) > 0 && !o.TreeTypes[tree.TreeType] {
-		return status.Errorf(codes.InvalidArgument, "operation not allowed for %s-type trees (wanted one of %v)", tree.TreeType, o.TreeTypes)
-	}
-
-	// Reject any operation types we don't know about.
-	rule, ok := rules[o.Operation]
-	if !ok {
-		return status.Errorf(codes.Internal, "invalid operation type in GetOpts: %v", o)
-	}
-
-	// Apply the rule, ensure it allows the tree type and state that we have.
-	if !rule.okTypes[tree.TreeType] || !rule.okStates[tree.TreeState] {
-		// If we have a status code to use it takes precedence, otherwise it's
-		// a generic InvalidArgument code.
-		code, ok := rule.rejectCodes[tree.TreeState]
-		if !ok {
-			code = codes.InvalidArgument
-		}
-		return status.Errorf(code, "operation: %v not allowed for tree type: %v state: %v", o.Operation, tree.TreeType, tree.TreeState)
-	}
-
 	return nil
 }
+
+// Reject any operation types we don't know about.
+
+// Apply the rule, ensure it allows the tree type and state that we have.
+
+// If we have a status code to use it takes precedence, otherwise it's
+// a generic InvalidArgument code.
 
 // GetTree returns the specified tree, either from the ctx (if present) or read from storage.
 // The tree will be validated according to GetOpts before returned. Tree state is also considered
 // (for example, deleted tree will return NotFound errors).
 func GetTree(ctx context.Context, s storage.AdminStorage, treeID int64, opts GetOpts) (*trillian.Tree, error) {
-	ctx, spanEnd := spanFor(ctx, "GetTree")
-	defer spanEnd()
-	tree, ok := FromContext(ctx)
-	if !ok {
-		var err error
-		tree, err = storage.GetTree(ctx, s, treeID)
-		if err != nil {
-			return nil, err
-		}
-	}
-	if tree.TreeId != treeID {
-		// No operations should span multiple trees. If a tree is already in the context
-		// it had better be the one that we want. If the tree comes back from the DB with
-		// the wrong ID then this checks that too.
-		return nil, status.Errorf(codes.Internal, "got tree %v, want %v", tree.TreeId, treeID)
-	}
-
-	if err := validate(opts, tree); err != nil {
-		return nil, err
-	}
-	if tree.Deleted {
-		return nil, status.Errorf(codes.NotFound, "tree %v not found", tree.TreeId)
-	}
-
-	return tree, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
+// No operations should span multiple trees. If a tree is already in the context
+// it had better be the one that we want. If the tree comes back from the DB with
+// the wrong ID then this checks that too.
+
 func spanFor(ctx context.Context, name string) (context.Context, func()) {
-	return monitoring.StartSpan(ctx, fmt.Sprintf("%s.%s", traceSpanRoot, name))
+	_ = "STUB: not implemented"
+	return *new(context.Context), nil
 }

@@ -15,17 +15,12 @@
 package admin
 
 import (
-	"bytes"
 	"context"
-	"errors"
-	"fmt"
-	"math/rand"
 	"sync"
 	"time"
 
 	"github.com/google/trillian/monitoring"
 	"github.com/google/trillian/storage"
-	"k8s.io/klog/v2"
 )
 
 const (
@@ -42,7 +37,8 @@ var (
 )
 
 func incHardDeleteCounter(treeID int64, success bool, reason string) {
-	hardDeleteCounter.Inc(fmt.Sprint(treeID), fmt.Sprint(success), reason)
+	_ = "STUB: not implemented"
+	return
 }
 
 // DeletedTreeGC garbage collects deleted trees.
@@ -68,40 +64,12 @@ type DeletedTreeGC struct {
 
 // NewDeletedTreeGC returns a new DeletedTreeGC.
 func NewDeletedTreeGC(admin storage.AdminStorage, threshold, minRunInterval time.Duration, mf monitoring.MetricFactory) *DeletedTreeGC {
-	gc := &DeletedTreeGC{
-		admin:           admin,
-		deleteThreshold: threshold,
-		minRunInterval:  minRunInterval,
-	}
-	metricsOnce.Do(func() {
-		if mf == nil {
-			mf = monitoring.InertMetricFactory{}
-		}
-		hardDeleteCounter = mf.NewCounter("tree_hard_delete_counter", "Counter of hard-deleted trees", monitoring.TreeIDLabel, "success", "reason")
-	})
-	return gc
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Run starts the tree garbage collection process. It runs until ctx is cancelled.
-func (gc *DeletedTreeGC) Run(ctx context.Context) {
-	for {
-		count, err := gc.RunOnce(ctx)
-		if err != nil {
-			klog.Errorf("DeletedTreeGC.Run: %v", err)
-		}
-		if count > 0 {
-			klog.Infof("DeletedTreeGC.Run: successfully deleted %v trees", count)
-		}
-
-		d := gc.minRunInterval + time.Duration(rand.Int63n(gc.minRunInterval.Nanoseconds()))
-		select {
-		case <-ctx.Done():
-			return
-		case <-timeAfter(d):
-		}
-
-	}
-}
+func (gc *DeletedTreeGC) Run(ctx context.Context) { _ = "STUB: not implemented"; return }
 
 // RunOnce performs a single tree garbage collection sweep. Returns the number of successfully
 // deleted trees.
@@ -109,54 +77,13 @@ func (gc *DeletedTreeGC) Run(ctx context.Context) {
 // It attempts to delete as many eligible trees as possible, regardless of failures. If it
 // encounters any failures while deleting the resulting error is non-nil.
 func (gc *DeletedTreeGC) RunOnce(ctx context.Context) (int, error) {
-	now := timeNow()
+	_ = "STUB: not implemented"
 
 	// List and delete trees in separate transactions. Hard-deletes may cascade to a lot of data, so
 	// each delete should be in its own transaction as well.
 	// It's OK to list and delete separately because HardDelete does its own state checking, plus
 	// deleted trees are unlikely to change, specially those deleted for a while.
-	trees, err := storage.ListTrees(ctx, gc.admin, true /* includeDeleted */)
-	if err != nil {
-		return 0, fmt.Errorf("error listing trees: %v", err)
-	}
-
-	count := 0
-	var errs []error
-	for _, tree := range trees {
-		if !tree.Deleted {
-			continue
-		}
-		if err := tree.DeleteTime.CheckValid(); err != nil {
-			errs = append(errs, fmt.Errorf("error parsing delete_time of tree %v: %v", tree.TreeId, err))
-			incHardDeleteCounter(tree.TreeId, false, timestampParseErrReson)
-			continue
-		}
-		deleteTime := tree.DeleteTime.AsTime()
-		durationSinceDelete := now.Sub(deleteTime)
-		if durationSinceDelete <= gc.deleteThreshold {
-			continue
-		}
-
-		klog.Infof("DeletedTreeGC.RunOnce: Hard-deleting tree %v after %v", tree.TreeId, durationSinceDelete)
-		if err := storage.HardDeleteTree(ctx, gc.admin, tree.TreeId); err != nil {
-			errs = append(errs, fmt.Errorf("error hard-deleting tree %v: %v", tree.TreeId, err))
-			incHardDeleteCounter(tree.TreeId, false, deleteErrReason)
-			continue
-		}
-
-		count++
-		incHardDeleteCounter(tree.TreeId, true, "")
-	}
-
-	if len(errs) == 0 {
-		return count, nil
-	}
-
-	buf := &bytes.Buffer{}
-	buf.WriteString("encountered errors hard-deleting trees:")
-	for _, err := range errs {
-		buf.WriteString("\n\t")
-		buf.WriteString(err.Error())
-	}
-	return count, errors.New(buf.String())
+	return 0, nil
 }
+
+/* includeDeleted */

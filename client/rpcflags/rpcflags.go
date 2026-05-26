@@ -19,9 +19,6 @@ import (
 	"flag"
 
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
-	"google.golang.org/grpc/credentials/insecure"
-	"k8s.io/klog/v2"
 )
 
 // tlsCertFile is the flag-assigned value for the path to the Trillian server's TLS certificate.
@@ -30,18 +27,6 @@ var tlsCertFile = flag.String("tls_cert_file", "", "Path to the file containing 
 // NewClientDialOptionsFromFlags returns a list of grpc.DialOption values to be
 // passed as DialOption arguments to grpc.Dial
 func NewClientDialOptionsFromFlags() ([]grpc.DialOption, error) {
-	dialOpts := []grpc.DialOption{}
-
-	if *tlsCertFile == "" {
-		klog.Warning("Using an insecure gRPC connection to Trillian")
-		dialOpts = append(dialOpts, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	} else {
-		creds, err := credentials.NewClientTLSFromFile(*tlsCertFile, "")
-		if err != nil {
-			return nil, err
-		}
-		dialOpts = append(dialOpts, grpc.WithTransportCredentials(creds))
-	}
-
-	return dialOpts, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

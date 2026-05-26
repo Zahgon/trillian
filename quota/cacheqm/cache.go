@@ -17,13 +17,10 @@ package cacheqm
 
 import (
 	"context"
-	"fmt"
-	"sort"
 	"sync"
 	"time"
 
 	"github.com/google/trillian/quota"
-	"k8s.io/klog/v2"
 )
 
 const (
@@ -63,124 +60,53 @@ type bucket struct {
 // entries are evicted as necessary, their tokens replenished via PutTokens() to avoid excessive
 // leakage.
 func NewCachedManager(qm quota.Manager, minBatchSize, maxEntries int) (quota.Manager, error) {
-	switch {
-	case minBatchSize <= 0:
-		return nil, fmt.Errorf("invalid minBatchSize: %v", minBatchSize)
-	case maxEntries <= 0:
-		return nil, fmt.Errorf("invalid maxEntries: %v", minBatchSize)
-	}
-	return &manager{
-		Manager:      qm,
-		minBatchSize: minBatchSize,
-		maxEntries:   maxEntries,
-		cache:        make(map[quota.Spec]*bucket),
-	}, nil
+	_ = "STUB: not implemented"
+	return *new(quota.Manager), nil
 }
 
 // GetTokens implements Manager.GetTokens.
 func (m *manager) GetTokens(ctx context.Context, numTokens int, specs []quota.Spec) error {
-	m.mu.Lock()
-	defer m.mu.Unlock()
-
-	// Verify which buckets need more tokens, if any
-	specsToRefill := []quota.Spec{}
-	for _, spec := range specs {
-		bucket, ok := m.cache[spec]
-		if !ok || bucket.tokens < numTokens {
-			specsToRefill = append(specsToRefill, spec)
-		}
-	}
-
-	// Request the required number of tokens and add them to buckets
-	if len(specsToRefill) != 0 {
-		defer func() {
-			// Do not hold GetTokens on eviction, it won't change the result.
-			m.evictWg.Add(1)
-			go func() {
-				m.evict(ctx)
-				m.evictWg.Done()
-			}()
-		}()
-
-		// A more accurate count would be numTokens+m.minBatchSize-bucket.tokens, but that might
-		// force us to make a GetTokens call for each spec. A single call is likely to be more
-		// efficient.
-		tokens := numTokens + m.minBatchSize
-		if err := m.Manager.GetTokens(ctx, tokens, specsToRefill); err != nil {
-			return err
-		}
-		for _, spec := range specsToRefill {
-			b, ok := m.cache[spec]
-			if !ok {
-				b = &bucket{}
-				m.cache[spec] = b
-			}
-			b.tokens += tokens
-		}
-	}
-
-	// Subtract tokens from cache
-	lastModified := now()
-	for _, spec := range specs {
-		bucket, ok := m.cache[spec]
-		// Sanity check
-		if !ok || bucket.tokens < 0 || bucket.tokens < numTokens {
-			klog.Errorf("Bucket invariants failed for spec %+v: ok = %v, bucket = %+v", spec, ok, bucket)
-			return nil // Something is wrong with the implementation, let requests go through.
-		}
-		bucket.tokens -= numTokens
-		bucket.lastModified = lastModified
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
+// Verify which buckets need more tokens, if any
+
+// Request the required number of tokens and add them to buckets
+
+// Do not hold GetTokens on eviction, it won't change the result.
+
+// A more accurate count would be numTokens+m.minBatchSize-bucket.tokens, but that might
+// force us to make a GetTokens call for each spec. A single call is likely to be more
+// efficient.
+
+// Subtract tokens from cache
+
+// Sanity check
+
+// Something is wrong with the implementation, let requests go through.
+
 func (m *manager) evict(ctx context.Context) {
-	m.mu.Lock()
+	_ = "STUB: not implemented"
+
 	// m.mu is explicitly unlocked, so we don't have to hold it while we wait for goroutines to
 	// complete.
-
-	if len(m.cache) <= m.maxEntries {
-		m.mu.Unlock()
-		return
-	}
-
-	// Find and evict the oldest entries. To avoid excessive token leakage, let's try and
-	// replenish the tokens held for the evicted entries.
-	var buckets bucketsByTime = make([]specBucket, 0, len(m.cache))
-	for spec, b := range m.cache {
-		if spec.Group != quota.Global {
-			buckets = append(buckets, specBucket{bucket: b, spec: spec})
-		}
-	}
-	sort.Sort(buckets)
-
-	wg := sync.WaitGroup{}
-	evicts := len(m.cache) - m.maxEntries
-	for i := 0; i < evicts; i++ {
-		b := buckets[i]
-		klog.V(1).Infof("Too many tokens cached, returning least recently used (%v tokens for %+v)", b.tokens, b.spec)
-		delete(m.cache, b.spec)
-
-		// goroutines must not access the cache, the lock is released before they complete.
-		wg.Add(1)
-		go func() {
-			if err := m.PutTokens(ctx, b.tokens, []quota.Spec{b.spec}); err != nil {
-				klog.Warningf("Error replenishing tokens from evicted bucket (spec = %+v, bucket = %+v): %v", b.spec, b.bucket, err)
-			}
-			wg.Done()
-		}()
-	}
-
-	m.mu.Unlock()
-	wg.Wait()
+	return
 }
+
+// Find and evict the oldest entries. To avoid excessive token leakage, let's try and
+// replenish the tokens held for the evicted entries.
+
+// goroutines must not access the cache, the lock is released before they complete.
 
 // wait waits for spawned goroutines to complete. Used by eviction tests.
 func (m *manager) wait() {
-	m.evictWg.Wait()
+	_ = "STUB: not implemented"
+
+	// specBucket is a bucket with the corresponding spec.
+	return
 }
 
-// specBucket is a bucket with the corresponding spec.
 type specBucket struct {
 	*bucket
 	spec quota.Spec
@@ -191,15 +117,13 @@ type bucketsByTime []specBucket
 
 // Len provides sort.Interface.Len.
 func (b bucketsByTime) Len() int {
-	return len(b)
+	_ = "STUB: not implemented"
+
+	// Less provides sort.Interface.Less.
+	return 0
 }
 
-// Less provides sort.Interface.Less.
-func (b bucketsByTime) Less(i, j int) bool {
-	return b[i].lastModified.Before(b[j].lastModified)
-}
+func (b bucketsByTime) Less(i, j int) bool { _ = "STUB: not implemented"; return false }
 
 // Swap provides sort.Interface.Swap.
-func (b bucketsByTime) Swap(i, j int) {
-	b[i], b[j] = b[j], b[i]
-}
+func (b bucketsByTime) Swap(i, j int) { _ = "STUB: not implemented"; return }

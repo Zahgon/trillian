@@ -15,7 +15,6 @@
 package testonly
 
 import (
-	"log"
 	"testing"
 
 	"google.golang.org/protobuf/proto"
@@ -26,22 +25,12 @@ import (
 // protobuf.ptypes.anypb.Any used throughout the Trillian API and in
 // storage.  Use if testing.T not available. Failure to marshal will
 // fail the test suite.
-func MustMarshalAnyNoT(in proto.Message) []byte {
-	protoBytes, err := proto.Marshal(in)
-	if err != nil {
-		log.Fatalf("failed to marshal %v as 'bytes': err %v", in, err)
-	}
-	return protoBytes
-}
+func MustMarshalAnyNoT(in proto.Message) []byte { _ = "STUB: not implemented"; return nil }
 
 // MustMarshalAny is used in tests to Marshal proto messages into the
 // protobuf.ptypes.anypb.Any used in the Trillian API and in storage.
 // Failure to marshal will fail the test but the suite will continue.
 func MustMarshalAny(t *testing.T, in proto.Message) *anypb.Any {
-	t.Helper()
-	anything, err := anypb.New(in)
-	if err != nil {
-		t.Fatalf("failed to marshal %v as 'any': err %v", in, err)
-	}
-	return anything
+	_ = "STUB: not implemented"
+	return nil
 }

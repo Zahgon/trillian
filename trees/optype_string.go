@@ -2,28 +2,15 @@
 
 package trees
 
-import "strconv"
-
 func _() {
+	_ = "STUB: not implemented"
 	// An "invalid array index" compiler error signifies that the constant values have changed.
 	// Re-run the stringer command to generate them again.
-	var x [1]struct{}
-	_ = x[Unknown-0]
-	_ = x[Admin-1]
-	_ = x[Query-2]
-	_ = x[QueueLog-3]
-	_ = x[SequenceLog-4]
-	_ = x[UpdateMap-5]
+	return
 }
 
 const _OpType_name = "UnknownAdminQueryQueueLogSequenceLogUpdateMap"
 
 var _OpType_index = [...]uint8{0, 7, 12, 17, 25, 36, 45}
 
-func (i OpType) String() string {
-	idx := int(i) - 0
-	if i < 0 || idx >= len(_OpType_index)-1 {
-		return "OpType(" + strconv.FormatInt(int64(i), 10) + ")"
-	}
-	return _OpType_name[_OpType_index[idx]:_OpType_index[idx+1]]
-}
+func (i OpType) String() string { _ = "STUB: not implemented"; return "" }

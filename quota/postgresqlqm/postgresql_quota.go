@@ -63,53 +63,38 @@ type QuotaManager struct {
 // It doesn't actually reserve or retrieve tokens, instead it allows access based on the number of
 // rows in the Unsequenced table.
 func (m *QuotaManager) GetTokens(ctx context.Context, numTokens int, specs []quota.Spec) error {
-	for _, spec := range specs {
-		if spec.Group != quota.Global || spec.Kind != quota.Write {
-			continue
-		}
-		// Only allow global writes if Unsequenced is under the expected limit
-		count, err := m.countUnsequenced(ctx)
-		if err != nil {
-			return err
-		}
-		if count+numTokens > m.MaxUnsequencedRows {
-			return ErrTooManyUnsequencedRows
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
+
+// Only allow global writes if Unsequenced is under the expected limit
 
 // PutTokens implements quota.Manager.PutTokens.
 // It's a noop for QuotaManager.
 func (m *QuotaManager) PutTokens(ctx context.Context, numTokens int, specs []quota.Spec) error {
+	_ = "STUB: not implemented"
+
+	// ResetQuota implements quota.Manager.ResetQuota.
+	// It's a noop for QuotaManager.
 	return nil
 }
 
-// ResetQuota implements quota.Manager.ResetQuota.
-// It's a noop for QuotaManager.
 func (m *QuotaManager) ResetQuota(ctx context.Context, specs []quota.Spec) error {
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *QuotaManager) countUnsequenced(ctx context.Context) (int, error) {
-	if m.UseSelectCount {
-		return countFromTable(ctx, m.DB)
-	}
-	return countFromExplainOutput(ctx, m.DB)
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 func countFromExplainOutput(ctx context.Context, db *pgxpool.Pool) (int, error) {
-	var count int
-	if err := db.QueryRow(ctx, countFromExplainOutputQuery, "Unsequenced").Scan(&count); err != nil {
-		return 0, err
-	}
-	return count, nil
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 func countFromTable(ctx context.Context, db *pgxpool.Pool) (int, error) {
-	var count int
-	if err := db.QueryRow(ctx, countFromUnsequencedQuery).Scan(&count); err != nil {
-		return 0, err
-	}
-	return count, nil
+	_ = "STUB: not implemented"
+	return 0, nil
 }

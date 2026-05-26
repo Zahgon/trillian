@@ -16,7 +16,6 @@ package cloudspanner
 
 import (
 	"context"
-	"fmt"
 	"sync"
 	"time"
 
@@ -24,13 +23,7 @@ import (
 	"github.com/google/trillian"
 	"github.com/google/trillian/storage"
 	"github.com/google/trillian/storage/cloudspanner/spannerpb"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/proto"
-	"google.golang.org/protobuf/types/known/anypb"
-	"google.golang.org/protobuf/types/known/durationpb"
-	"google.golang.org/protobuf/types/known/timestamppb"
-	"k8s.io/klog/v2"
 )
 
 var (
@@ -57,25 +50,13 @@ var (
 const nanosPerMilli = int64(time.Millisecond / time.Nanosecond)
 
 func reverseTreeStateMap(m map[trillian.TreeState]spannerpb.TreeState) map[spannerpb.TreeState]trillian.TreeState {
-	reverse := make(map[spannerpb.TreeState]trillian.TreeState)
-	for k, v := range m {
-		if x, ok := reverse[v]; ok {
-			klog.Fatalf("Duplicate values for key %v: %v and %v", v, x, k)
-		}
-		reverse[v] = k
-	}
-	return reverse
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func reverseTreeTypeMap(m map[trillian.TreeType]spannerpb.TreeType) map[spannerpb.TreeType]trillian.TreeType {
-	reverse := make(map[spannerpb.TreeType]trillian.TreeType)
-	for k, v := range m {
-		if x, ok := reverse[v]; ok {
-			klog.Fatalf("Duplicate values for key %v: %v and %v", v, x, k)
-		}
-		reverse[v] = k
-	}
-	return reverse
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // adminTX implements both storage.ReadOnlyAdminTX and storage.AdminTX.
@@ -104,499 +85,145 @@ type adminStorage struct {
 
 // NewAdminStorage returns a Spanner-based storage.AdminStorage implementation.
 func NewAdminStorage(client *spanner.Client) storage.AdminStorage {
-	return &adminStorage{client}
+	_ = "STUB: not implemented"
+	return *new(storage.AdminStorage)
 }
 
 // CheckDatabaseAccessible implements AdminStorage.CheckDatabaseAccessible.
 func (s *adminStorage) CheckDatabaseAccessible(ctx context.Context) error {
-	return checkDatabaseAccessible(ctx, s.client)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Snapshot implements AdminStorage.Snapshot.
 func (s *adminStorage) Snapshot(ctx context.Context) (storage.ReadOnlyAdminTX, error) {
-	tx := s.client.ReadOnlyTransaction()
-	return &adminTX{client: s.client, tx: tx}, nil
+	_ = "STUB: not implemented"
+	return *new(storage.ReadOnlyAdminTX), nil
 }
 
 // Begin implements AdminStorage.Begin.
 func (s *adminStorage) Begin(ctx context.Context) (storage.AdminTX, error) {
-	return nil, ErrNotImplemented
+	_ = "STUB: not implemented"
+	return *new(storage.AdminTX), nil
 }
 
 // ReadWriteTransaction implements AdminStorage.ReadWriteTransaction.
 func (s *adminStorage) ReadWriteTransaction(ctx context.Context, f storage.AdminTXFunc) error {
-	_, err := s.client.ReadWriteTransaction(ctx, func(ctx context.Context, stx *spanner.ReadWriteTransaction) error {
-		tx := &adminTX{client: s.client, tx: stx}
-		return f(ctx, tx)
-	})
-	return err
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Commit implements ReadOnlyAdminTX.Commit.
 func (t *adminTX) Commit() error {
-	return t.Close()
-}
+	_ = "STUB: not implemented"
 
-// Close implements ReadOnlyAdminTX.Close.
-func (t *adminTX) Close() error {
-	t.mu.Lock()
-	defer t.mu.Unlock()
-	if t.tx == nil {
-		return nil
-	}
-	// tx will be committed by ReadWriteTransaction(), so only close readonly tx here
-	if stx, ok := t.tx.(*spanner.ReadOnlyTransaction); ok {
-		klog.V(1).Infof("Closed admin %p", stx)
-		stx.Close()
-	}
-	t.tx = nil
+	// Close implements ReadOnlyAdminTX.Close.
 	return nil
 }
 
+func (t *adminTX) Close() error { _ = "STUB: not implemented"; return nil }
+
+// tx will be committed by ReadWriteTransaction(), so only close readonly tx here
+
 // GetTree implements ReadOnlyAdminTX.GetTree.
 func (t *adminTX) GetTree(ctx context.Context, treeID int64) (*trillian.Tree, error) {
-	info, err := t.getTreeInfo(ctx, treeID)
-	if err != nil {
-		return nil, err
-	}
-	return toTrillianTree(info)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (t *adminTX) getTreeInfo(ctx context.Context, treeID int64) (*spannerpb.TreeInfo, error) {
-	cols := []string{
-		"TreeID",
-		"TreeState",
-		"TreeType",
-		"TreeInfo",
-		"Deleted",
-		"DeleteTimeMillis",
-	}
-
-	row, err := t.tx.ReadRow(ctx, "TreeRoots", spanner.Key{treeID}, cols)
-	switch {
-	case spanner.ErrCode(err) == codes.NotFound:
-		// Improve on the error message
-		return nil, status.Errorf(codes.NotFound, "tree %v not found", treeID)
-	case err != nil:
-		return nil, err
-	}
-
-	info := &spannerpb.TreeInfo{}
-	var infoBytes []byte
-	var tID, tState, tType int64
-	var deleted bool
-	var delMillis spanner.NullInt64
-	if err := row.Columns(
-		&tID,
-		&tState, // info.TreeState,
-		&tType,  // info.TreeType,
-		&infoBytes,
-		&deleted,
-		&delMillis,
-	); err != nil {
-		return nil, err
-	}
-
-	if infoBytes != nil {
-		if err := proto.Unmarshal(infoBytes, info); err != nil {
-			return nil, err
-		}
-	}
-	if tID != info.TreeId {
-		return nil, fmt.Errorf("inconsistency, treeIDs don't match: %d != %d", tID, info.TreeId)
-	}
-	if treeID != tID {
-		return nil, fmt.Errorf("inconsistency, got treeID %d, want %d", tID, treeID)
-	}
-	// TODO(al): check other denormalisations are consistent too.
-
-	// Sanity checks
-	switch tt := info.TreeType; tt {
-	case spannerpb.TreeType_PREORDERED_LOG:
-		fallthrough
-	case spannerpb.TreeType_LOG:
-		if info.GetLogStorageConfig() == nil {
-			return nil, status.Errorf(codes.Internal, "corrupt TreeInfo %#v: LogStorageConfig is nil", treeID)
-		}
-	default:
-		return nil, status.Errorf(codes.Internal, "corrupt TreeInfo %#v: unexpected TreeType = %s", treeID, tt)
-	}
-
-	return info, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// Improve on the error message
+
+// info.TreeState,
+// info.TreeType,
+
+// TODO(al): check other denormalisations are consistent too.
+
+// Sanity checks
 
 // ListTrees implements ReadOnlyAdminTX.ListTrees.
 func (t *adminTX) ListTrees(ctx context.Context, includeDeleted bool) ([]*trillian.Tree, error) {
-	trees := []*trillian.Tree{}
-	err := t.readTrees(ctx, includeDeleted, false /* idOnly */, func(r *spanner.Row) error {
-		var infoBytes []byte
-		if err := r.Columns(&infoBytes); err != nil {
-			return err
-		}
-		info := &spannerpb.TreeInfo{}
-		if err := proto.Unmarshal(infoBytes, info); err != nil {
-			return err
-		}
-		tree, err := toTrillianTree(info)
-		if err != nil {
-			return err
-		}
-		trees = append(trees, tree)
-		return nil
-	})
-	return trees, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
+/* idOnly */
+
 func (t *adminTX) readTrees(ctx context.Context, includeDeleted, idOnly bool, f func(*spanner.Row) error) error {
-	var stmt spanner.Statement
-	if idOnly {
-		stmt = spanner.NewStatement("SELECT t.TreeID FROM TreeRoots t")
-	} else {
-		stmt = spanner.NewStatement("SELECT t.TreeInfo FROM TreeRoots t")
-	}
-	if !includeDeleted {
-		stmt.SQL += " WHERE t.Deleted = @deleted"
-		stmt.Params["deleted"] = false
-	}
-	rows := t.tx.Query(ctx, stmt)
-	return rows.Do(f)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateTree implements AdminWriter.CreateTree.
 func (t *adminTX) CreateTree(ctx context.Context, tree *trillian.Tree) (*trillian.Tree, error) {
-	if err := storage.ValidateTreeForCreation(ctx, tree); err != nil {
-		return nil, err
-	}
-
-	id, err := storage.NewTreeID()
-	if err != nil {
-		return nil, err
-	}
-
-	info, err := newTreeInfo(tree, id, TimeNow())
-	if err != nil {
-		return nil, err
-	}
-
-	infoBytes, err := proto.Marshal(info)
-	if err != nil {
-		return nil, err
-	}
-
-	m1 := spanner.Insert(
-		"TreeRoots",
-		[]string{
-			"TreeID",
-			"TreeState",
-			"TreeType",
-			"TreeInfo",
-			"Deleted",
-		},
-		[]interface{}{
-			info.TreeId,
-			int64(info.TreeState),
-			int64(info.TreeType),
-			infoBytes,
-			false,
-		})
-
-	stx, ok := t.tx.(*spanner.ReadWriteTransaction)
-	if !ok {
-		return nil, ErrWrongTXType
-	}
-	if err := stx.BufferWrite([]*spanner.Mutation{m1}); err != nil {
-		return nil, err
-	}
-	return toTrillianTree(info)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // newTreeInfo creates a new TreeInfo from a Tree. Meant to be used for new trees.
 func newTreeInfo(tree *trillian.Tree, treeID int64, now time.Time) (*spannerpb.TreeInfo, error) {
-	ts, ok := treeStateMap[tree.TreeState]
-	if !ok {
-		return nil, status.Errorf(codes.Internal, "unexpected TreeState: %s", tree.TreeState)
-	}
-
-	tt, ok := treeTypeMap[tree.TreeType]
-	if !ok {
-		return nil, status.Errorf(codes.Internal, "unexpected TreeType: %s", tree.TreeType)
-	}
-
-	if err := tree.MaxRootDuration.CheckValid(); err != nil {
-		return nil, status.Errorf(codes.InvalidArgument, "malformed MaxRootDuration: %v", err)
-	}
-	maxRootDuration := tree.MaxRootDuration.AsDuration()
-
-	info := &spannerpb.TreeInfo{
-		TreeId:                treeID,
-		Name:                  tree.DisplayName,
-		Description:           tree.Description,
-		TreeState:             ts,
-		TreeType:              tt,
-		CreateTimeNanos:       now.UnixNano(),
-		UpdateTimeNanos:       now.UnixNano(),
-		MaxRootDurationMillis: int64(maxRootDuration / time.Millisecond),
-	}
-
-	switch tt := tree.TreeType; tt {
-	case trillian.TreeType_PREORDERED_LOG:
-		fallthrough
-	case trillian.TreeType_LOG:
-		config, err := logConfigOrDefault(tree)
-		if err != nil {
-			return nil, err
-		}
-		if err := validateLogStorageConfig(config); err != nil {
-			return nil, err
-		}
-		info.StorageConfig = &spannerpb.TreeInfo_LogStorageConfig{LogStorageConfig: config}
-	default:
-		return nil, fmt.Errorf("unknown tree type %v", tt)
-	}
-
-	return info, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func logConfigOrDefault(tree *trillian.Tree) (*spannerpb.LogStorageConfig, error) {
-	settings, err := unmarshalSettings(tree)
-	if err != nil {
-		return nil, err
-	}
-	if settings == nil {
-		return &spannerpb.LogStorageConfig{
-			NumUnseqBuckets:  NumUnseqBuckets,
-			NumMerkleBuckets: NumMerkleBuckets,
-		}, nil
-	}
-	config, ok := settings.(*spannerpb.LogStorageConfig)
-	if !ok {
-		return nil, status.Errorf(codes.Internal, "unsupported config type for LOG tree: %T", settings)
-	}
-	return config, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateTree implements AdminWriter.UpdateTree.
 func (t *adminTX) UpdateTree(ctx context.Context, treeID int64, updateFunc func(*trillian.Tree)) (*trillian.Tree, error) {
-	info, err := t.getTreeInfo(ctx, treeID)
-	if err != nil {
-		return nil, err
-	}
-
-	tree, err := toTrillianTree(info)
-	if err != nil {
-		return nil, err
-	}
-	beforeTree := proto.Clone(tree).(*trillian.Tree)
-	updateFunc(tree)
-	if err = storage.ValidateTreeForUpdate(ctx, beforeTree, tree); err != nil {
-		return nil, err
-	}
-	if !proto.Equal(beforeTree.StorageSettings, tree.StorageSettings) {
-		return nil, status.New(codes.InvalidArgument, "readonly field changed: storage_settings").Err()
-	}
-
-	ts, ok := treeStateMap[tree.TreeState]
-	if !ok {
-		return nil, status.Errorf(codes.Internal, "unexpected TreeState: %s", tree.TreeState)
-	}
-
-	if err := tree.MaxRootDuration.CheckValid(); err != nil {
-		return nil, status.Errorf(codes.InvalidArgument, "malformed MaxRootDuration: %v", err)
-	}
-	maxRootDuration := tree.MaxRootDuration.AsDuration()
-
-	// Update (just) the mutable fields in treeInfo.
-	now := TimeNow()
-	info.TreeState = ts
-	info.Name = tree.DisplayName
-	info.Description = tree.Description
-	info.UpdateTimeNanos = now.UnixNano()
-	info.MaxRootDurationMillis = int64(maxRootDuration / time.Millisecond)
-
-	if err := t.updateTreeInfo(ctx, info); err != nil {
-		return nil, err
-	}
-
-	return toTrillianTree(info)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
+// Update (just) the mutable fields in treeInfo.
+
 func (t *adminTX) updateTreeInfo(ctx context.Context, info *spannerpb.TreeInfo) error {
-	infoBytes, err := proto.Marshal(info)
-	if err != nil {
-		return err
-	}
-
-	m1 := spanner.Update(
-		"TreeRoots",
-		[]string{
-			"TreeID",
-			"TreeState",
-			"TreeType",
-			"TreeInfo",
-			"Deleted",
-			"DeleteTimeMillis",
-		},
-		[]interface{}{
-			info.TreeId,
-			int64(info.TreeState),
-			int64(info.TreeType),
-			infoBytes,
-			info.Deleted,
-			info.DeleteTimeNanos / nanosPerMilli,
-		})
-
-	stx, ok := t.tx.(*spanner.ReadWriteTransaction)
-	if !ok {
-		return ErrWrongTXType
-	}
-	return stx.BufferWrite([]*spanner.Mutation{m1})
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SoftDeleteTree implements AdminWriter.SoftDeleteTree.
 func (t *adminTX) SoftDeleteTree(ctx context.Context, treeID int64) (*trillian.Tree, error) {
-	info, err := t.getTreeInfo(ctx, treeID)
-	if err != nil {
-		return nil, err
-	}
-	if info.Deleted {
-		return nil, status.Errorf(codes.FailedPrecondition, "tree %v already soft deleted", treeID)
-	}
-
-	info.Deleted = true
-	info.DeleteTimeNanos = TimeNow().UnixNano()
-	if err := t.updateTreeInfo(ctx, info); err != nil {
-		return nil, err
-	}
-
-	return toTrillianTree(info)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // HardDeleteTree implements AdminWriter.HardDeleteTree.
 func (t *adminTX) HardDeleteTree(ctx context.Context, treeID int64) error {
-	info, err := t.getTreeInfo(ctx, treeID)
-	if err != nil {
-		return err
-	}
-	if !info.Deleted {
-		return status.Errorf(codes.FailedPrecondition, "tree %v is not soft deleted", treeID)
-	}
-
-	stx, ok := t.tx.(*spanner.ReadWriteTransaction)
-	if !ok {
-		return ErrWrongTXType
-	}
-
-	// Due to cloud spanner sizing recommendations, we don't interleave our tables
-	// which means no ON DELETE CASCADE goodies for us, so we have to
-	// transactionally delete related data from all tables.
-	return stx.BufferWrite([]*spanner.Mutation{
-		spanner.Delete("TreeRoots", spanner.Key{info.TreeId}),
-		spanner.Delete("TreeHeads", spanner.Key{info.TreeId}.AsPrefix()),
-		spanner.Delete("SubtreeData", spanner.Key{info.TreeId}.AsPrefix()),
-		spanner.Delete("LeafData", spanner.Key{info.TreeId}.AsPrefix()),
-		spanner.Delete("SequencedLeafData", spanner.Key{info.TreeId}.AsPrefix()),
-		spanner.Delete("Unsequenced", spanner.Key{info.TreeId}.AsPrefix()),
-	})
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// Due to cloud spanner sizing recommendations, we don't interleave our tables
+// which means no ON DELETE CASCADE goodies for us, so we have to
+// transactionally delete related data from all tables.
 
 // UndeleteTree implements AdminWriter.UndeleteTree.
 func (t *adminTX) UndeleteTree(ctx context.Context, treeID int64) (*trillian.Tree, error) {
-	info, err := t.getTreeInfo(ctx, treeID)
-	if err != nil {
-		return nil, err
-	}
-	if !info.Deleted {
-		return nil, status.Errorf(codes.FailedPrecondition, "tree %v is not soft deleted", treeID)
-	}
-
-	info.Deleted = false
-	info.DeleteTimeNanos = 0
-	if err := t.updateTreeInfo(ctx, info); err != nil {
-		return nil, err
-	}
-
-	return toTrillianTree(info)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func toTrillianTree(info *spannerpb.TreeInfo) (*trillian.Tree, error) {
-	createdPB := timestamppb.New(time.Unix(0, info.CreateTimeNanos))
-	updatedPB := timestamppb.New(time.Unix(0, info.UpdateTimeNanos))
-	if err := createdPB.CheckValid(); err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to convert creation time: %v", err)
-	}
-	if err := updatedPB.CheckValid(); err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to convert update time: %v", err)
-	}
-	tree := &trillian.Tree{
-		TreeId:          info.TreeId,
-		DisplayName:     info.Name,
-		Description:     info.Description,
-		CreateTime:      createdPB,
-		UpdateTime:      updatedPB,
-		MaxRootDuration: durationpb.New(time.Duration(info.MaxRootDurationMillis) * time.Millisecond),
-	}
-
-	ts, ok := treeStateReverseMap[info.TreeState]
-	if !ok {
-		return nil, status.Errorf(codes.Internal, "unexpected TreeState: %s", info.TreeState)
-	}
-	tree.TreeState = ts
-
-	tt, ok := treeTypeReverseMap[info.TreeType]
-	if !ok {
-		return nil, status.Errorf(codes.Internal, "unexpected TreeType: %s", info.TreeType)
-	}
-	tree.TreeType = tt
-
-	var config proto.Message
-	switch tt := info.TreeType; tt {
-	case spannerpb.TreeType_PREORDERED_LOG:
-		fallthrough
-	case spannerpb.TreeType_LOG:
-		config = info.GetLogStorageConfig()
-	default:
-		return nil, fmt.Errorf("unknown tree type %v", tt)
-	}
-	settings, err := anypb.New(config)
-	if err != nil {
-		return nil, fmt.Errorf("anypb.New(): %w", err)
-	}
-	tree.StorageSettings = settings
-
-	if info.Deleted {
-		tree.Deleted = info.Deleted
-	}
-	if info.DeleteTimeNanos > 0 {
-		tree.DeleteTime = timestamppb.New(time.Unix(0, info.DeleteTimeNanos))
-		if err := tree.DeleteTime.CheckValid(); err != nil {
-			return nil, status.Errorf(codes.Internal, "failed to convert delete time: %v", err)
-		}
-	}
-
-	return tree, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // unmarshalSettings returns the message obtained from tree.StorageSettings.
 // If tree.StorageSettings is nil no unmarshaling will be attempted; instead the method will return
 // (nil, nil).
 func unmarshalSettings(tree *trillian.Tree) (proto.Message, error) {
-	settings := tree.GetStorageSettings()
-	if settings == nil {
-		return nil, nil
-	}
-	any, err := settings.UnmarshalNew()
-	if err != nil {
-		return nil, err
-	}
-	return any, nil
+	_ = "STUB: not implemented"
+	return *new(proto.Message), nil
 }
 
 func validateLogStorageConfig(config *spannerpb.LogStorageConfig) error {
-	if config.NumUnseqBuckets < 1 {
-		return status.Errorf(codes.InvalidArgument, "NumUnseqBuckets = %v, want > 0", config.NumUnseqBuckets)
-	}
-	if config.NumMerkleBuckets < 1 || config.NumMerkleBuckets > 256 {
-		return status.Errorf(codes.InvalidArgument, "NumMerkleBuckets = %v, want a number in range [1, 256]", config.NumMerkleBuckets)
-	}
+	_ = "STUB: not implemented"
 	return nil
 }

@@ -46,46 +46,18 @@ var (
 
 var names = []string{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
 
-func signerName(i int) string {
-	if i < len(names) {
-		return names[i]
-	}
-	return fmt.Sprintf("signer%d", i)
-}
+func signerName(i int) string { _ = "STUB: not implemented"; return "" }
 
-func increment(s string) string {
-	if len(s) == 0 {
-		return "A"
-	}
-	offset := len(s) - 1
-	char := s[offset]
-	var prefix string
-	if len(s) > 1 {
-		prefix = s[0:offset]
-	}
-	if char < 'Z' {
-		char++
-		return string(append([]byte(prefix), char))
-	}
-	return string(append([]byte(increment(prefix)), 'A'))
-}
+func increment(s string) string { _ = "STUB: not implemented"; return "" }
 
 type lockedBool struct {
 	mu  sync.RWMutex
 	val bool
 }
 
-func (ab *lockedBool) Get() bool {
-	ab.mu.RLock()
-	defer ab.mu.RUnlock()
-	return ab.val
-}
+func (ab *lockedBool) Get() bool { _ = "STUB: not implemented"; return false }
 
-func (ab *lockedBool) Set(v bool) {
-	ab.mu.Lock()
-	defer ab.mu.Unlock()
-	ab.val = v
-}
+func (ab *lockedBool) Set(v bool) { _ = "STUB: not implemented"; return }
 
 func main() {
 	flag.Parse()

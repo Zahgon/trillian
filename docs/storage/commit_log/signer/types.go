@@ -14,8 +14,6 @@
 
 package signer
 
-import "encoding/json"
-
 // STH is a signed tree head.
 type STH struct {
 	TreeSize  int   `json:"sz"`
@@ -25,22 +23,9 @@ type STH struct {
 	Offset int `json:"off"`
 }
 
-func (s *STH) String() string {
-	v, err := json.Marshal(*s)
-	if err != nil {
-		panic(err)
-	}
-	return string(v)
-}
+func (s *STH) String() string { _ = "STUB: not implemented"; return "" }
 
-func sthFromString(s string) (*STH, error) {
-	if s == "" {
-		return nil, nil
-	}
-	var result STH
-	err := json.Unmarshal([]byte(s), &result)
-	return &result, err
-}
+func sthFromString(s string) (*STH, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // STHInfo holds information about an STH stored in the STH topic.
 type STHInfo struct {

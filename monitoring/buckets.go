@@ -20,33 +20,14 @@ package monitoring
 // PercentileBuckets returns a range of buckets for 0.0-100.0% use cases.
 // in specified integer increments. The increment must be at least 1%, which
 // prevents creating very large metric exports.
-func PercentileBuckets(inc int64) []float64 {
-	if inc <= 0 || inc > 100 {
-		return nil
-	}
-	r := make([]float64, 0, 100/inc)
-	var v int64
-	for v < 100 {
-		r = append(r, float64(v))
-		v += inc
-	}
-	return r
-}
+func PercentileBuckets(inc int64) []float64 { _ = "STUB: not implemented"; return nil }
 
 // LatencyBuckets returns a reasonable range of histogram upper limits for most
 // latency-in-seconds usecases. The thresholds increase exponentially from 0.04
 // seconds to ~282 days.
-func LatencyBuckets() []float64 {
-	return ExpBuckets(0.04, 1.07, 300)
-}
+func LatencyBuckets() []float64 { _ = "STUB: not implemented"; return nil }
 
 // ExpBuckets returns the specified number of histogram buckets with
 // exponentially increasing thresholds. The thresholds vary between base and
 // base * mult^(buckets-1).
-func ExpBuckets(base, mult float64, buckets uint) []float64 {
-	r := make([]float64, buckets)
-	for i, exp := uint(0), base; i < buckets; i, exp = i+1, exp*mult {
-		r[i] = exp
-	}
-	return r
-}
+func ExpBuckets(base, mult float64, buckets uint) []float64 { _ = "STUB: not implemented"; return nil }

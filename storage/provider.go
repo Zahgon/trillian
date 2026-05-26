@@ -15,7 +15,6 @@
 package storage
 
 import (
-	"fmt"
 	"sync"
 
 	"github.com/google/trillian/monitoring"
@@ -31,43 +30,16 @@ var (
 )
 
 // RegisterProvider registers the given storage Provider.
-func RegisterProvider(name string, sp NewProviderFunc) error {
-	spMu.Lock()
-	defer spMu.Unlock()
-
-	_, exists := spByName[name]
-	if exists {
-		return fmt.Errorf("storage provider %v already registered", name)
-	}
-	spByName[name] = sp
-	return nil
-}
+func RegisterProvider(name string, sp NewProviderFunc) error { _ = "STUB: not implemented"; return nil }
 
 // NewProvider returns a new Provider instance of the type specified by name.
 func NewProvider(name string, mf monitoring.MetricFactory) (Provider, error) {
-	spMu.RLock()
-	defer spMu.RUnlock()
-
-	sp := spByName[name]
-	if sp == nil {
-		return nil, fmt.Errorf("no such storage provider %v", name)
-	}
-
-	return sp(mf)
+	_ = "STUB: not implemented"
+	return *new(Provider), nil
 }
 
 // Providers returns a slice of all registered storage provider names.
-func Providers() []string {
-	spMu.RLock()
-	defer spMu.RUnlock()
-
-	r := []string{}
-	for k := range spByName {
-		r = append(r, k)
-	}
-
-	return r
-}
+func Providers() []string { _ = "STUB: not implemented"; return nil }
 
 // Provider is an interface which allows Trillian binaries to use different
 // storage implementations.

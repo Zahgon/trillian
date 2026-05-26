@@ -15,12 +15,7 @@
 package cloudspanner
 
 import (
-	"bytes"
-	"compress/gzip"
-	"context"
-	"encoding/base64"
 	"flag"
-	"io"
 	"sync"
 	"time"
 
@@ -28,7 +23,6 @@ import (
 	"github.com/google/trillian/monitoring"
 	"github.com/google/trillian/storage"
 	"google.golang.org/api/option"
-	"k8s.io/klog/v2"
 )
 
 var (
@@ -56,83 +50,38 @@ func init() {
 	}
 }
 
-func warn() {
-	warnOnce.Do(func() {
-		w := `H4sIAAAAAAAA/4xUsW7rMAzc8xUE2lE41B2sWlzsZ3TwoKEIgkQZ64mLsxga8vUPlG3FrZ2Hd1Ng3onHE5UDPQOEmVnwjCGhjyLC8RLcPgfhIvmwot8/CaHF9CMdOthdGmKvdSQQET85TqxJtKzjgnd4mYaFilDIlmhsnKql977mZSqzYcLy5K/zCUX66sbtNOAwteTXiVph5m4nigGzzUH7e3+a3XIRf5PFyhQQEV6UXLeY8nL292gyujlMIlIbdcUwet9ieBx/snWIOXkievPenyOMiDjnjOHj+MMJhjZfFBFpHF+AcQkGpr9f1nz02YoKcPXed5nvjHG2DGtB//7gGwHCq69HIPMBGa7hIYi3mPlOBOhf/Z8eMBmAdNVjZKlCFuiQgK19Y1YKrXDT5KWX7ohVC+cArnUKwGAF/rwvk6CrVhJ1DuDDF9igfVtEuFf8U2M0MXW4wf28pBy/4yOuOaLZw2+Qa76m5PpSFy+5N0usbnyr66+AjY7cx3eKz5VHrZpFlqL6nJa82+gI/H3Vh+TKm9Fmib7I5GXSvcStTQrndxwIw4dQvpak00DGpKvbnVgIxXk4kD31oLnTSkgkxchmJ01Vnj7lQLZFXrV532bpfqLJbTzqfygXrLHkh/CoP5Hq13DXJYuV3fD/DcRbm+5f7s1tvNj/RLBD9T6vNbi9dYpT05QTKsV1B+Ut4m8AAAD///IJ0vhIBgAA`
+func warn() { _ = "STUB: not implemented"; return }
 
-		wd, _ := base64.StdEncoding.DecodeString(w)
-		b := bytes.NewReader(wd)
-		r, _ := gzip.NewReader(b)
-		if err := r.Close(); err != nil {
-			// No need to exit, it's an unlikely error and doesn't affect operation.
-			klog.Warningf("Close()=%v", err)
-		}
-		t, _ := io.ReadAll(r)
-		klog.Warningf("WARNING\n%s\nCloudspanner is an experimental storage implementation, and only supports Logs currently.", string(t))
-	})
-}
+// No need to exit, it's an unlikely error and doesn't affect operation.
 
 type cloudSpannerProvider struct {
 	client *spanner.Client
 }
 
 func configFromFlags() spanner.ClientConfig {
-	return spanner.ClientConfig{}
+	_ = "STUB: not implemented"
+	return *new(spanner.ClientConfig)
 }
 
-func optionsFromFlags() []option.ClientOption {
-	opts := []option.ClientOption{}
-	if numConns := *csNumChannels; numConns != 0 {
-		opts = append(opts, option.WithGRPCConnectionPool(numConns))
-	}
-	return opts
-}
+func optionsFromFlags() []option.ClientOption { _ = "STUB: not implemented"; return nil }
 
 func newCloudSpannerStorageProvider(_ monitoring.MetricFactory) (storage.Provider, error) {
-	csMu.Lock()
-	defer csMu.Unlock()
-
-	if csStorageInstance != nil {
-		return csStorageInstance, nil
-	}
-
-	client, err := spanner.NewClientWithConfig(context.TODO(), *csURI, configFromFlags(), optionsFromFlags()...)
-	if err != nil {
-		return nil, err
-	}
-	csStorageInstance = &cloudSpannerProvider{
-		client: client,
-	}
-	return csStorageInstance, nil
+	_ = "STUB: not implemented"
+	return *new(storage.Provider), nil
 }
 
 // LogStorage builds and returns a new storage.LogStorage using CloudSpanner.
 func (s *cloudSpannerProvider) LogStorage() storage.LogStorage {
-	warn()
-	opts := LogStorageOptions{}
-	frac := *csDequeueAcrossMerkleBucketsFraction
-	if frac > 1.0 {
-		frac = 1.0
-	}
-	if frac > 0 {
-		opts.DequeueAcrossMerkleBuckets = true
-		opts.DequeueAcrossMerkleBucketsRangeFraction = frac
-	}
-	if *csReadOnlyStaleness > 0 {
-		opts.ReadOnlyStaleness = *csReadOnlyStaleness
-	}
-	return NewLogStorageWithOpts(s.client, opts)
+	_ = "STUB: not implemented"
+	return *new(storage.LogStorage)
 }
 
 // AdminStorage builds and returns a new storage.AdminStorage using CloudSpanner.
 func (s *cloudSpannerProvider) AdminStorage() storage.AdminStorage {
-	warn()
-	return NewAdminStorage(s.client)
+	_ = "STUB: not implemented"
+	return *new(storage.AdminStorage)
 }
 
 // Close shuts down this provider. Calls to the other methods will fail
 // after this.
-func (s *cloudSpannerProvider) Close() error {
-	s.client.Close()
-	return nil
-}
+func (s *cloudSpannerProvider) Close() error { _ = "STUB: not implemented"; return nil }

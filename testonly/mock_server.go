@@ -15,13 +15,9 @@
 package testonly
 
 import (
-	"net"
-
 	"github.com/golang/mock/gomock"
 	"github.com/google/trillian"
 	"github.com/google/trillian/testonly/tmock"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
 // MockServer implements the TrillianAdminServer, and TrillianLogServer.
@@ -38,36 +34,6 @@ type MockServer struct {
 // close function that must be defer-called on the scope the server is meant to
 // stop.
 func NewMockServer(ctrl *gomock.Controller) (*MockServer, func(), error) {
-	grpcServer := grpc.NewServer()
-	logServer := tmock.NewMockTrillianLogServer(ctrl)
-	adminServer := tmock.NewMockTrillianAdminServer(ctrl)
-	trillian.RegisterTrillianLogServer(grpcServer, logServer)
-	trillian.RegisterTrillianAdminServer(grpcServer, adminServer)
-
-	lis, err := net.Listen("tcp", ":0")
-	if err != nil {
-		return nil, nil, err
-	}
-	go func() { _ = grpcServer.Serve(lis) }()
-
-	cc, err := grpc.Dial(lis.Addr().String(), grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		grpcServer.Stop()
-		_ = lis.Close()
-		return nil, nil, err
-	}
-
-	stopFn := func() {
-		_ = cc.Close()
-		grpcServer.Stop()
-		_ = lis.Close()
-	}
-
-	return &MockServer{
-		Log:         logServer,
-		Admin:       adminServer,
-		LogClient:   trillian.NewTrillianLogClient(cc),
-		AdminClient: trillian.NewTrillianAdminClient(cc),
-		Addr:        lis.Addr().String(),
-	}, stopFn, nil
+	_ = "STUB: not implemented"
+	return nil, nil, nil
 }

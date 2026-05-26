@@ -17,28 +17,15 @@ package util
 
 import (
 	"context"
-	"os"
-	"os/signal"
-	"syscall"
-
-	"k8s.io/klog/v2"
 )
 
 // AwaitSignal waits for standard termination signals, then runs the given
 // function. Can early return if the passed in context is canceled, in which
 // case the function is not run.
 func AwaitSignal(ctx context.Context, doneFn func()) {
+	_ = "STUB: not implemented"
 	// Subscribe for the standard set of signals used to terminate a server.
-	sigs := make(chan os.Signal, 1)
-	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
-	defer signal.Stop(sigs)
-
-	// Wait for a signal or context cancellation.
-	select {
-	case sig := <-sigs:
-		klog.Warningf("Signal received: %v", sig)
-		doneFn()
-	case <-ctx.Done():
-		klog.Infof("AwaitSignal canceled: %v", ctx.Err())
-	}
+	return
 }
+
+// Wait for a signal or context cancellation.

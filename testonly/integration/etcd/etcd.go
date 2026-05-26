@@ -16,12 +16,6 @@
 package etcd
 
 import (
-	"errors"
-	"fmt"
-	"net"
-	"net/url"
-	"os"
-	"strings"
 	"time"
 
 	clientv3 "go.etcd.io/etcd/client/v3"
@@ -43,87 +37,12 @@ const (
 //
 // A temp directory and random ports are used to setup etcd.
 func StartEtcd() (e *embed.Etcd, c *clientv3.Client, cleanup func(), err error) {
-	var dir string
-	dir, err = os.MkdirTemp("", tempDirPrefix)
-	if err != nil {
-		return
-	}
-
-	cleanup = func() {
-		if c != nil {
-			_ = c.Close()
-		}
-		if e != nil {
-			e.Close()
-		}
-		_ = os.RemoveAll(dir)
-	}
-
-	for i := 0; i < MaxEtcdStartAttempts; i++ {
-		e, err = tryStartEtcd(dir)
-		if err == nil {
-			break
-		}
-		if strings.Contains(err.Error(), "address already in use") {
-			continue
-		}
-		cleanup()
-		return
-	}
-	if e == nil {
-		cleanup()
-		err = errors.New("failed to start etcd: too many attempts")
-		return
-	}
-
-	select {
-	case <-e.Server.ReadyNotify():
-		// OK
-	case <-time.After(defaultTimeout):
-		cleanup()
-		err = errors.New("timed out waiting for etcd to start")
-		return
-	}
-
-	c, err = clientv3.New(clientv3.Config{
-		Endpoints:   []string{e.Config().ListenClientUrls[0].String()},
-		DialTimeout: defaultTimeout,
-	})
-	if err != nil {
-		cleanup()
-	}
-	return
+	_ = "STUB: not implemented"
+	return nil, nil, nil, nil
 }
 
-func tryStartEtcd(dir string) (*embed.Etcd, error) {
-	p1, err := net.Listen("tcp", "localhost:0")
-	if err != nil {
-		return nil, err
-	}
-	if err := p1.Close(); err != nil {
-		return nil, err
-	}
+// OK
 
-	p2, err := net.Listen("tcp", "localhost:0")
-	if err != nil {
-		return nil, err
-	}
-	if err := p2.Close(); err != nil {
-		return nil, err
-	}
+func tryStartEtcd(dir string) (*embed.Etcd, error) { _ = "STUB: not implemented"; return nil, nil }
 
-	// OK to ignore err, it'll error below if parsing fails
-	clientURL, _ := url.Parse("http://" + p1.Addr().String())
-	peerURL, _ := url.Parse("http://" + p2.Addr().String())
-
-	cfg := embed.NewConfig()
-	cfg.Dir = dir
-	cfg.ListenClientUrls = []url.URL{*clientURL}
-	cfg.AdvertiseClientUrls = []url.URL{*clientURL}
-	cfg.ListenPeerUrls = []url.URL{*peerURL}
-	cfg.AdvertisePeerUrls = []url.URL{*peerURL}
-	cfg.InitialCluster = fmt.Sprintf("default=%v", peerURL)
-	cfg.Logger = "zap"
-
-	return embed.StartEtcd(cfg)
-}
+// OK to ignore err, it'll error below if parsing fails

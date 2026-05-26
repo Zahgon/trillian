@@ -16,13 +16,10 @@ package election
 
 import (
 	"context"
-	"fmt"
-	"math/rand"
 	"time"
 
 	"github.com/google/trillian/util/clock"
 	"github.com/google/trillian/util/election2"
-	"k8s.io/klog/v2"
 )
 
 // Minimum values for configuration intervals.
@@ -48,29 +45,12 @@ type RunnerConfig struct {
 
 // ResignDelay returns a randomized delay of how long to keep mastership for.
 func (cfg *RunnerConfig) ResignDelay() time.Duration {
-	delay := cfg.MasterHoldInterval
-	if cfg.MasterHoldJitter <= 0 {
-		return delay
-	}
-	add := rand.Int63n(int64(cfg.MasterHoldJitter))
-	return delay + time.Duration(add)
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 // fixupRunnerConfig ensures operation parameters have required minimum values.
-func fixupRunnerConfig(cfg *RunnerConfig) {
-	if cfg.PreElectionPause < MinPreElectionPause {
-		cfg.PreElectionPause = MinPreElectionPause
-	}
-	if cfg.MasterHoldInterval < MinMasterHoldInterval {
-		cfg.MasterHoldInterval = MinMasterHoldInterval
-	}
-	if cfg.MasterHoldJitter < 0 {
-		cfg.MasterHoldJitter = 0
-	}
-	if cfg.TimeSource == nil {
-		cfg.TimeSource = clock.System
-	}
-}
+func fixupRunnerConfig(cfg *RunnerConfig) { _ = "STUB: not implemented"; return }
 
 // Runner controls a continuous election process.
 type Runner struct {
@@ -86,79 +66,29 @@ type Runner struct {
 // calling Run(), the provided Election will be continuously monitored, and
 // mastership changes will be notified to the provided MasterTracker instance.
 func NewRunner(id string, cfg *RunnerConfig, tracker *MasterTracker, cancel context.CancelFunc, el election2.Election) *Runner {
-	fixupRunnerConfig(cfg)
-	return &Runner{
-		Cancel:   cancel,
-		id:       id,
-		cfg:      cfg,
-		tracker:  tracker,
-		election: el,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Run performs a continuous election process. It runs continuously until the
 // context is canceled or an internal error is encountered.
 func (er *Runner) Run(ctx context.Context, pending chan<- Resignation) {
+	_ = "STUB: not implemented"
 	// Pause for a random interval so that if multiple instances start at the
 	// same time there is less of a thundering herd.
-	pause := rand.Int63n(er.cfg.PreElectionPause.Nanoseconds())
-	if err := clock.SleepSource(ctx, time.Duration(pause), er.cfg.TimeSource); err != nil {
-		return // The context has been canceled during the sleep.
-	}
-
-	klog.V(1).Infof("%s: start election-monitoring loop ", er.id)
-	defer func() {
-		closeCtx, closeCancel := context.WithTimeout(context.Background(), time.Second)
-		defer closeCancel()
-		klog.Infof("%s: shutdown election-monitoring loop", er.id)
-		if err := er.election.Close(closeCtx); err != nil {
-			klog.Warningf("%s: election.Close: %v", er.id, err)
-		}
-	}()
-
-	for {
-		if err := er.beMaster(ctx, pending); err != nil {
-			klog.Errorf("%s: %v", er.id, err)
-			break
-		}
-	}
+	return
 }
+
+// The context has been canceled during the sleep.
 
 func (er *Runner) beMaster(ctx context.Context, pending chan<- Resignation) error {
-	klog.V(1).Infof("%s: When I left you, I was but the learner", er.id)
-	if err := er.election.Await(ctx); err != nil {
-		return fmt.Errorf("election.Await() failed: %v", err)
-	}
-	klog.Infof("%s: Now, I am the master", er.id)
-	er.tracker.Set(er.id, true)
-	defer er.tracker.Set(er.id, false)
-
-	mctx, err := er.election.WithMastership(ctx)
-	if err != nil {
-		return fmt.Errorf("election.WithMastership() failed: %v", err)
-	}
-
-	timer := er.cfg.TimeSource.NewTimer(er.cfg.ResignDelay())
-	defer timer.Stop()
-
-	select {
-	case <-mctx.Done(): // Mastership context is canceled.
-		klog.Errorf("%s: no longer the master!", er.id)
-		return mctx.Err()
-
-	case <-timer.Chan():
-		klog.Infof("%s: queue up resignation of mastership", er.id)
-		done := make(chan struct{})
-		r := Resignation{ID: er.id, er: er, done: done}
-		select {
-		case pending <- r:
-			<-done // Block until acted on.
-		default:
-			klog.Warning("Dropping resignation because operation manager seems to be exiting")
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
+
+// Mastership context is canceled.
+
+// Block until acted on.
 
 // Resignation indicates that a master should explicitly resign mastership, and
 // call the Execute() method as soon as no master-related activity is ongoing.
@@ -169,10 +99,4 @@ type Resignation struct {
 }
 
 // Execute performs the pending deliberate resignation for an election runner.
-func (r *Resignation) Execute(ctx context.Context) {
-	defer close(r.done)
-	klog.Infof("%s: deliberately resigning mastership", r.er.id)
-	if err := r.er.election.Resign(ctx); err != nil {
-		klog.Errorf("%s: failed to resign mastership: %v", r.er.id, err)
-	}
-}
+func (r *Resignation) Execute(ctx context.Context) { _ = "STUB: not implemented"; return }

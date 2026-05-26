@@ -18,36 +18,20 @@ import (
 	"github.com/google/btree"
 	"github.com/google/trillian/storage"
 	"github.com/google/trillian/storage/storagepb"
-	"k8s.io/klog/v2"
 )
 
 // This file contains utilities that are not part of the Storage API contracts but may
 // be useful for development or debugging.
 
 // Dump ascends the tree, logging the items contained.
-func Dump(t *btree.BTree) {
-	t.Ascend(func(i btree.Item) bool {
-		klog.Infof("%#v", i)
-		return true
-	})
-}
+func Dump(t *btree.BTree) { _ = "STUB: not implemented"; return }
 
 // DumpSubtrees will traverse the BTree and execute a callback on each subtree proto
 // that it contains. The traversal will be 'in order' according to the BTree keys, which
 // may not be useful at the application level.
 func DumpSubtrees(ls storage.LogStorage, treeID int64, callback func(string, *storagepb.SubtreeProto)) {
-	m := ls.(*memoryLogStorage)
-	tree := m.trees[treeID]
-	pi := subtreeKey(treeID, 0, []byte{})
-
-	tree.store.AscendGreaterOrEqual(pi, func(bi btree.Item) bool {
-		i := bi.(*kv)
-
-		if _, ok := i.v.(*storagepb.SubtreeProto); !ok {
-			// Then we've finished iterating over subtrees
-			return false
-		}
-		callback(i.k, i.v.(*storagepb.SubtreeProto))
-		return true
-	})
+	_ = "STUB: not implemented"
+	return
 }
+
+// Then we've finished iterating over subtrees

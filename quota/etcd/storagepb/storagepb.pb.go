@@ -24,11 +24,10 @@
 package storagepb
 
 import (
+	sync "sync"
+
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
 )
 
 const (
@@ -64,32 +63,27 @@ var (
 	}
 )
 
-func (x Config_State) Enum() *Config_State {
-	p := new(Config_State)
-	*p = x
-	return p
-}
+func (x Config_State) Enum() *Config_State { _ = "STUB: not implemented"; return nil }
 
-func (x Config_State) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
+func (x Config_State) String() string { _ = "STUB: not implemented"; return "" }
 
 func (Config_State) Descriptor() protoreflect.EnumDescriptor {
-	return file_storagepb_proto_enumTypes[0].Descriptor()
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumDescriptor)
 }
 
 func (Config_State) Type() protoreflect.EnumType {
-	return &file_storagepb_proto_enumTypes[0]
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumType)
 }
 
 func (x Config_State) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumNumber)
 }
 
 // Deprecated: Use Config_State.Descriptor instead.
-func (Config_State) EnumDescriptor() ([]byte, []int) {
-	return file_storagepb_proto_rawDescGZIP(), []int{2, 0}
-}
+func (Config_State) EnumDescriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
 // Data contained in a quota bucket.
 // Stored at each each quota's zero bucket. For example,
@@ -104,49 +98,23 @@ type Bucket struct {
 	sizeCache                     protoimpl.SizeCache
 }
 
-func (x *Bucket) Reset() {
-	*x = Bucket{}
-	mi := &file_storagepb_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *Bucket) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *Bucket) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *Bucket) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*Bucket) ProtoMessage() {}
+func (*Bucket) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *Bucket) ProtoReflect() protoreflect.Message {
-	mi := &file_storagepb_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use Bucket.ProtoReflect.Descriptor instead.
-func (*Bucket) Descriptor() ([]byte, []int) {
-	return file_storagepb_proto_rawDescGZIP(), []int{0}
-}
+func (*Bucket) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *Bucket) GetTokens() int64 {
-	if x != nil {
-		return x.Tokens
-	}
-	return 0
-}
+func (x *Bucket) GetTokens() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *Bucket) GetLastReplenishMillisSinceEpoch() int64 {
-	if x != nil {
-		return x.LastReplenishMillisSinceEpoch
-	}
-	return 0
-}
+func (x *Bucket) GetLastReplenishMillisSinceEpoch() int64 { _ = "STUB: not implemented"; return 0 }
 
 // Configuration for all quotas.
 // Stored at quotas/configs.
@@ -158,42 +126,21 @@ type Configs struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Configs) Reset() {
-	*x = Configs{}
-	mi := &file_storagepb_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *Configs) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *Configs) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *Configs) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*Configs) ProtoMessage() {}
+func (*Configs) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *Configs) ProtoReflect() protoreflect.Message {
-	mi := &file_storagepb_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use Configs.ProtoReflect.Descriptor instead.
-func (*Configs) Descriptor() ([]byte, []int) {
-	return file_storagepb_proto_rawDescGZIP(), []int{1}
-}
+func (*Configs) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *Configs) GetConfigs() []*Config {
-	if x != nil {
-		return x.Configs
-	}
-	return nil
-}
+func (x *Configs) GetConfigs() []*Config { _ = "STUB: not implemented"; return nil }
 
 // Configuration of a quota.
 type Config struct {
@@ -215,81 +162,37 @@ type Config struct {
 	sizeCache             protoimpl.SizeCache
 }
 
-func (x *Config) Reset() {
-	*x = Config{}
-	mi := &file_storagepb_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *Config) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *Config) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *Config) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*Config) ProtoMessage() {}
+func (*Config) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *Config) ProtoReflect() protoreflect.Message {
-	mi := &file_storagepb_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use Config.ProtoReflect.Descriptor instead.
-func (*Config) Descriptor() ([]byte, []int) {
-	return file_storagepb_proto_rawDescGZIP(), []int{2}
-}
+func (*Config) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *Config) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
+func (x *Config) GetName() string { _ = "STUB: not implemented"; return "" }
 
-func (x *Config) GetState() Config_State {
-	if x != nil {
-		return x.State
-	}
-	return Config_UNKNOWN_CONFIG_STATE
-}
+func (x *Config) GetState() Config_State { _ = "STUB: not implemented"; return *new(Config_State) }
 
-func (x *Config) GetMaxTokens() int64 {
-	if x != nil {
-		return x.MaxTokens
-	}
-	return 0
-}
+func (x *Config) GetMaxTokens() int64 { _ = "STUB: not implemented"; return 0 }
 
 func (x *Config) GetReplenishmentStrategy() isConfig_ReplenishmentStrategy {
-	if x != nil {
-		return x.ReplenishmentStrategy
-	}
-	return nil
+	_ = "STUB: not implemented"
+	return *new(isConfig_ReplenishmentStrategy)
 }
 
 func (x *Config) GetSequencingBased() *SequencingBasedStrategy {
-	if x != nil {
-		if x, ok := x.ReplenishmentStrategy.(*Config_SequencingBased); ok {
-			return x.SequencingBased
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (x *Config) GetTimeBased() *TimeBasedStrategy {
-	if x != nil {
-		if x, ok := x.ReplenishmentStrategy.(*Config_TimeBased); ok {
-			return x.TimeBased
-		}
-	}
-	return nil
-}
+func (x *Config) GetTimeBased() *TimeBasedStrategy { _ = "STUB: not implemented"; return nil }
 
 type isConfig_ReplenishmentStrategy interface {
 	isConfig_ReplenishmentStrategy()
@@ -305,45 +208,36 @@ type Config_TimeBased struct {
 	TimeBased *TimeBasedStrategy `protobuf:"bytes,5,opt,name=time_based,json=timeBased,proto3,oneof"`
 }
 
-func (*Config_SequencingBased) isConfig_ReplenishmentStrategy() {}
+func (*Config_SequencingBased) isConfig_ReplenishmentStrategy() { _ = "STUB: not implemented"; return }
 
-func (*Config_TimeBased) isConfig_ReplenishmentStrategy() {}
+func (*Config_TimeBased) isConfig_ReplenishmentStrategy() {
+	_ = "STUB: not implemented"
 
-// Sequencing-based replenishment strategy settings.
+	// Sequencing-based replenishment strategy settings.
+	return
+}
+
 type SequencingBasedStrategy struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SequencingBasedStrategy) Reset() {
-	*x = SequencingBasedStrategy{}
-	mi := &file_storagepb_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *SequencingBasedStrategy) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *SequencingBasedStrategy) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *SequencingBasedStrategy) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*SequencingBasedStrategy) ProtoMessage() {}
+func (*SequencingBasedStrategy) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *SequencingBasedStrategy) ProtoReflect() protoreflect.Message {
-	mi := &file_storagepb_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use SequencingBasedStrategy.ProtoReflect.Descriptor instead.
 func (*SequencingBasedStrategy) Descriptor() ([]byte, []int) {
-	return file_storagepb_proto_rawDescGZIP(), []int{3}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Time-based replenishment strategy settings.
@@ -357,47 +251,24 @@ type TimeBasedStrategy struct {
 	sizeCache                protoimpl.SizeCache
 }
 
-func (x *TimeBasedStrategy) Reset() {
-	*x = TimeBasedStrategy{}
-	mi := &file_storagepb_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *TimeBasedStrategy) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *TimeBasedStrategy) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *TimeBasedStrategy) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*TimeBasedStrategy) ProtoMessage() {}
+func (*TimeBasedStrategy) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *TimeBasedStrategy) ProtoReflect() protoreflect.Message {
-	mi := &file_storagepb_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use TimeBasedStrategy.ProtoReflect.Descriptor instead.
-func (*TimeBasedStrategy) Descriptor() ([]byte, []int) {
-	return file_storagepb_proto_rawDescGZIP(), []int{4}
-}
+func (*TimeBasedStrategy) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *TimeBasedStrategy) GetTokensToReplenish() int64 {
-	if x != nil {
-		return x.TokensToReplenish
-	}
-	return 0
-}
+func (x *TimeBasedStrategy) GetTokensToReplenish() int64 { _ = "STUB: not implemented"; return 0 }
 
 func (x *TimeBasedStrategy) GetReplenishIntervalSeconds() int64 {
-	if x != nil {
-		return x.ReplenishIntervalSeconds
-	}
+	_ = "STUB: not implemented"
 	return 0
 }
 
@@ -434,12 +305,7 @@ var (
 	file_storagepb_proto_rawDescData []byte
 )
 
-func file_storagepb_proto_rawDescGZIP() []byte {
-	file_storagepb_proto_rawDescOnce.Do(func() {
-		file_storagepb_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_storagepb_proto_rawDesc), len(file_storagepb_proto_rawDesc)))
-	})
-	return file_storagepb_proto_rawDescData
-}
+func file_storagepb_proto_rawDescGZIP() []byte { _ = "STUB: not implemented"; return nil }
 
 var file_storagepb_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_storagepb_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
@@ -463,31 +329,5 @@ var file_storagepb_proto_depIdxs = []int32{
 	0, // [0:4] is the sub-list for field type_name
 }
 
-func init() { file_storagepb_proto_init() }
-func file_storagepb_proto_init() {
-	if File_storagepb_proto != nil {
-		return
-	}
-	file_storagepb_proto_msgTypes[2].OneofWrappers = []any{
-		(*Config_SequencingBased)(nil),
-		(*Config_TimeBased)(nil),
-	}
-	type x struct{}
-	out := protoimpl.TypeBuilder{
-		File: protoimpl.DescBuilder{
-			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_storagepb_proto_rawDesc), len(file_storagepb_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   5,
-			NumExtensions: 0,
-			NumServices:   0,
-		},
-		GoTypes:           file_storagepb_proto_goTypes,
-		DependencyIndexes: file_storagepb_proto_depIdxs,
-		EnumInfos:         file_storagepb_proto_enumTypes,
-		MessageInfos:      file_storagepb_proto_msgTypes,
-	}.Build()
-	File_storagepb_proto = out.File
-	file_storagepb_proto_goTypes = nil
-	file_storagepb_proto_depIdxs = nil
-}
+func init()                      { file_storagepb_proto_init() }
+func file_storagepb_proto_init() { _ = "STUB: not implemented"; return }

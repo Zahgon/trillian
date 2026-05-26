@@ -21,11 +21,10 @@
 package storagepb
 
 import (
+	sync "sync"
+
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
 )
 
 const (
@@ -56,70 +55,29 @@ type SubtreeProto struct {
 	sizeCache         protoimpl.SizeCache
 }
 
-func (x *SubtreeProto) Reset() {
-	*x = SubtreeProto{}
-	mi := &file_storage_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *SubtreeProto) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *SubtreeProto) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *SubtreeProto) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*SubtreeProto) ProtoMessage() {}
+func (*SubtreeProto) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *SubtreeProto) ProtoReflect() protoreflect.Message {
-	mi := &file_storage_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use SubtreeProto.ProtoReflect.Descriptor instead.
-func (*SubtreeProto) Descriptor() ([]byte, []int) {
-	return file_storage_proto_rawDescGZIP(), []int{0}
-}
+func (*SubtreeProto) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *SubtreeProto) GetPrefix() []byte {
-	if x != nil {
-		return x.Prefix
-	}
-	return nil
-}
+func (x *SubtreeProto) GetPrefix() []byte { _ = "STUB: not implemented"; return nil }
 
-func (x *SubtreeProto) GetDepth() int32 {
-	if x != nil {
-		return x.Depth
-	}
-	return 0
-}
+func (x *SubtreeProto) GetDepth() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (x *SubtreeProto) GetLeaves() map[string][]byte {
-	if x != nil {
-		return x.Leaves
-	}
-	return nil
-}
+func (x *SubtreeProto) GetLeaves() map[string][]byte { _ = "STUB: not implemented"; return nil }
 
-func (x *SubtreeProto) GetInternalNodes() map[string][]byte {
-	if x != nil {
-		return x.InternalNodes
-	}
-	return nil
-}
+func (x *SubtreeProto) GetInternalNodes() map[string][]byte { _ = "STUB: not implemented"; return nil }
 
-func (x *SubtreeProto) GetInternalNodeCount() uint32 {
-	if x != nil {
-		return x.InternalNodeCount
-	}
-	return 0
-}
+func (x *SubtreeProto) GetInternalNodeCount() uint32 { _ = "STUB: not implemented"; return 0 }
 
 var File_storage_proto protoreflect.FileDescriptor
 
@@ -144,12 +102,7 @@ var (
 	file_storage_proto_rawDescData []byte
 )
 
-func file_storage_proto_rawDescGZIP() []byte {
-	file_storage_proto_rawDescOnce.Do(func() {
-		file_storage_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_storage_proto_rawDesc), len(file_storage_proto_rawDesc)))
-	})
-	return file_storage_proto_rawDescData
-}
+func file_storage_proto_rawDescGZIP() []byte { _ = "STUB: not implemented"; return nil }
 
 var file_storage_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_storage_proto_goTypes = []any{
@@ -167,26 +120,5 @@ var file_storage_proto_depIdxs = []int32{
 	0, // [0:2] is the sub-list for field type_name
 }
 
-func init() { file_storage_proto_init() }
-func file_storage_proto_init() {
-	if File_storage_proto != nil {
-		return
-	}
-	type x struct{}
-	out := protoimpl.TypeBuilder{
-		File: protoimpl.DescBuilder{
-			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_storage_proto_rawDesc), len(file_storage_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   3,
-			NumExtensions: 0,
-			NumServices:   0,
-		},
-		GoTypes:           file_storage_proto_goTypes,
-		DependencyIndexes: file_storage_proto_depIdxs,
-		MessageInfos:      file_storage_proto_msgTypes,
-	}.Build()
-	File_storage_proto = out.File
-	file_storage_proto_goTypes = nil
-	file_storage_proto_depIdxs = nil
-}
+func init()                    { file_storage_proto_init() }
+func file_storage_proto_init() { _ = "STUB: not implemented"; return }

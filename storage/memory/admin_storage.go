@@ -16,21 +16,17 @@ package memory
 
 import (
 	"context"
-	"fmt"
 	"sync"
-	"time"
 
 	"github.com/google/trillian"
 	"github.com/google/trillian/storage"
-	"google.golang.org/protobuf/proto"
-	"google.golang.org/protobuf/types/known/timestamppb"
-	"k8s.io/klog/v2"
 )
 
 // NewAdminStorage returns a storage.AdminStorage implementation backed by
 // TreeStorage.
 func NewAdminStorage(ms *TreeStorage) storage.AdminStorage {
-	return &memoryAdminStorage{ms}
+	_ = "STUB: not implemented"
+	return *new(storage.AdminStorage)
 }
 
 // memoryAdminStorage implements storage.AdminStorage
@@ -39,23 +35,17 @@ type memoryAdminStorage struct {
 }
 
 func (s *memoryAdminStorage) Snapshot(ctx context.Context) (storage.ReadOnlyAdminTX, error) {
-	return &adminTX{ms: s.ms}, nil
+	_ = "STUB: not implemented"
+	return *new(storage.ReadOnlyAdminTX), nil
 }
 
 func (s *memoryAdminStorage) ReadWriteTransaction(ctx context.Context, f storage.AdminTXFunc) error {
-	tx := &adminTX{ms: s.ms}
-	defer func() {
-		if err := tx.Close(); err != nil {
-			klog.Errorf("tx.Close(): %v", err)
-		}
-	}()
-	if err := f(ctx, tx); err != nil {
-		return err
-	}
-	return tx.Commit()
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (s *memoryAdminStorage) CheckDatabaseAccessible(ctx context.Context) error {
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -71,112 +61,50 @@ type adminTX struct {
 }
 
 func (t *adminTX) Commit() error {
+	_ = "STUB: not implemented"
 	// TODO(al): The admin implementation isn't transactional.
-	return t.Close()
+	return nil
 }
 
 func (t *adminTX) Close() error {
+	_ = "STUB: not implemented"
 	// TODO(al): The admin implementation isn't transactional.
-	t.mu.Lock()
-	defer t.mu.Unlock()
-	t.closed = true
 	return nil
 }
 
 func (t *adminTX) GetTree(ctx context.Context, treeID int64) (*trillian.Tree, error) {
-	tree := t.ms.getTree(treeID)
-	if tree == nil {
-		return nil, fmt.Errorf("no such treeID %d", treeID)
-	}
-	tree.RLock()
-	defer tree.RUnlock()
-
-	return tree.meta, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (t *adminTX) ListTrees(ctx context.Context, includeDeleted bool) ([]*trillian.Tree, error) {
-	t.ms.mu.RLock()
-	defer t.ms.mu.RUnlock()
-
-	var ret []*trillian.Tree
-	for _, v := range t.ms.trees {
-		ret = append(ret, v.meta)
-	}
-	return ret, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (t *adminTX) CreateTree(ctx context.Context, tr *trillian.Tree) (*trillian.Tree, error) {
-	if err := storage.ValidateTreeForCreation(ctx, tr); err != nil {
-		return nil, err
-	}
-	if err := validateStorageSettings(tr); err != nil {
-		return nil, err
-	}
-
-	id, err := storage.NewTreeID()
-	if err != nil {
-		return nil, err
-	}
-
-	now := time.Now()
-
-	meta := proto.Clone(tr).(*trillian.Tree)
-	meta.TreeId = id
-	meta.CreateTime = timestamppb.New(now)
-	if err := meta.CreateTime.CheckValid(); err != nil {
-		return nil, err
-	}
-	meta.UpdateTime = timestamppb.New(now)
-	if err := meta.UpdateTime.CheckValid(); err != nil {
-		return nil, err
-	}
-
-	t.ms.mu.Lock()
-	defer t.ms.mu.Unlock()
-	t.ms.trees[id] = newTree(meta)
-
-	klog.V(1).Infof("trees: %v", t.ms.trees)
-
-	return meta, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (t *adminTX) UpdateTree(ctx context.Context, treeID int64, updateFunc func(*trillian.Tree)) (*trillian.Tree, error) {
-	mTree := t.ms.getTree(treeID)
-	mTree.mu.Lock()
-	defer mTree.mu.Unlock()
-
-	tree := mTree.meta
-	beforeUpdate := proto.Clone(tree).(*trillian.Tree)
-	updateFunc(tree)
-	if err := storage.ValidateTreeForUpdate(ctx, beforeUpdate, tree); err != nil {
-		return nil, err
-	}
-	if err := validateStorageSettings(tree); err != nil {
-		return nil, err
-	}
-
-	tree.UpdateTime = timestamppb.New(time.Now())
-	if err := tree.UpdateTime.CheckValid(); err != nil {
-		return nil, err
-	}
-	return tree, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (t *adminTX) SoftDeleteTree(ctx context.Context, treeID int64) (*trillian.Tree, error) {
-	return nil, fmt.Errorf("method not supported: SoftDeleteTree")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (t *adminTX) HardDeleteTree(ctx context.Context, treeID int64) error {
-	return fmt.Errorf("method not supported: HardDeleteTree")
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (t *adminTX) UndeleteTree(ctx context.Context, treeID int64) (*trillian.Tree, error) {
-	return nil, fmt.Errorf("method not supported: UndeleteTree")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func validateStorageSettings(tree *trillian.Tree) error {
-	if tree.StorageSettings != nil {
-		return fmt.Errorf("storage_settings not supported, but got %v", tree.StorageSettings)
-	}
-	return nil
-}
+func validateStorageSettings(tree *trillian.Tree) error { _ = "STUB: not implemented"; return nil }

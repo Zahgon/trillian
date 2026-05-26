@@ -21,11 +21,10 @@
 package keyspb
 
 import (
+	sync "sync"
+
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
 )
 
 const (
@@ -62,30 +61,31 @@ var (
 )
 
 func (x Specification_ECDSA_Curve) Enum() *Specification_ECDSA_Curve {
-	p := new(Specification_ECDSA_Curve)
-	*p = x
-	return p
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (x Specification_ECDSA_Curve) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
+func (x Specification_ECDSA_Curve) String() string { _ = "STUB: not implemented"; return "" }
 
 func (Specification_ECDSA_Curve) Descriptor() protoreflect.EnumDescriptor {
-	return file_crypto_keyspb_keyspb_proto_enumTypes[0].Descriptor()
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumDescriptor)
 }
 
 func (Specification_ECDSA_Curve) Type() protoreflect.EnumType {
-	return &file_crypto_keyspb_keyspb_proto_enumTypes[0]
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumType)
 }
 
 func (x Specification_ECDSA_Curve) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.EnumNumber)
 }
 
 // Deprecated: Use Specification_ECDSA_Curve.Descriptor instead.
 func (Specification_ECDSA_Curve) EnumDescriptor() ([]byte, []int) {
-	return file_crypto_keyspb_keyspb_proto_rawDescGZIP(), []int{0, 0, 0}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Specification for a private key.
@@ -103,67 +103,34 @@ type Specification struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Specification) Reset() {
-	*x = Specification{}
-	mi := &file_crypto_keyspb_keyspb_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *Specification) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *Specification) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *Specification) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*Specification) ProtoMessage() {}
+func (*Specification) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *Specification) ProtoReflect() protoreflect.Message {
-	mi := &file_crypto_keyspb_keyspb_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use Specification.ProtoReflect.Descriptor instead.
-func (*Specification) Descriptor() ([]byte, []int) {
-	return file_crypto_keyspb_keyspb_proto_rawDescGZIP(), []int{0}
-}
+func (*Specification) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
 func (x *Specification) GetParams() isSpecification_Params {
-	if x != nil {
-		return x.Params
-	}
-	return nil
+	_ = "STUB: not implemented"
+	return *new(isSpecification_Params)
 }
 
 func (x *Specification) GetEcdsaParams() *Specification_ECDSA {
-	if x != nil {
-		if x, ok := x.Params.(*Specification_EcdsaParams); ok {
-			return x.EcdsaParams
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (x *Specification) GetRsaParams() *Specification_RSA {
-	if x != nil {
-		if x, ok := x.Params.(*Specification_RsaParams); ok {
-			return x.RsaParams
-		}
-	}
-	return nil
-}
+func (x *Specification) GetRsaParams() *Specification_RSA { _ = "STUB: not implemented"; return nil }
 
 func (x *Specification) GetEd25519Params() *Specification_Ed25519 {
-	if x != nil {
-		if x, ok := x.Params.(*Specification_Ed25519Params); ok {
-			return x.Ed25519Params
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -186,13 +153,17 @@ type Specification_Ed25519Params struct {
 	Ed25519Params *Specification_Ed25519 `protobuf:"bytes,3,opt,name=ed25519_params,json=ed25519Params,proto3,oneof"`
 }
 
-func (*Specification_EcdsaParams) isSpecification_Params() {}
+func (*Specification_EcdsaParams) isSpecification_Params() { _ = "STUB: not implemented"; return }
 
-func (*Specification_RsaParams) isSpecification_Params() {}
+func (*Specification_RsaParams) isSpecification_Params() { _ = "STUB: not implemented"; return }
 
-func (*Specification_Ed25519Params) isSpecification_Params() {}
+func (*Specification_Ed25519Params) isSpecification_Params() {
+	_ = "STUB: not implemented"
 
-// PEMKeyFile identifies a private key stored in a PEM-encoded file.
+	// PEMKeyFile identifies a private key stored in a PEM-encoded file.
+	return
+}
+
 type PEMKeyFile struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// File path of the private key.
@@ -204,49 +175,23 @@ type PEMKeyFile struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *PEMKeyFile) Reset() {
-	*x = PEMKeyFile{}
-	mi := &file_crypto_keyspb_keyspb_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *PEMKeyFile) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *PEMKeyFile) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *PEMKeyFile) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*PEMKeyFile) ProtoMessage() {}
+func (*PEMKeyFile) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *PEMKeyFile) ProtoReflect() protoreflect.Message {
-	mi := &file_crypto_keyspb_keyspb_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use PEMKeyFile.ProtoReflect.Descriptor instead.
-func (*PEMKeyFile) Descriptor() ([]byte, []int) {
-	return file_crypto_keyspb_keyspb_proto_rawDescGZIP(), []int{1}
-}
+func (*PEMKeyFile) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *PEMKeyFile) GetPath() string {
-	if x != nil {
-		return x.Path
-	}
-	return ""
-}
+func (x *PEMKeyFile) GetPath() string { _ = "STUB: not implemented"; return "" }
 
-func (x *PEMKeyFile) GetPassword() string {
-	if x != nil {
-		return x.Password
-	}
-	return ""
-}
+func (x *PEMKeyFile) GetPassword() string { _ = "STUB: not implemented"; return "" }
 
 // PrivateKey is a private key, used for generating signatures.
 type PrivateKey struct {
@@ -258,42 +203,21 @@ type PrivateKey struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *PrivateKey) Reset() {
-	*x = PrivateKey{}
-	mi := &file_crypto_keyspb_keyspb_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *PrivateKey) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *PrivateKey) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *PrivateKey) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*PrivateKey) ProtoMessage() {}
+func (*PrivateKey) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *PrivateKey) ProtoReflect() protoreflect.Message {
-	mi := &file_crypto_keyspb_keyspb_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use PrivateKey.ProtoReflect.Descriptor instead.
-func (*PrivateKey) Descriptor() ([]byte, []int) {
-	return file_crypto_keyspb_keyspb_proto_rawDescGZIP(), []int{2}
-}
+func (*PrivateKey) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *PrivateKey) GetDer() []byte {
-	if x != nil {
-		return x.Der
-	}
-	return nil
-}
+func (x *PrivateKey) GetDer() []byte { _ = "STUB: not implemented"; return nil }
 
 // PublicKey is a public key, used for verifying signatures.
 type PublicKey struct {
@@ -304,42 +228,21 @@ type PublicKey struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *PublicKey) Reset() {
-	*x = PublicKey{}
-	mi := &file_crypto_keyspb_keyspb_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *PublicKey) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *PublicKey) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *PublicKey) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*PublicKey) ProtoMessage() {}
+func (*PublicKey) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *PublicKey) ProtoReflect() protoreflect.Message {
-	mi := &file_crypto_keyspb_keyspb_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use PublicKey.ProtoReflect.Descriptor instead.
-func (*PublicKey) Descriptor() ([]byte, []int) {
-	return file_crypto_keyspb_keyspb_proto_rawDescGZIP(), []int{3}
-}
+func (*PublicKey) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *PublicKey) GetDer() []byte {
-	if x != nil {
-		return x.Der
-	}
-	return nil
-}
+func (x *PublicKey) GetDer() []byte { _ = "STUB: not implemented"; return nil }
 
 // PKCS11Config identifies a private key accessed using PKCS #11.
 type PKCS11Config struct {
@@ -354,56 +257,25 @@ type PKCS11Config struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *PKCS11Config) Reset() {
-	*x = PKCS11Config{}
-	mi := &file_crypto_keyspb_keyspb_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *PKCS11Config) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *PKCS11Config) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *PKCS11Config) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*PKCS11Config) ProtoMessage() {}
+func (*PKCS11Config) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *PKCS11Config) ProtoReflect() protoreflect.Message {
-	mi := &file_crypto_keyspb_keyspb_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use PKCS11Config.ProtoReflect.Descriptor instead.
-func (*PKCS11Config) Descriptor() ([]byte, []int) {
-	return file_crypto_keyspb_keyspb_proto_rawDescGZIP(), []int{4}
-}
+func (*PKCS11Config) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *PKCS11Config) GetTokenLabel() string {
-	if x != nil {
-		return x.TokenLabel
-	}
-	return ""
-}
+func (x *PKCS11Config) GetTokenLabel() string { _ = "STUB: not implemented"; return "" }
 
-func (x *PKCS11Config) GetPin() string {
-	if x != nil {
-		return x.Pin
-	}
-	return ""
-}
+func (x *PKCS11Config) GetPin() string { _ = "STUB: not implemented"; return "" }
 
-func (x *PKCS11Config) GetPublicKey() string {
-	if x != nil {
-		return x.PublicKey
-	}
-	return ""
-}
+func (x *PKCS11Config) GetPublicKey() string { _ = "STUB: not implemented"; return "" }
 
 // / ECDSA defines parameters for an ECDSA key.
 type Specification_ECDSA struct {
@@ -415,41 +287,26 @@ type Specification_ECDSA struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Specification_ECDSA) Reset() {
-	*x = Specification_ECDSA{}
-	mi := &file_crypto_keyspb_keyspb_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *Specification_ECDSA) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *Specification_ECDSA) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *Specification_ECDSA) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*Specification_ECDSA) ProtoMessage() {}
+func (*Specification_ECDSA) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *Specification_ECDSA) ProtoReflect() protoreflect.Message {
-	mi := &file_crypto_keyspb_keyspb_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use Specification_ECDSA.ProtoReflect.Descriptor instead.
 func (*Specification_ECDSA) Descriptor() ([]byte, []int) {
-	return file_crypto_keyspb_keyspb_proto_rawDescGZIP(), []int{0, 0}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (x *Specification_ECDSA) GetCurve() Specification_ECDSA_Curve {
-	if x != nil {
-		return x.Curve
-	}
-	return Specification_ECDSA_DEFAULT_CURVE
+	_ = "STUB: not implemented"
+	return *new(Specification_ECDSA_Curve)
 }
 
 // RSA defines parameters for an RSA key.
@@ -463,42 +320,21 @@ type Specification_RSA struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Specification_RSA) Reset() {
-	*x = Specification_RSA{}
-	mi := &file_crypto_keyspb_keyspb_proto_msgTypes[6]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *Specification_RSA) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *Specification_RSA) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *Specification_RSA) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*Specification_RSA) ProtoMessage() {}
+func (*Specification_RSA) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *Specification_RSA) ProtoReflect() protoreflect.Message {
-	mi := &file_crypto_keyspb_keyspb_proto_msgTypes[6]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use Specification_RSA.ProtoReflect.Descriptor instead.
-func (*Specification_RSA) Descriptor() ([]byte, []int) {
-	return file_crypto_keyspb_keyspb_proto_rawDescGZIP(), []int{0, 1}
-}
+func (*Specification_RSA) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *Specification_RSA) GetBits() int32 {
-	if x != nil {
-		return x.Bits
-	}
-	return 0
-}
+func (x *Specification_RSA) GetBits() int32 { _ = "STUB: not implemented"; return 0 }
 
 // Ed25519 defines (empty) parameters for an Ed25519 private key.
 type Specification_Ed25519 struct {
@@ -507,34 +343,21 @@ type Specification_Ed25519 struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Specification_Ed25519) Reset() {
-	*x = Specification_Ed25519{}
-	mi := &file_crypto_keyspb_keyspb_proto_msgTypes[7]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *Specification_Ed25519) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *Specification_Ed25519) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *Specification_Ed25519) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*Specification_Ed25519) ProtoMessage() {}
+func (*Specification_Ed25519) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *Specification_Ed25519) ProtoReflect() protoreflect.Message {
-	mi := &file_crypto_keyspb_keyspb_proto_msgTypes[7]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use Specification_Ed25519.ProtoReflect.Descriptor instead.
 func (*Specification_Ed25519) Descriptor() ([]byte, []int) {
-	return file_crypto_keyspb_keyspb_proto_rawDescGZIP(), []int{0, 2}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 var File_crypto_keyspb_keyspb_proto protoreflect.FileDescriptor
@@ -579,12 +402,7 @@ var (
 	file_crypto_keyspb_keyspb_proto_rawDescData []byte
 )
 
-func file_crypto_keyspb_keyspb_proto_rawDescGZIP() []byte {
-	file_crypto_keyspb_keyspb_proto_rawDescOnce.Do(func() {
-		file_crypto_keyspb_keyspb_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_crypto_keyspb_keyspb_proto_rawDesc), len(file_crypto_keyspb_keyspb_proto_rawDesc)))
-	})
-	return file_crypto_keyspb_keyspb_proto_rawDescData
-}
+func file_crypto_keyspb_keyspb_proto_rawDescGZIP() []byte { _ = "STUB: not implemented"; return nil }
 
 var file_crypto_keyspb_keyspb_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_crypto_keyspb_keyspb_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
@@ -611,32 +429,5 @@ var file_crypto_keyspb_keyspb_proto_depIdxs = []int32{
 	0, // [0:4] is the sub-list for field type_name
 }
 
-func init() { file_crypto_keyspb_keyspb_proto_init() }
-func file_crypto_keyspb_keyspb_proto_init() {
-	if File_crypto_keyspb_keyspb_proto != nil {
-		return
-	}
-	file_crypto_keyspb_keyspb_proto_msgTypes[0].OneofWrappers = []any{
-		(*Specification_EcdsaParams)(nil),
-		(*Specification_RsaParams)(nil),
-		(*Specification_Ed25519Params)(nil),
-	}
-	type x struct{}
-	out := protoimpl.TypeBuilder{
-		File: protoimpl.DescBuilder{
-			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_crypto_keyspb_keyspb_proto_rawDesc), len(file_crypto_keyspb_keyspb_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   8,
-			NumExtensions: 0,
-			NumServices:   0,
-		},
-		GoTypes:           file_crypto_keyspb_keyspb_proto_goTypes,
-		DependencyIndexes: file_crypto_keyspb_keyspb_proto_depIdxs,
-		EnumInfos:         file_crypto_keyspb_keyspb_proto_enumTypes,
-		MessageInfos:      file_crypto_keyspb_keyspb_proto_msgTypes,
-	}.Build()
-	File_crypto_keyspb_keyspb_proto = out.File
-	file_crypto_keyspb_keyspb_proto_goTypes = nil
-	file_crypto_keyspb_keyspb_proto_depIdxs = nil
-}
+func init()                                 { file_crypto_keyspb_keyspb_proto_init() }
+func file_crypto_keyspb_keyspb_proto_init() { _ = "STUB: not implemented"; return }

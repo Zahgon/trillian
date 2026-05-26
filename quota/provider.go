@@ -15,7 +15,6 @@
 package quota
 
 import (
-	"fmt"
 	"sync"
 )
 
@@ -29,43 +28,10 @@ var (
 type NewManagerFunc func() (Manager, error)
 
 // RegisterProvider registers a function that provides Manager instances.
-func RegisterProvider(name string, qp NewManagerFunc) error {
-	qpMu.Lock()
-	defer qpMu.Unlock()
-
-	if qpByName == nil {
-		qpByName = make(map[string]NewManagerFunc)
-	}
-
-	_, exists := qpByName[name]
-	if exists {
-		return fmt.Errorf("quota provider %v already registered", name)
-	}
-	qpByName[name] = qp
-	return nil
-}
+func RegisterProvider(name string, qp NewManagerFunc) error { _ = "STUB: not implemented"; return nil }
 
 // Providers returns a slice of registered quota provider names.
-func Providers() []string {
-	qpMu.RLock()
-	defer qpMu.RUnlock()
-
-	r := []string{}
-	for k := range qpByName {
-		r = append(r, k)
-	}
-
-	return r
-}
+func Providers() []string { _ = "STUB: not implemented"; return nil }
 
 // NewManager returns a Manager implementation.
-func NewManager(name string) (Manager, error) {
-	qpMu.RLock()
-	defer qpMu.RUnlock()
-
-	f, exists := qpByName[name]
-	if !exists {
-		return nil, fmt.Errorf("unknown quota system: %v", name)
-	}
-	return f()
-}
+func NewManager(name string) (Manager, error) { _ = "STUB: not implemented"; return *new(Manager), nil }

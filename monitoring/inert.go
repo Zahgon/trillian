@@ -15,11 +15,7 @@
 package monitoring
 
 import (
-	"fmt"
-	"strings"
 	"sync"
-
-	"k8s.io/klog/v2"
 )
 
 // InertMetricFactory creates inert metrics for testing.
@@ -27,33 +23,27 @@ type InertMetricFactory struct{}
 
 // NewCounter creates a new inert Counter.
 func (imf InertMetricFactory) NewCounter(name, help string, labelNames ...string) Counter {
-	return &InertFloat{
-		labelCount: len(labelNames),
-		vals:       make(map[string]float64),
-	}
+	_ = "STUB: not implemented"
+	return *new(Counter)
 }
 
 // NewGauge creates a new inert Gauge.
 func (imf InertMetricFactory) NewGauge(name, help string, labelNames ...string) Gauge {
-	return &InertFloat{
-		labelCount: len(labelNames),
-		vals:       make(map[string]float64),
-	}
+	_ = "STUB: not implemented"
+	return *new(Gauge)
 }
 
 // NewHistogram creates a new inert Histogram.
 func (imf InertMetricFactory) NewHistogram(name, help string, labelNames ...string) Histogram {
-	return &InertDistribution{
-		labelCount: len(labelNames),
-		counts:     make(map[string]uint64),
-		sums:       make(map[string]float64),
-	}
+	_ = "STUB: not implemented"
+	return *new(Histogram)
 }
 
 // NewHistogramWithBuckets creates a new inert Histogram with supplied buckets.
 // The buckets are not actually used.
 func (imf InertMetricFactory) NewHistogramWithBuckets(name, help string, _ []float64, labelNames ...string) Histogram {
-	return imf.NewHistogram(name, help, labelNames...)
+	_ = "STUB: not implemented"
+	return *new(Histogram)
 }
 
 // InertFloat is an internal-only implementation of both the Counter and Gauge interfaces.
@@ -64,50 +54,19 @@ type InertFloat struct {
 }
 
 // Inc adds 1 to the value.
-func (m *InertFloat) Inc(labelVals ...string) {
-	m.Add(1.0, labelVals...)
-}
+func (m *InertFloat) Inc(labelVals ...string) { _ = "STUB: not implemented"; return }
 
 // Dec subtracts 1 from the value.
-func (m *InertFloat) Dec(labelVals ...string) {
-	m.Add(-1.0, labelVals...)
-}
+func (m *InertFloat) Dec(labelVals ...string) { _ = "STUB: not implemented"; return }
 
 // Add adds the given amount to the value.
-func (m *InertFloat) Add(val float64, labelVals ...string) {
-	m.mu.Lock()
-	defer m.mu.Unlock()
-	key, err := keyForLabels(labelVals, m.labelCount)
-	if err != nil {
-		klog.Error(err.Error())
-		return
-	}
-	m.vals[key] += val
-}
+func (m *InertFloat) Add(val float64, labelVals ...string) { _ = "STUB: not implemented"; return }
 
 // Set sets the value.
-func (m *InertFloat) Set(val float64, labelVals ...string) {
-	m.mu.Lock()
-	defer m.mu.Unlock()
-	key, err := keyForLabels(labelVals, m.labelCount)
-	if err != nil {
-		klog.Error(err.Error())
-		return
-	}
-	m.vals[key] = val
-}
+func (m *InertFloat) Set(val float64, labelVals ...string) { _ = "STUB: not implemented"; return }
 
 // Value returns the current value.
-func (m *InertFloat) Value(labelVals ...string) float64 {
-	m.mu.Lock()
-	defer m.mu.Unlock()
-	key, err := keyForLabels(labelVals, m.labelCount)
-	if err != nil {
-		klog.Error(err.Error())
-		return 0.0
-	}
-	return m.vals[key]
-}
+func (m *InertFloat) Value(labelVals ...string) float64 { _ = "STUB: not implemented"; return 0 }
 
 // InertDistribution is an internal-only implementation of the Distribution interface.
 type InertDistribution struct {
@@ -119,32 +78,17 @@ type InertDistribution struct {
 
 // Observe adds a single observation to the distribution.
 func (m *InertDistribution) Observe(val float64, labelVals ...string) {
-	m.mu.Lock()
-	defer m.mu.Unlock()
-	key, err := keyForLabels(labelVals, m.labelCount)
-	if err != nil {
-		klog.Error(err.Error())
-		return
-	}
-	m.counts[key]++
-	m.sums[key] += val
+	_ = "STUB: not implemented"
+	return
 }
 
 // Info returns count, sum for the distribution.
 func (m *InertDistribution) Info(labelVals ...string) (uint64, float64) {
-	m.mu.Lock()
-	defer m.mu.Unlock()
-	key, err := keyForLabels(labelVals, m.labelCount)
-	if err != nil {
-		klog.Error(err.Error())
-		return 0, 0.0
-	}
-	return m.counts[key], m.sums[key]
+	_ = "STUB: not implemented"
+	return 0, 0
 }
 
 func keyForLabels(labelVals []string, count int) (string, error) {
-	if len(labelVals) != count {
-		return "", fmt.Errorf("invalid label count %d; want %d", len(labelVals), count)
-	}
-	return strings.Join(labelVals, "|"), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }

@@ -15,10 +15,6 @@
 package smt
 
 import (
-	"bytes"
-	"fmt"
-	"sort"
-
 	"github.com/google/trillian/merkle/smt/node"
 )
 
@@ -35,29 +31,21 @@ type TileSet struct {
 
 // NewTileSet creates an empty TileSet with the given tree parameters.
 func NewTileSet(treeID int64, hasher Hasher, layout Layout) *TileSet {
-	tiles := make(map[node.ID]NodesRow)
-	hashes := make(map[node.ID][]byte)
-	h := bindHasher(hasher, treeID)
-	return &TileSet{layout: layout, tiles: tiles, hashes: hashes, h: h}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Hashes returns a map containing all node hashes keyed by node IDs.
 func (t *TileSet) Hashes() map[node.ID][]byte {
-	return t.hashes
+	_ = "STUB: not implemented"
+
+	// Add puts the given tile into the set. Not thread-safe.
+	//
+	// TODO(pavelkalinnikov): Take a whole list of Tiles instead.
+	return nil
 }
 
-// Add puts the given tile into the set. Not thread-safe.
-//
-// TODO(pavelkalinnikov): Take a whole list of Tiles instead.
-func (t *TileSet) Add(tile Tile) error {
-	if _, ok := t.tiles[tile.ID]; ok {
-		return fmt.Errorf("tile already exists: %v", tile.ID)
-	}
-	t.tiles[tile.ID] = tile.Leaves
-	return tile.scan(t.layout, t.h, func(node Node) {
-		t.hashes[node.ID] = node.Hash
-	})
-}
+func (t *TileSet) Add(tile Tile) error { _ = "STUB: not implemented"; return nil }
 
 // TileSetMutation accumulates tree tiles that need to be updated. This type is
 // not thread-safe.
@@ -69,45 +57,18 @@ type TileSetMutation struct {
 // NewTileSetMutation creates a mutation which is based off the provided
 // TileSet. This means that each modification is checked against the hashes in
 // this set, and is applied if it does change the hash.
-func NewTileSetMutation(ts *TileSet) *TileSetMutation {
-	tiles := make(map[node.ID][]Node)
-	return &TileSetMutation{read: ts, tiles: tiles}
-}
+func NewTileSetMutation(ts *TileSet) *TileSetMutation { _ = "STUB: not implemented"; return nil }
 
 // Set updates the hash of the given tree node. Not thread-safe.
 //
 // TODO(pavelkalinnikov): Elaborate on the expected order of Set calls.
 // Currently, Build method sorts nodes to allow any order, but it can be
 // avoided.
-func (t *TileSetMutation) Set(id node.ID, hash []byte) {
-	if bytes.Equal(t.read.hashes[id], hash) {
-		return // Nothing changed.
-	}
-	d, height := t.read.layout.Locate(id.BitLen())
-	if d+height != id.BitLen() {
-		return // Not a leaf node of a tile.
-	}
-	root := id.Prefix(d)
-	t.tiles[root] = append(t.tiles[root], Node{ID: id, Hash: hash})
-}
+func (t *TileSetMutation) Set(id node.ID, hash []byte) { _ = "STUB: not implemented"; return }
+
+// Nothing changed.
+
+// Not a leaf node of a tile.
 
 // Build returns the full set of tiles modified by this mutation.
-func (t *TileSetMutation) Build() ([]Tile, error) {
-	res := make([]Tile, 0, len(t.tiles))
-	for id, upd := range t.tiles {
-		sort.Slice(upd, func(i, j int) bool {
-			return compareHorizontal(upd[i].ID, upd[j].ID) < 0
-		})
-		had, ok := t.read.tiles[id]
-		if !ok {
-			res = append(res, Tile{ID: id, Leaves: upd})
-			continue
-		}
-		tile, err := Tile{ID: id, Leaves: had}.Merge(upd)
-		if err != nil {
-			return nil, err
-		}
-		res = append(res, tile)
-	}
-	return res, nil
-}
+func (t *TileSetMutation) Build() ([]Tile, error) { _ = "STUB: not implemented"; return nil, nil }

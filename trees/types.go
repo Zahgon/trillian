@@ -46,9 +46,6 @@ type GetOpts struct {
 // NewGetOpts creates GetOps that allows the listed set of tree types, and
 // optionally forces the tree to be readonly.
 func NewGetOpts(op OpType, types ...trillian.TreeType) GetOpts {
-	m := make(map[trillian.TreeType]bool)
-	for _, t := range types {
-		m[t] = true
-	}
-	return GetOpts{Operation: op, TreeTypes: m}
+	_ = "STUB: not implemented"
+	return *new(GetOpts)
 }

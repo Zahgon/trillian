@@ -17,7 +17,6 @@ package interceptor
 
 import (
 	"context"
-	"fmt"
 	"regexp"
 	"sync"
 	"time"
@@ -25,14 +24,8 @@ import (
 	"github.com/google/trillian"
 	"github.com/google/trillian/monitoring"
 	"github.com/google/trillian/quota"
-	"github.com/google/trillian/quota/etcd/quotapb"
-	"github.com/google/trillian/server/errors"
 	"github.com/google/trillian/storage"
-	"github.com/google/trillian/trees"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
-	"k8s.io/klog/v2"
 )
 
 const (
@@ -92,57 +85,30 @@ type TrillianInterceptor struct {
 
 // New returns a new TrillianInterceptor instance.
 func New(admin storage.AdminStorage, qm quota.Manager, quotaDryRun bool, mf monitoring.MetricFactory) *TrillianInterceptor {
-	metricsOnce.Do(func() { initMetrics(mf) })
-	return &TrillianInterceptor{
-		admin:       admin,
-		qm:          qm,
-		quotaDryRun: quotaDryRun,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func initMetrics(mf monitoring.MetricFactory) {
-	if mf == nil {
-		mf = monitoring.InertMetricFactory{}
-	}
-	quota.InitMetrics(mf)
-	requestCounter = mf.NewCounter(
-		"interceptor_request_count",
-		"Total number of intercepted requests",
-		monitoring.TreeIDLabel)
-	requestDeniedCounter = mf.NewCounter(
-		"interceptor_request_denied_count",
-		"Number of requests by denied, labeled according to the reason for denial",
-		"reason", monitoring.TreeIDLabel, "quota_user")
-	contextErrCounter = mf.NewCounter(
-		"interceptor_context_err_counter",
-		"Total number of times request context has been cancelled or deadline exceeded by stage",
-		"stage")
-}
+func initMetrics(mf monitoring.MetricFactory) { _ = "STUB: not implemented"; return }
 
 func incRequestDeniedCounter(reason string, treeID int64, quotaUser string) {
-	requestDeniedCounter.Inc(reason, fmt.Sprint(treeID), quotaUser)
+	_ = "STUB: not implemented"
+	return
 }
 
 // UnaryInterceptor executes the TrillianInterceptor logic for unary RPCs.
 func (i *TrillianInterceptor) UnaryInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+	_ = "STUB: not implemented"
 	// Implement UnaryInterceptor using a RequestProcessor, so we
 	// 1. exercise it
 	// 2. make it easier to port this logic to non-gRPC implementations.
-
-	rp := i.NewProcessor()
-	var err error
-	ctx, err = rp.Before(ctx, req, info.FullMethod)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := handler(ctx, req)
-	rp.After(ctx, resp, info.FullMethod, err)
-	return resp, err
+	return nil, nil
 }
 
 // NewProcessor returns a RequestProcessor for the TrillianInterceptor logic.
 func (i *TrillianInterceptor) NewProcessor() RequestProcessor {
-	return &trillianProcessor{parent: i}
+	_ = "STUB: not implemented"
+	return *new(RequestProcessor)
 }
 
 type trillianProcessor struct {
@@ -151,133 +117,44 @@ type trillianProcessor struct {
 }
 
 func (tp *trillianProcessor) Before(ctx context.Context, req interface{}, method string) (context.Context, error) {
+	_ = "STUB: not implemented"
 	// Skip if the interceptor is not enabled for this service.
-	if !enabledServices[serviceName(method)] {
-		return ctx, nil
-	}
-
-	// Don't want the Before to contain the action, so don't overwrite the ctx.
-	innerCtx, spanEnd := spanFor(ctx, "Before")
-	defer spanEnd()
-	info, err := newRPCInfo(req)
-	if err != nil {
-		klog.Warningf("Failed to read tree info: %v", err)
-		incRequestDeniedCounter(badInfoReason, 0, "")
-		return ctx, err
-	}
-	tp.info = info
-	requestCounter.Inc(fmt.Sprint(info.treeID))
-
-	// TODO(codingllama): Add auth interception
-
-	if info.getTree {
-		tree, err := trees.GetTree(
-			innerCtx, tp.parent.admin, info.treeID, trees.NewGetOpts(trees.Admin, info.treeTypes...))
-		if err != nil {
-			incRequestDeniedCounter(badTreeReason, info.treeID, info.quotaUsers)
-			return ctx, err
-		}
-		if err := innerCtx.Err(); err != nil {
-			contextErrCounter.Inc(getTreeStage)
-			return ctx, err
-		}
-		ctx = trees.NewContext(ctx, tree)
-	}
-
-	if info.tokens > 0 && len(info.specs) > 0 {
-		err := tp.parent.qm.GetTokens(innerCtx, info.tokens, info.specs)
-		if err != nil {
-			if !tp.parent.quotaDryRun {
-				incRequestDeniedCounter(insufficientTokensReason, info.treeID, info.quotaUsers)
-				return ctx, status.Errorf(codes.ResourceExhausted, "quota exhausted: %v", err)
-			}
-			klog.Warningf("(quotaDryRun) Request %+v not denied due to dry run mode: %v", req, err)
-		}
-		quota.Metrics.IncAcquired(info.tokens, info.specs, err == nil)
-		if err = innerCtx.Err(); err != nil {
-			contextErrCounter.Inc(getTokensStage)
-			return ctx, err
-		}
-	}
-
-	return ctx, nil
+	return *new(context.Context), nil
 }
+
+// Don't want the Before to contain the action, so don't overwrite the ctx.
+
+// TODO(codingllama): Add auth interception
 
 func (tp *trillianProcessor) After(ctx context.Context, resp interface{}, method string, handlerErr error) {
-	if !enabledServices[serviceName(method)] {
-		return
-	}
-	_, spanEnd := spanFor(ctx, "After")
-	defer spanEnd()
-	switch {
-	case tp.info == nil:
-		klog.Warningf("After called with nil rpcInfo, resp = [%+v], handlerErr = [%v]", resp, handlerErr)
-		return
-	case tp.info.tokens == 0:
-		// After() currently only does quota processing
-		return
-	}
-
-	// Decide if we have to replenish tokens. There are a few situations that require tokens to
-	// be replenished:
-	// * Invalid requests (a bad request shouldn't spend sequencing-based tokens, as it won't
-	//   cause a corresponding sequencing to happen)
-	// * Requests that filter out duplicates (e.g., QueueLeaf, for the same reason as above:
-	//   duplicates aren't queued for sequencing)
-	// These are only applied for Refundable specs.
-	refunds := make([]quota.Spec, 0)
-	for _, s := range tp.info.specs {
-		if s.Refundable {
-			refunds = append(refunds, s)
-		}
-	}
-	if len(refunds) == 0 {
-		return
-	}
-
-	tokens := 0
-	if handlerErr != nil {
-		// Return the tokens spent by invalid requests
-		tokens = tp.info.tokens
-	} else {
-		switch resp := resp.(type) {
-		case *trillian.QueueLeafResponse:
-			if !isLeafOK(resp.GetQueuedLeaf()) {
-				tokens = 1
-			}
-		case *trillian.AddSequencedLeavesResponse:
-			for _, leaf := range resp.GetResults() {
-				if !isLeafOK(leaf) {
-					tokens++
-				}
-			}
-		}
-	}
-	if tokens > 0 {
-		// Run PutTokens in a separate goroutine and with a separate context.
-		// It shouldn't block RPC completion, nor should it share the RPC's context deadline.
-		go func() {
-			ctx, spanEnd := spanFor(context.Background(), "After.PutTokens")
-			defer spanEnd()
-			ctx, cancel := context.WithTimeout(ctx, PutTokensTimeout)
-			defer cancel()
-
-			// TODO(codingllama): If PutTokens turns out to be unreliable we can still leak tokens. In
-			// this case, we may want to keep tabs on how many tokens we failed to replenish and bundle
-			// them up in the next PutTokens call (possibly as a QuotaManager decorator, or internally
-			// in its impl).
-			err := tp.parent.qm.PutTokens(ctx, tokens, refunds)
-			if err != nil {
-				klog.Warningf("Failed to replenish %v tokens: %v", tokens, err)
-			}
-			quota.Metrics.IncReturned(tokens, refunds, err == nil)
-		}()
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
+// After() currently only does quota processing
+
+// Decide if we have to replenish tokens. There are a few situations that require tokens to
+// be replenished:
+// * Invalid requests (a bad request shouldn't spend sequencing-based tokens, as it won't
+//   cause a corresponding sequencing to happen)
+// * Requests that filter out duplicates (e.g., QueueLeaf, for the same reason as above:
+//   duplicates aren't queued for sequencing)
+// These are only applied for Refundable specs.
+
+// Return the tokens spent by invalid requests
+
+// Run PutTokens in a separate goroutine and with a separate context.
+// It shouldn't block RPC completion, nor should it share the RPC's context deadline.
+
+// TODO(codingllama): If PutTokens turns out to be unreliable we can still leak tokens. In
+// this case, we may want to keep tabs on how many tokens we failed to replenish and bundle
+// them up in the next PutTokens call (possibly as a QuotaManager decorator, or internally
+// in its impl).
+
 func isLeafOK(leaf *trillian.QueuedLogLeaf) bool {
+	_ = "STUB: not implemented"
 	// Be biased in favor of OK, as that matches TrillianLogRPCServer's behavior.
-	return leaf == nil || leaf.Status == nil || leaf.Status.Code == int32(codes.OK)
+	return false
 }
 
 var (
@@ -288,15 +165,7 @@ var (
 // serviceName returns the fully qualified service name
 // "some.package.service" for "/some.package.service/method".
 // It returns the unqualified service name "service" for "/service.method".
-func serviceName(fullMethod string) string {
-	if matches := fullyQualifiedRE.FindStringSubmatch(fullMethod); len(matches) == 3 {
-		return matches[1]
-	}
-	if matches := unqualifiedRE.FindStringSubmatch(fullMethod); len(matches) == 3 {
-		return matches[1]
-	}
-	return ""
-}
+func serviceName(fullMethod string) string { _ = "STUB: not implemented"; return "" }
 
 type rpcInfo struct {
 	// getTree indicates whether the interceptor should populate treeID.
@@ -319,140 +188,47 @@ type chargable interface {
 }
 
 // chargedUsers returns user identifiers for any chargable user quotas.
-func chargedUsers(req interface{}) []string {
-	c, ok := req.(chargable)
-	if !ok {
-		return nil
-	}
-	chargeTo := c.GetChargeTo()
-	if chargeTo == nil {
-		return nil
-	}
-
-	return chargeTo.User
-}
+func chargedUsers(req interface{}) []string { _ = "STUB: not implemented"; return nil }
 
 func newRPCInfoForRequest(req interface{}) (*rpcInfo, error) {
+	_ = "STUB: not implemented"
 	// Set "safe" defaults: enable all interception and assume requests are readonly.
-	info := &rpcInfo{
-		getTree:   true,
-		readonly:  true,
-		treeTypes: nil,
-		tokens:    0,
-	}
-
-	switch req := req.(type) {
-
-	// Not intercepted at all
-	case
-		// Quota configuration requests
-		*quotapb.CreateConfigRequest,
-		*quotapb.DeleteConfigRequest,
-		*quotapb.GetConfigRequest,
-		*quotapb.ListConfigsRequest,
-		*quotapb.UpdateConfigRequest:
-		info.getTree = false
-		info.readonly = false // Doesn't really matter as all interceptors are turned off
-
-	// Admin create
-	case *trillian.CreateTreeRequest:
-		info.getTree = false // Tree doesn't exist
-		info.readonly = false
-
-	// Admin list
-	case *trillian.ListTreesRequest:
-		info.getTree = false // Zero to many trees
-
-	// Admin / readonly
-	case *trillian.GetTreeRequest:
-		info.getTree = false // Read done within RPC handler
-
-	// Admin / readwrite
-	case *trillian.DeleteTreeRequest,
-		*trillian.UndeleteTreeRequest,
-		*trillian.UpdateTreeRequest:
-		info.getTree = false // Read-modify-write done within RPC handler
-		info.readonly = false
-
-	// (Log + Pre-ordered Log) / readonly
-	case *trillian.GetConsistencyProofRequest,
-		*trillian.GetEntryAndProofRequest,
-		*trillian.GetInclusionProofByHashRequest,
-		*trillian.GetInclusionProofRequest,
-		*trillian.GetLatestSignedLogRootRequest:
-		info.treeTypes = []trillian.TreeType{trillian.TreeType_LOG, trillian.TreeType_PREORDERED_LOG}
-		info.tokens = 1
-	case *trillian.GetLeavesByRangeRequest:
-		info.treeTypes = []trillian.TreeType{trillian.TreeType_LOG, trillian.TreeType_PREORDERED_LOG}
-		info.tokens = 1
-		if c := req.GetCount(); c > 1 {
-			info.tokens = int(c)
-		}
-	// Log / readwrite
-	case *trillian.QueueLeafRequest:
-		info.readonly = false
-		info.treeTypes = []trillian.TreeType{trillian.TreeType_LOG}
-		info.tokens = 1
-
-	// Pre-ordered Log / readwrite
-	case *trillian.AddSequencedLeavesRequest:
-		info.readonly = false
-		info.treeTypes = []trillian.TreeType{trillian.TreeType_PREORDERED_LOG}
-		info.tokens = len(req.GetLeaves())
-
-	// (Log + Pre-ordered Log) / readwrite
-	case *trillian.InitLogRequest:
-		info.readonly = false
-		info.treeTypes = []trillian.TreeType{trillian.TreeType_LOG, trillian.TreeType_PREORDERED_LOG}
-		info.tokens = 1
-
-	default:
-		return nil, status.Errorf(codes.Internal, "newRPCInfo: unmapped request type: %T", req)
-	}
-
-	return info, nil
+	return nil, nil
 }
 
-func newRPCInfo(req interface{}) (*rpcInfo, error) {
-	info, err := newRPCInfoForRequest(req)
-	if err != nil {
-		return nil, err
-	}
+// Not intercepted at all
 
-	if info.getTree || info.tokens > 0 {
-		switch req := req.(type) {
-		case logIDRequest:
-			info.treeID = req.GetLogId()
-		case treeIDRequest:
-			info.treeID = req.GetTreeId()
-		case treeRequest:
-			info.treeID = req.GetTree().GetTreeId()
-		default:
-			return nil, status.Errorf(codes.Internal, "cannot retrieve treeID from request: %T", req)
-		}
-	}
+// Quota configuration requests
 
-	if info.tokens > 0 {
-		kind := quota.Write
-		if info.readonly {
-			kind = quota.Read
-		}
+// Doesn't really matter as all interceptors are turned off
 
-		for _, user := range chargedUsers(req) {
-			info.specs = append(info.specs, quota.Spec{Group: quota.User, Kind: kind, User: user})
-			if len(info.quotaUsers) > 0 {
-				info.quotaUsers += "+"
-			}
-			info.quotaUsers += user
-		}
-		info.specs = append(info.specs, []quota.Spec{
-			{Group: quota.Tree, Kind: kind, TreeID: info.treeID},
-			{Group: quota.Global, Kind: kind, Refundable: true}, // Only Global tokens are refunded.
-		}...)
-	}
+// Admin create
 
-	return info, nil
-}
+// Tree doesn't exist
+
+// Admin list
+
+// Zero to many trees
+
+// Admin / readonly
+
+// Read done within RPC handler
+
+// Admin / readwrite
+
+// Read-modify-write done within RPC handler
+
+// (Log + Pre-ordered Log) / readonly
+
+// Log / readwrite
+
+// Pre-ordered Log / readwrite
+
+// (Log + Pre-ordered Log) / readwrite
+
+func newRPCInfo(req interface{}) (*rpcInfo, error) { _ = "STUB: not implemented"; return nil, nil }
+
+// Only Global tokens are refunded.
 
 type logIDRequest interface {
 	GetLogId() int64
@@ -468,12 +244,11 @@ type treeRequest interface {
 
 // ErrorWrapper is a grpc.UnaryServerInterceptor that wraps the errors emitted by the underlying handler.
 func ErrorWrapper(ctx context.Context, req interface{}, _ *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
-	ctx, spanEnd := spanFor(ctx, "ErrorWrapper")
-	defer spanEnd()
-	rsp, err := handler(ctx, req)
-	return rsp, errors.WrapError(err)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func spanFor(ctx context.Context, name string) (context.Context, func()) {
-	return monitoring.StartSpan(ctx, fmt.Sprintf("%s.%s", traceSpanRoot, name))
+	_ = "STUB: not implemented"
+	return *new(context.Context), nil
 }

@@ -15,15 +15,8 @@
 package setup
 
 import (
-	"flag"
 	"testing"
 )
 
 // SetFlag updates a flag value, failing the test if something goes wrong.
-func SetFlag(t *testing.T, name, value string) {
-	t.Helper()
-
-	if err := flag.Set(name, value); err != nil {
-		t.Errorf("failed to set the -%s flag: %v", name, err)
-	}
-}
+func SetFlag(t *testing.T, name, value string) { _ = "STUB: not implemented"; return }

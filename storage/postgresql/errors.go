@@ -14,22 +14,6 @@
 
 package postgresql
 
-import (
-	"github.com/jackc/pgerrcode"
-	"github.com/jackc/pgx/v5/pgconn"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
-)
-
 // postgresqlToGRPC converts some types of PostgreSQL errors to GRPC errors. This gives
 // clients more signal when the operation can be retried.
-func postgresqlToGRPC(err error) error {
-	postgresqlErr, ok := err.(*pgconn.PgError)
-	if !ok {
-		return err
-	}
-	if postgresqlErr.Code == pgerrcode.DeadlockDetected {
-		return status.Errorf(codes.Aborted, "PostgreSQL: %v", postgresqlErr)
-	}
-	return err
-}
+func postgresqlToGRPC(err error) error { _ = "STUB: not implemented"; return nil }

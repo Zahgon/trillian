@@ -17,12 +17,7 @@
 package types
 
 import (
-	"encoding/binary"
-	"fmt"
-
 	"github.com/google/trillian/types/internal/tls"
-
-	"github.com/google/trillian"
 )
 
 // LogRootV1 holds the TLS-deserialization of the following structure
@@ -72,31 +67,9 @@ type LogRoot struct {
 // the LOG_ROOT_FORMAT_V1 tag, and populates the caller with the deserialized
 // *LogRootV1.
 func (l *LogRootV1) UnmarshalBinary(logRootBytes []byte) error {
-	if len(logRootBytes) < 3 {
-		return fmt.Errorf("logRootBytes too short")
-	}
-	if l == nil {
-		return fmt.Errorf("nil log root")
-	}
-	version := binary.BigEndian.Uint16(logRootBytes)
-	if version != uint16(trillian.LogRootFormat_LOG_ROOT_FORMAT_V1) {
-		return fmt.Errorf("invalid LogRoot.Version: %v, want %v",
-			version, trillian.LogRootFormat_LOG_ROOT_FORMAT_V1)
-	}
-
-	var logRoot LogRoot
-	if _, err := tls.Unmarshal(logRootBytes, &logRoot); err != nil {
-		return err
-	}
-
-	*l = *logRoot.V1
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // MarshalBinary returns a canonical TLS serialization of LogRoot.
-func (l *LogRootV1) MarshalBinary() ([]byte, error) {
-	return tls.Marshal(LogRoot{
-		Version: tls.Enum(trillian.LogRootFormat_LOG_ROOT_FORMAT_V1),
-		V1:      l,
-	})
-}
+func (l *LogRootV1) MarshalBinary() ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }

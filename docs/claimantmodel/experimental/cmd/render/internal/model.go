@@ -16,13 +16,7 @@
 package claimant
 
 import (
-	"bytes"
 	_ "embed"
-	"fmt"
-	"regexp"
-	"sort"
-
-	"text/template"
 )
 
 var (
@@ -79,138 +73,31 @@ type Model struct {
 
 // Markdown returns this Claimant Model in a definition table that renders
 // clearly in markdown format.
-func (m Model) Markdown() string {
-	t, err := template.New("model").Parse(string(TemplateModelMarkdown))
-	if err != nil {
-		panic(err)
-	}
-	w := bytes.NewBuffer([]byte{})
-	err = t.Execute(w, m)
-	if err != nil {
-		panic(err)
-	}
-	return w.String()
-}
+func (m Model) Markdown() string { _ = "STUB: not implemented"; return "" }
 
 // Questionnaire returns some questions to guide the designer to ensure that
 // the claimant model is sound.
-func (m Model) Questionnaire() string {
-	t, err := template.New("questions").Parse(string(TemplateQuestionsMarkdown))
-	if err != nil {
-		panic(err)
-	}
-	w := bytes.NewBuffer([]byte{})
-	err = t.Execute(w, m)
-	if err != nil {
-		panic(err)
-	}
-	return w.String()
-}
+func (m Model) Questionnaire() string { _ = "STUB: not implemented"; return "" }
 
 // ClaimTerms finds all of the terms used in the Claim that must be
 // present in the Statement.
-func (m Model) ClaimTerms() []string {
-	re := regexp.MustCompile(`\$[\w\@]*`)
-
-	return re.FindAllString(m.ClaimMarkdown(), -1)
-}
+func (m Model) ClaimTerms() []string { _ = "STUB: not implemented"; return nil }
 
 // ClaimMarkdown renders the Claim(s) in markdown.
-func (m Model) ClaimMarkdown() string {
-	if len(m.Claims) == 0 {
-		return m.Claim.Claim
-	}
-	r := "<ol>"
-	for _, c := range m.Claims {
-		r += fmt.Sprintf("<li>%s</li>", c.Claim)
-	}
-	r += "</ol>"
-	return r
-}
+func (m Model) ClaimMarkdown() string { _ = "STUB: not implemented"; return "" }
 
 // VerifierList returns all of the verifiers mapped to the claim they verify.
-func (m Model) VerifierList() map[string]string {
-	if len(m.Claim.Verifier) > 0 {
-		return map[string]string{m.Claim.Verifier: m.Claim.Claim}
-	}
-	r := make(map[string]string)
-	for _, c := range m.Claims {
-		r[c.Verifier] = c.Claim
-	}
-	return r
-}
+func (m Model) VerifierList() map[string]string { _ = "STUB: not implemented"; return nil }
 
 // VerifierMarkdown renders the Verifier(s) in markdown.
-func (m Model) VerifierMarkdown() string {
-	if len(m.Claims) == 0 {
-		return fmt.Sprintf("%s: <i>%s</i>", m.Claim.Verifier, m.Claim.Claim)
-	}
-	r := "<ul>"
-	for _, c := range m.Claims {
-		r += fmt.Sprintf("<li>%s: <i>%s</i></li>", c.Verifier, c.Claim)
-	}
-	r += "</ul>"
-	return r
-}
+func (m Model) VerifierMarkdown() string { _ = "STUB: not implemented"; return "" }
 
 // BelieverMarkdown renders the Believer(s) in markdown.
-func (m Model) BelieverMarkdown() string {
-	if len(m.Believer) > 0 {
-		return m.Believer
-	}
-	r := "<ul>"
-	for _, b := range m.Believers {
-		r += fmt.Sprintf("<li>%s</li>", b)
-	}
-	r += "</ul>"
-	return r
-}
+func (m Model) BelieverMarkdown() string { _ = "STUB: not implemented"; return "" }
 
 // LogModelForDomain proposes a template Claimant Model for human
 // editing based on a domain model provided.
-func LogModelForDomain(m Model) Model {
-	verifiersString := m.Claim.Verifier
-	if len(verifiersString) == 0 {
-		verifiersString += "{"
-		for _, c := range m.Claims {
-			verifiersString += c.Verifier + "/"
-		}
-		verifiersString = verifiersString[:len(verifiersString)-1]
-		verifiersString += "}"
-	}
-	believers := m.Believers
-	if len(believers) == 0 {
-		believers = append(believers, m.Believer)
-	}
-	if v := m.Claim.Verifier; len(v) > 0 {
-		believers = append(believers, v)
-	} else {
-		for _, c := range m.Claims {
-			believers = append(believers, c.Verifier)
-		}
-	}
-	return Model{
-		System:   fmt.Sprintf("LOG_%s", m.System),
-		Claimant: fmt.Sprintf("TODO: %s/$LogOperator", m.Claimant),
-		Claims: []Claim{
-			{
-				Claim:    "This data structure is append-only from any previous version",
-				Verifier: "Witness",
-			},
-			{
-				Claim:    "This data structure is globally consistent",
-				Verifier: "Witness Quorum",
-			},
-			{
-				Claim:    fmt.Sprintf("This data structure contains only leaves of type `%s`", m.Statement),
-				Verifier: verifiersString,
-			},
-		},
-		Statement: "Log Checkpoint",
-		Believers: believers,
-		Arbiter:   fmt.Sprintf("TODO: %s/$LogArbiter", m.Arbiter),
-	}
-}
+func LogModelForDomain(m Model) Model { _ = "STUB: not implemented"; return *new(Model) }
 
 // Models captures the domain model along with the log model that supports it.
 // This can be extended for more general model composition in the future, but
@@ -222,39 +109,12 @@ type Models struct {
 
 // Actors returns all of the actors that participate in the ecosystem of logging
 // the domain claims and verifying all behaviours.
-func (ms Models) Actors() []string {
-	am := make(map[string]bool)
-	for _, model := range []Model{ms.Domain, ms.Log} {
-		am[model.Claimant] = true
-		for v := range model.VerifierList() {
-			am[v] = true
-		}
-		if len(model.Believer) > 0 {
-			am[model.Believer] = true
-		} else {
-			for _, b := range model.Believers {
-				am[b] = true
-			}
-		}
-		for v := range model.VerifierList() {
-			am[v] = true
-		}
-	}
-	r := make([]string, 0, len(am))
-	for actor := range am {
-		if len(actor) > 0 {
-			r = append(r, actor)
-		}
-	}
-	// TODO(mhutchinson): put these in a more useful order than alphabetical
-	sort.Strings(r)
-	return r
-}
+func (ms Models) Actors() []string { _ = "STUB: not implemented"; return nil }
+
+// TODO(mhutchinson): put these in a more useful order than alphabetical
 
 // Markdown returns the markdown representation of both models.
-func (ms Models) Markdown() string {
-	return fmt.Sprintf("%s\n%s", ms.Domain.Markdown(), ms.Log.Markdown())
-}
+func (ms Models) Markdown() string { _ = "STUB: not implemented"; return "" }
 
 // SequenceDiagram returns a mermaid markdown snippet that shows the
 // idealized workflow for this log ecosystem. This can be changed in the
@@ -265,15 +125,4 @@ func (ms Models) Markdown() string {
 // For now, this is out of scope and this generated sequence diagram should
 // be taken to represent the current best practice, and designers can modify
 // it to reflect the deltas in their world.
-func (ms Models) SequenceDiagram() string {
-	t, err := template.New("seq").Parse(string(TemplateSequenceMarkdown))
-	if err != nil {
-		panic(err)
-	}
-	w := bytes.NewBuffer([]byte{})
-	err = t.Execute(w, ms)
-	if err != nil {
-		panic(err)
-	}
-	return w.String()
-}
+func (ms Models) SequenceDiagram() string { _ = "STUB: not implemented"; return "" }

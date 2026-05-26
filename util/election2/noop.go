@@ -36,28 +36,37 @@ type NoopElection string
 
 // Await returns immediately, as the instance is always the master.
 func (ne NoopElection) Await(ctx context.Context) error {
+	_ = "STUB: not implemented"
+
+	// WithMastership returns the passed in context as a mastership context.
 	return nil
 }
 
-// WithMastership returns the passed in context as a mastership context.
 func (ne NoopElection) WithMastership(ctx context.Context) (context.Context, error) {
-	return ctx, nil
+	_ = "STUB: not implemented"
+
+	// Resign does nothing because NoopElection is always the master.
+	return *new(context.Context), nil
 }
 
-// Resign does nothing because NoopElection is always the master.
 func (ne NoopElection) Resign(ctx context.Context) error {
+	_ = "STUB: not implemented"
+
+	// Close does nothing because NoopElection is always the master.
 	return nil
 }
 
-// Close does nothing because NoopElection is always the master.
 func (ne NoopElection) Close(ctx context.Context) error {
+	_ = "STUB: not implemented"
+
+	// NoopFactory creates NoopElection instances.
 	return nil
 }
 
-// NoopFactory creates NoopElection instances.
 type NoopFactory struct{}
 
 // NewElection creates a specific NoopElection instance.
 func (nf NoopFactory) NewElection(ctx context.Context, resourceID string) (Election, error) {
-	return NoopElection(resourceID), nil
+	_ = "STUB: not implemented"
+	return *new(Election), nil
 }

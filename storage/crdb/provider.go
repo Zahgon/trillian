@@ -44,11 +44,7 @@ var (
 )
 
 // GetDatabase returns the database handle for the provider.
-func GetDatabase() (*sql.DB, error) {
-	dbConnMu.Lock()
-	defer dbConnMu.Unlock()
-	return getCRDBDatabaseLocked()
-}
+func GetDatabase() (*sql.DB, error) { _ = "STUB: not implemented"; return nil, nil }
 
 func init() {
 	if err := storage.RegisterProvider(StorageProviderName, newCRDBStorageProvider); err != nil {
@@ -62,51 +58,22 @@ type crdbProvider struct {
 }
 
 func newCRDBStorageProvider(mf monitoring.MetricFactory) (storage.Provider, error) {
-	dbConnMu.Lock()
-	defer dbConnMu.Unlock()
-	if crdbStorageInstance == nil {
-		db, err := getCRDBDatabaseLocked()
-		if err != nil {
-			return nil, err
-		}
-		crdbStorageInstance = &crdbProvider{
-			db: db,
-			mf: mf,
-		}
-	}
-
-	return crdbStorageInstance, nil
+	_ = "STUB: not implemented"
+	return *new(storage.Provider), nil
 }
 
 // Lazy initializes the database connection handle and returns the instance.
 // Requires lock to be held.
-func getCRDBDatabaseLocked() (*sql.DB, error) {
-	if crdbHandle != nil || crdbErr != nil {
-		return crdbHandle, crdbErr
-	}
-	db, err := OpenDB(*crdbURI)
-	if err != nil {
-		crdbErr = err
-		return nil, err
-	}
-	if *maxConns > 0 {
-		db.SetMaxOpenConns(*maxConns)
-	}
-	if *maxIdle >= 0 {
-		db.SetMaxIdleConns(*maxIdle)
-	}
-	crdbHandle, crdbErr = db, nil
-	return db, nil
-}
+func getCRDBDatabaseLocked() (*sql.DB, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (p *crdbProvider) Close() error {
-	return p.db.Close()
-}
+func (p *crdbProvider) Close() error { _ = "STUB: not implemented"; return nil }
 
 func (p *crdbProvider) LogStorage() storage.LogStorage {
-	return NewLogStorage(p.db, p.mf)
+	_ = "STUB: not implemented"
+	return *new(storage.LogStorage)
 }
 
 func (p *crdbProvider) AdminStorage() storage.AdminStorage {
-	return NewSQLAdminStorage(p.db)
+	_ = "STUB: not implemented"
+	return *new(storage.AdminStorage)
 }

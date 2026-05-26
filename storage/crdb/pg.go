@@ -14,17 +14,4 @@
 
 package crdb
 
-import (
-	"fmt"
-	"strings"
-)
-
-func fromMySQLToPGPreparedStatement(sql string) string {
-	counter := 1
-	for strings.Contains(sql, "?") {
-		pgmarker := fmt.Sprintf("$%d", counter)
-		sql = strings.Replace(sql, "?", pgmarker, 1)
-		counter++
-	}
-	return sql
-}
+func fromMySQLToPGPreparedStatement(sql string) string { _ = "STUB: not implemented"; return "" }

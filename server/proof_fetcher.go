@@ -16,7 +16,6 @@ package server
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/trillian"
 	"github.com/google/trillian/storage/tree"
@@ -36,47 +35,15 @@ type nodeReader interface {
 // revisions. This code only relies on the nodeReader interface so can be tested without
 // a complete storage implementation.
 func fetchNodesAndBuildProof(ctx context.Context, nr nodeReader, hasher compact.HashFn, leafIndex uint64, pn proof.Nodes) (*trillian.Proof, error) {
-	ctx, spanEnd := spanFor(ctx, "fetchNodesAndBuildProof")
-	defer spanEnd()
-	nodes, err := fetchNodes(ctx, nr, pn.IDs)
-	if err != nil {
-		return nil, err
-	}
-
-	h := make([][]byte, len(nodes))
-	for i, node := range nodes {
-		h[i] = node.Hash
-	}
-	proof, err := pn.Rehash(h, hasher)
-	if err != nil {
-		return nil, err
-	}
-
-	return &trillian.Proof{
-		LeafIndex: int64(leafIndex),
-		Hashes:    proof,
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // fetchNodes obtains the nodes denoted by the given NodeFetch structs, and
 // returns them after some validation checks.
 func fetchNodes(ctx context.Context, nr nodeReader, ids []compact.NodeID) ([]tree.Node, error) {
-	ctx, spanEnd := spanFor(ctx, "fetchNodes")
-	defer spanEnd()
-
-	nodes, err := nr.GetMerkleNodes(ctx, ids)
-	if err != nil {
-		return nil, err
-	}
-	if got, want := len(nodes), len(ids); got != want {
-		return nil, fmt.Errorf("expected %d nodes from storage but got %d", want, got)
-	}
-	for i, node := range nodes {
-		// Additional check that the correct node was returned.
-		if got, want := node.ID, ids[i]; got != want {
-			return nil, fmt.Errorf("expected node %v at proof pos %d but got %v", want, i, got)
-		}
-	}
-
-	return nodes, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// Additional check that the correct node was returned.

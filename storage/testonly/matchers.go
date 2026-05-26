@@ -15,38 +15,21 @@
 package testonly
 
 import (
-	"fmt"
-	"reflect"
-	"sort"
-
 	"github.com/golang/mock/gomock"
 	"github.com/google/trillian/storage/tree"
 )
 
 // NodeSet returns a matcher that expects the given set of nodes.
 func NodeSet(nodes []tree.Node) gomock.Matcher {
-	return nodeSet(sorted(nodes))
+	_ = "STUB: not implemented"
+	return *new(gomock.Matcher)
 }
 
 type nodeSet []tree.Node
 
 // Matches implements the gomock.Matcher API.
-func (n nodeSet) Matches(x interface{}) bool {
-	nodes, ok := x.([]tree.Node)
-	if !ok {
-		return false
-	}
-	return reflect.DeepEqual(sorted(nodes), []tree.Node(n))
-}
+func (n nodeSet) Matches(x interface{}) bool { _ = "STUB: not implemented"; return false }
 
-func (n nodeSet) String() string {
-	return fmt.Sprintf("equivalent to %v", []tree.Node(n))
-}
+func (n nodeSet) String() string { _ = "STUB: not implemented"; return "" }
 
-func sorted(n []tree.Node) []tree.Node {
-	sort.Slice(n, func(i, j int) bool {
-		return n[i].ID.Level < n[j].ID.Level ||
-			(n[i].ID.Level == n[j].ID.Level && n[i].ID.Index < n[j].ID.Index)
-	})
-	return n
-}
+func sorted(n []tree.Node) []tree.Node { _ = "STUB: not implemented"; return nil }

@@ -14,8 +14,6 @@
 
 package smt
 
-import "sort"
-
 // Layout defines the mapping between tree nodes and tiles.
 //
 // The tree is divided into horizontal tiers of the heights specified in the
@@ -27,16 +25,7 @@ type Layout struct {
 }
 
 // NewLayout creates a tree layout based on the passed-in tier heights.
-func NewLayout(heights []uint) Layout {
-	depths := make([]int, len(heights)+1)
-	for i, h := range heights {
-		if h <= 0 {
-			panic("tile heights must be positive")
-		}
-		depths[i+1] = depths[i] + int(h)
-	}
-	return Layout{depths: depths}
-}
+func NewLayout(heights []uint) Layout { _ = "STUB: not implemented"; return *new(Layout) }
 
 // Locate returns the tier info that nodes at the given depth belong to. The
 // first returned value is the depth of the root node, for any tile in this
@@ -44,13 +33,11 @@ func NewLayout(heights []uint) Layout {
 //
 // If depth is 0, or beyond the tree height, then the result is undefined.
 func (l Layout) Locate(depth uint) (uint, uint) {
-	if depth == 0 { // The root belongs to its own "pseudo" tile.
-		return 0, 0
-	}
-	i := sort.SearchInts(l.depths, int(depth)) // 1 <= i <= len(depths)
-	rootDepth := uint(l.depths[i-1])
-	if ln := len(l.depths); i >= ln { // Anything below the leaves does not exist.
-		return rootDepth, 0
-	}
-	return rootDepth, uint(l.depths[i]) - rootDepth
+	_ = "STUB: not implemented"
+	// The root belongs to its own "pseudo" tile.
+	return 0, 0
 }
+
+// 1 <= i <= len(depths)
+
+// Anything below the leaves does not exist.

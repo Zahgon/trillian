@@ -15,8 +15,6 @@
 // Package node implements a sparse Merkle tree node.
 package node
 
-import "fmt"
-
 // ID identifies a node of a Merkle tree. It is a bit string that counts the
 // node down from the tree root, i.e. 0 and 1 bits represent going to the left
 // or right child correspondingly.
@@ -49,98 +47,67 @@ type ID struct {
 // NewID creates a node ID from the given path bytes truncated to the specified
 // number of bits if necessary. Panics if the number of bits is more than the
 // byte string contains.
-func NewID(path string, bits uint) ID {
-	if bits == 0 {
-		return ID{}
-	} else if mx := uint(len(path)) * 8; bits > mx {
-		panic(fmt.Sprintf("NewID: bits %d > %d", bits, mx))
-	}
-	bytes, tailBits := split(bits)
-	// Note: Getting the substring is cheap because strings are immutable in Go.
-	return newMaskedID(path[:bytes], path[bytes], tailBits)
-}
+func NewID(path string, bits uint) ID { _ = "STUB: not implemented"; return *new(ID) }
+
+// Note: Getting the substring is cheap because strings are immutable in Go.
 
 // NewIDWithLast creates a node ID from the given path bytes and the additional
 // last byte, of which only the specified number of most significant bits is
 // used. The number of bits must be between 1 and 8, and can be 0 only if the
 // path bytes string is empty; otherwise the function panics.
 func NewIDWithLast(path string, last byte, bits uint8) ID {
-	if bits > 8 {
-		panic(fmt.Sprintf("NewIDWithLast: bits %d > 8", bits))
-	} else if bits == 0 && len(path) != 0 {
-		panic("NewIDWithLast: bits=0, but path is not empty")
-	}
-	return newMaskedID(path, last, bits)
+	_ = "STUB: not implemented"
+	return *new(ID)
 }
 
 // newMaskedID constructs a node ID ensuring its invariants are met. The last
 // byte is masked so that the given number of upper bits are in use, and the
 // others are unset.
-func newMaskedID(path string, last byte, bits uint8) ID {
-	last &= ^byte(1<<(8-bits) - 1) // Unset the unused bits.
-	return ID{path: path, last: last, bits: bits}
-}
+func newMaskedID(path string, last byte, bits uint8) ID { _ = "STUB: not implemented"; return *new(ID) }
+
+// Unset the unused bits.
 
 // BitLen returns the length of the ID in bits.
-func (n ID) BitLen() uint {
-	return uint(len(n.path))*8 + uint(n.bits)
-}
+func (n ID) BitLen() uint { _ = "STUB: not implemented"; return 0 }
 
 // FullBytes returns the ID bytes that are complete. Note that there might
 // still be up to 8 extra bits, which can be obtained with the LastByte method.
 func (n ID) FullBytes() string {
-	return n.path
+	_ = "STUB: not implemented"
+
+	// LastByte returns the terminating byte of the ID, with the number of upper
+	// bits that it uses (between 1 and 8, and 0 if the ID is empty). The remaining
+	// unused lower bits are always unset.
+	return ""
 }
 
-// LastByte returns the terminating byte of the ID, with the number of upper
-// bits that it uses (between 1 and 8, and 0 if the ID is empty). The remaining
-// unused lower bits are always unset.
 func (n ID) LastByte() (byte, uint8) {
-	return n.last, n.bits
+	_ = "STUB: not implemented"
+	return 0,
+
+		// Prefix returns the prefix of the node ID with the given number of bits.
+		0
 }
 
-// Prefix returns the prefix of the node ID with the given number of bits.
 func (n ID) Prefix(bits uint) ID {
+	_ = "STUB: not implemented"
 	// Note: This code is very similar to NewID, and it's tempting to return
 	// NewID(n.path, bits). But there is a difference: NewID expects all the
 	// bytes to be in the path string, while here the last byte is not.
-	if bits == 0 {
-		return ID{}
-	} else if mx := n.BitLen(); bits > mx {
-		panic(fmt.Sprintf("Prefix: bits %d > %d", bits, mx))
-	}
-	bytes, tailBits := split(bits)
-	last := n.last
-	if bytes != uint(len(n.path)) {
-		last = n.path[bytes]
-	}
-	return newMaskedID(n.path[:bytes], last, tailBits)
+	return *new(ID)
 }
 
 // Sibling returns the ID of the nodes's sibling in a binary tree, i.e. the ID
 // of the parent node's other child. If the node is the root then the returned
 // ID is the same.
-func (n ID) Sibling() ID {
-	last := n.last ^ byte(1<<(8-n.bits))
-	return ID{path: n.path, last: last, bits: n.bits}
-}
+func (n ID) Sibling() ID { _ = "STUB: not implemented"; return *new(ID) }
 
 // String returns a human-readable bit string.
-func (n ID) String() string {
-	if n.BitLen() == 0 {
-		return "[]"
-	}
-	path := fmt.Sprintf("%08b", []byte(n.path))
-	path = path[1 : len(path)-1] // Trim the brackets.
-	if len(path) > 0 {
-		path += " "
-	}
-	return fmt.Sprintf("[%s%0*b]", path, n.bits, n.last>>(8-n.bits))
-}
+func (n ID) String() string { _ = "STUB: not implemented"; return "" }
+
+// Trim the brackets.
 
 // split returns the decomposition of an ID with the given number of bits. The
 // first int returned is the number of full bytes stored in the dynamically
 // allocated part. The second one is the number of bits in the tail byte.
-func split(bits uint) (bytes uint, tailBits uint8) {
-	return (bits - 1) / 8, uint8(1 + (bits-1)%8)
-}
+func split(bits uint) (bytes uint, tailBits uint8) { _ = "STUB: not implemented"; return 0, 0 }

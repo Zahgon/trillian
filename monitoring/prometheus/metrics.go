@@ -17,12 +17,8 @@
 package prometheus
 
 import (
-	"fmt"
-
 	"github.com/google/trillian/monitoring"
 	"github.com/prometheus/client_golang/prometheus"
-	dto "github.com/prometheus/client_model/go"
-	"k8s.io/klog/v2"
 )
 
 // MetricFactory allows the creation of Prometheus-based metrics.
@@ -36,80 +32,34 @@ type MetricFactory struct {
 
 // NewCounter creates a new Counter object backed by Prometheus.
 func (pmf MetricFactory) NewCounter(name, help string, labelNames ...string) monitoring.Counter {
-	if len(labelNames) == 0 {
-		counter := prometheus.NewCounter(
-			prometheus.CounterOpts{
-				Name: pmf.Prefix + name,
-				Help: help,
-			})
-		prometheus.MustRegister(counter)
-		return &Counter{single: counter}
-	}
-
-	vec := prometheus.NewCounterVec(
-		prometheus.CounterOpts{
-			Name: pmf.Prefix + name,
-			Help: help,
-		},
-		labelNames)
-	prometheus.MustRegister(vec)
-	return &Counter{labelNames: labelNames, vec: vec}
+	_ = "STUB: not implemented"
+	return *new(monitoring.Counter)
 }
 
 // NewGauge creates a new Gauge object backed by Prometheus.
 func (pmf MetricFactory) NewGauge(name, help string, labelNames ...string) monitoring.Gauge {
-	if len(labelNames) == 0 {
-		gauge := prometheus.NewGauge(
-			prometheus.GaugeOpts{
-				Name: pmf.Prefix + name,
-				Help: help,
-			})
-		prometheus.MustRegister(gauge)
-		return &Gauge{single: gauge}
-	}
-	vec := prometheus.NewGaugeVec(
-		prometheus.GaugeOpts{
-			Name: pmf.Prefix + name,
-			Help: help,
-		},
-		labelNames)
-	prometheus.MustRegister(vec)
-	return &Gauge{labelNames: labelNames, vec: vec}
+	_ = "STUB: not implemented"
+	return *new(monitoring.Gauge)
 }
 
 // NewHistogramWithBuckets creates a new Histogram object backed by
 // Prometheus and using the supplied bucketing intervals. Note: the
 // number of buckets should be kept within reasonable bounds.
 func (pmf MetricFactory) NewHistogramWithBuckets(name, help string, buckets []float64, labelNames ...string) monitoring.Histogram {
-	return pmf.newHistogram(name, help, buckets, labelNames)
+	_ = "STUB: not implemented"
+	return *new(monitoring.Histogram)
 }
 
 // NewHistogram creates a new Histogram object backed by Prometheus with
 // the supplied buckets.
 func (pmf MetricFactory) NewHistogram(name, help string, labelNames ...string) monitoring.Histogram {
-	return pmf.newHistogram(name, help, monitoring.LatencyBuckets(), labelNames)
+	_ = "STUB: not implemented"
+	return *new(monitoring.Histogram)
 }
 
 func (pmf MetricFactory) newHistogram(name, help string, buckets []float64, labelNames []string) monitoring.Histogram {
-	if len(labelNames) == 0 {
-		histogram := prometheus.NewHistogram(
-			prometheus.HistogramOpts{
-				Name:    pmf.Prefix + name,
-				Help:    help,
-				Buckets: buckets,
-			})
-		prometheus.MustRegister(histogram)
-		return &Histogram{single: histogram}
-	}
-	vec := prometheus.NewHistogramVec(
-		prometheus.HistogramOpts{
-			Name:    pmf.Prefix + name,
-			Help:    help,
-			Buckets: buckets,
-		},
-		labelNames)
-	prometheus.MustRegister(vec)
-	return &Histogram{labelNames: labelNames, vec: vec}
+	_ = "STUB: not implemented"
+	return *new(monitoring.Histogram)
 }
 
 // Counter is a wrapper around a Prometheus Counter or CounterVec object.
@@ -120,57 +70,13 @@ type Counter struct {
 }
 
 // Inc adds 1 to a counter.
-func (m *Counter) Inc(labelVals ...string) {
-	labels, err := labelsFor(m.labelNames, labelVals)
-	if err != nil {
-		klog.Error(err.Error())
-		return
-	}
-	if m.vec != nil {
-		m.vec.With(labels).Inc()
-	} else {
-		m.single.Inc()
-	}
-}
+func (m *Counter) Inc(labelVals ...string) { _ = "STUB: not implemented"; return }
 
 // Add adds the given amount to a counter.
-func (m *Counter) Add(val float64, labelVals ...string) {
-	labels, err := labelsFor(m.labelNames, labelVals)
-	if err != nil {
-		klog.Error(err.Error())
-		return
-	}
-	if m.vec != nil {
-		m.vec.With(labels).Add(val)
-	} else {
-		m.single.Add(val)
-	}
-}
+func (m *Counter) Add(val float64, labelVals ...string) { _ = "STUB: not implemented"; return }
 
 // Value returns the current amount of a counter.
-func (m *Counter) Value(labelVals ...string) float64 {
-	labels, err := labelsFor(m.labelNames, labelVals)
-	if err != nil {
-		klog.Error(err.Error())
-		return 0.0
-	}
-	var metric prometheus.Metric
-	if m.vec != nil {
-		metric = m.vec.With(labels)
-	} else {
-		metric = m.single
-	}
-	var metricpb dto.Metric
-	if err := metric.Write(&metricpb); err != nil {
-		klog.Errorf("failed to Write metric: %v", err)
-		return 0.0
-	}
-	if metricpb.Counter == nil {
-		klog.Errorf("counter field missing")
-		return 0.0
-	}
-	return metricpb.Counter.GetValue()
-}
+func (m *Counter) Value(labelVals ...string) float64 { _ = "STUB: not implemented"; return 0 }
 
 // Gauge is a wrapper around a Prometheus Gauge or GaugeVec object.
 type Gauge struct {
@@ -180,85 +86,19 @@ type Gauge struct {
 }
 
 // Inc adds 1 to a gauge.
-func (m *Gauge) Inc(labelVals ...string) {
-	labels, err := labelsFor(m.labelNames, labelVals)
-	if err != nil {
-		klog.Error(err.Error())
-		return
-	}
-	if m.vec != nil {
-		m.vec.With(labels).Inc()
-	} else {
-		m.single.Inc()
-	}
-}
+func (m *Gauge) Inc(labelVals ...string) { _ = "STUB: not implemented"; return }
 
 // Dec subtracts 1 from a gauge.
-func (m *Gauge) Dec(labelVals ...string) {
-	labels, err := labelsFor(m.labelNames, labelVals)
-	if err != nil {
-		klog.Error(err.Error())
-		return
-	}
-	if m.vec != nil {
-		m.vec.With(labels).Dec()
-	} else {
-		m.single.Dec()
-	}
-}
+func (m *Gauge) Dec(labelVals ...string) { _ = "STUB: not implemented"; return }
 
 // Add adds given value to a gauge.
-func (m *Gauge) Add(val float64, labelVals ...string) {
-	labels, err := labelsFor(m.labelNames, labelVals)
-	if err != nil {
-		klog.Error(err.Error())
-		return
-	}
-	if m.vec != nil {
-		m.vec.With(labels).Add(val)
-	} else {
-		m.single.Add(val)
-	}
-}
+func (m *Gauge) Add(val float64, labelVals ...string) { _ = "STUB: not implemented"; return }
 
 // Set sets the value of a gauge.
-func (m *Gauge) Set(val float64, labelVals ...string) {
-	labels, err := labelsFor(m.labelNames, labelVals)
-	if err != nil {
-		klog.Error(err.Error())
-		return
-	}
-	if m.vec != nil {
-		m.vec.With(labels).Set(val)
-	} else {
-		m.single.Set(val)
-	}
-}
+func (m *Gauge) Set(val float64, labelVals ...string) { _ = "STUB: not implemented"; return }
 
 // Value returns the current amount of a gauge.
-func (m *Gauge) Value(labelVals ...string) float64 {
-	labels, err := labelsFor(m.labelNames, labelVals)
-	if err != nil {
-		klog.Error(err.Error())
-		return 0.0
-	}
-	var metric prometheus.Metric
-	if m.vec != nil {
-		metric = m.vec.With(labels)
-	} else {
-		metric = m.single
-	}
-	var metricpb dto.Metric
-	if err := metric.Write(&metricpb); err != nil {
-		klog.Errorf("failed to Write metric: %v", err)
-		return 0.0
-	}
-	if metricpb.Gauge == nil {
-		klog.Errorf("gauge field missing")
-		return 0.0
-	}
-	return metricpb.Gauge.GetValue()
-}
+func (m *Gauge) Value(labelVals ...string) float64 { _ = "STUB: not implemented"; return 0 }
 
 // Histogram is a wrapper around a Prometheus Histogram or HistogramVec object.
 type Histogram struct {
@@ -268,55 +108,15 @@ type Histogram struct {
 }
 
 // Observe adds a single observation to the histogram.
-func (m *Histogram) Observe(val float64, labelVals ...string) {
-	labels, err := labelsFor(m.labelNames, labelVals)
-	if err != nil {
-		klog.Error(err.Error())
-		return
-	}
-	if m.vec != nil {
-		m.vec.With(labels).Observe(val)
-	} else {
-		m.single.Observe(val)
-	}
-}
+func (m *Histogram) Observe(val float64, labelVals ...string) { _ = "STUB: not implemented"; return }
 
 // Info returns the count and sum of observations for the histogram.
 func (m *Histogram) Info(labelVals ...string) (uint64, float64) {
-	labels, err := labelsFor(m.labelNames, labelVals)
-	if err != nil {
-		klog.Error(err.Error())
-		return 0, 0.0
-	}
-	var metric prometheus.Metric
-	if m.vec != nil {
-		metric = m.vec.With(labels).(prometheus.Metric)
-	} else {
-		metric = m.single
-	}
-	var metricpb dto.Metric
-	if err := metric.Write(&metricpb); err != nil {
-		klog.Errorf("failed to Write metric: %v", err)
-		return 0, 0.0
-	}
-	histVal := metricpb.GetHistogram()
-	if histVal == nil {
-		klog.Errorf("histogram field missing")
-		return 0, 0.0
-	}
-	return histVal.GetSampleCount(), histVal.GetSampleSum()
+	_ = "STUB: not implemented"
+	return 0, 0
 }
 
 func labelsFor(names, values []string) (prometheus.Labels, error) {
-	if len(names) != len(values) {
-		return nil, fmt.Errorf("got %d (%v) values for %d labels (%v)", len(values), values, len(names), names)
-	}
-	if len(names) == 0 {
-		return nil, nil
-	}
-	labels := make(prometheus.Labels)
-	for i, name := range names {
-		labels[name] = values[i]
-	}
-	return labels, nil
+	_ = "STUB: not implemented"
+	return *new(prometheus.Labels), nil
 }

@@ -16,13 +16,11 @@ package log
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/google/trillian"
 	"github.com/google/trillian/extension"
 	"github.com/google/trillian/trees"
-	"k8s.io/klog/v2"
 )
 
 // SequencerManager provides sequencing operations for a collection of Logs.
@@ -36,32 +34,14 @@ var seqOpts = trees.NewGetOpts(trees.SequenceLog, trillian.TreeType_LOG, trillia
 // NewSequencerManager creates a new SequencerManager instance based on the provided KeyManager instance
 // and guard window.
 func NewSequencerManager(registry extension.Registry, gw time.Duration) *SequencerManager {
-	InitMetrics(registry.MetricFactory)
-	return &SequencerManager{
-		guardWindow: gw,
-		registry:    registry,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ExecutePass performs sequencing for the specified Log.
 func (s *SequencerManager) ExecutePass(ctx context.Context, logID int64, info *OperationInfo) (int, error) {
+	_ = "STUB: not implemented"
 	// TODO(Martin2112): Honor the sequencing enabled in log parameters, needs an API change
 	// so deferring it
-
-	tree, err := trees.GetTree(ctx, s.registry.AdminStorage, logID, seqOpts)
-	if err != nil {
-		return 0, fmt.Errorf("error retrieving log %v: %v", logID, err)
-	}
-	ctx = trees.NewContext(ctx, tree)
-
-	maxRootDuration := tree.MaxRootDuration.AsDuration()
-	if !tree.MaxRootDuration.IsValid() {
-		klog.Warning("failed to parse tree.MaxRootDuration, using zero")
-		maxRootDuration = 0
-	}
-	leaves, err := IntegrateBatch(ctx, tree, info.BatchSize, s.guardWindow, maxRootDuration, info.TimeSource, s.registry.LogStorage, s.registry.QuotaManager)
-	if err != nil {
-		return 0, fmt.Errorf("failed to integrate batch for %v: %v", logID, err)
-	}
-	return leaves, nil
+	return 0, nil
 }

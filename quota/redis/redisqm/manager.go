@@ -17,7 +17,6 @@ package redisqm
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/trillian/quota"
 	"github.com/google/trillian/quota/redis/redistb"
@@ -56,52 +55,26 @@ type RedisClient interface {
 }
 
 // New returns a new Redis-based quota.Manager.
-func New(client RedisClient, opts ManagerOptions) *Manager {
-	tb := redistb.New(client)
-	return &Manager{tb: tb, opts: opts}
-}
+func New(client RedisClient, opts ManagerOptions) *Manager { _ = "STUB: not implemented"; return nil }
 
 // GetTokens implements the quota.Manager API.
 func (m *Manager) GetTokens(ctx context.Context, numTokens int, specs []quota.Spec) error {
-	for _, spec := range specs {
-		if err := m.getTokensSingle(ctx, numTokens, spec); err != nil {
-			return err
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *Manager) getTokensSingle(ctx context.Context, numTokens int, spec quota.Spec) error {
-	capacity, rate := m.opts.Parameters(spec)
-
-	// If we get back `MaxTokens` from our parameters call, this indicates
-	// that there's no actual limit. We don't need to do anything to "get"
-	// them; just ignore.
-	if capacity == quota.MaxTokens {
-		return nil
-	}
-
-	name := specName(m.opts.Prefix, spec)
-	allowed, remaining, err := m.tb.Call(
-		ctx,
-		name,
-		int64(capacity),
-		rate,
-		numTokens,
-	)
-	if err != nil {
-		return err
-	}
-	if !allowed {
-		return fmt.Errorf("insufficient tokens on %v (%v vs %v)", name, remaining, numTokens)
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
+// If we get back `MaxTokens` from our parameters call, this indicates
+// that there's no actual limit. We don't need to do anything to "get"
+// them; just ignore.
+
 // PutTokens implements the quota.Manager API.
 func (m *Manager) PutTokens(ctx context.Context, numTokens int, specs []quota.Spec) error {
+	_ = "STUB: not implemented"
 	// Putting tokens into a time-based quota doesn't mean anything (since
 	// tokens are replenished at the moment they're requested) and since
 	// that's the only supported mechanism for this package currently, do
@@ -115,17 +88,8 @@ func (m *Manager) PutTokens(ctx context.Context, numTokens int, specs []quota.Sp
 // if any, but will continue trying to reset every quota even if an error is
 // encountered.
 func (m *Manager) ResetQuota(ctx context.Context, specs []quota.Spec) error {
-	var firstErr error
-
-	for _, name := range specNames(m.opts.Prefix, specs) {
-		if err := m.tb.Reset(ctx, name); err != nil {
-			if firstErr == nil {
-				firstErr = err
-			}
-		}
-	}
-
-	return firstErr
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Load attempts to load Redis scripts used by the Manager into the Redis
@@ -134,18 +98,8 @@ func (m *Manager) ResetQuota(ctx context.Context, specs []quota.Spec) error {
 // A Manager will operate successfully if this method is not called or fails,
 // but a successful Load will reduce bandwidth to/from the Redis cluster
 // substantially.
-func (m *Manager) Load(ctx context.Context) error {
-	return m.tb.Load(ctx)
-}
+func (m *Manager) Load(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
-func specNames(prefix string, specs []quota.Spec) []string {
-	names := make([]string, 0, len(specs))
-	for _, spec := range specs {
-		names = append(names, specName(prefix, spec))
-	}
-	return names
-}
+func specNames(prefix string, specs []quota.Spec) []string { _ = "STUB: not implemented"; return nil }
 
-func specName(prefix string, spec quota.Spec) string {
-	return prefix + "trillian/" + spec.Name()
-}
+func specName(prefix string, spec quota.Spec) string { _ = "STUB: not implemented"; return "" }

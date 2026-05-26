@@ -17,7 +17,6 @@ package redistb
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/go-redis/redis"
@@ -45,34 +44,21 @@ type TokenBucket struct {
 }
 
 // New returns a new TokenBucket that uses the provided Redis client.
-func New(client RedisClient) *TokenBucket {
-	ret := &TokenBucket{
-		c:          client,
-		timeSource: clock.System,
-	}
-	return ret
-}
+func New(client RedisClient) *TokenBucket { _ = "STUB: not implemented"; return nil }
 
 // Load preloads any required Lua scripts into the Redis database, and updates
 // the hash of the resulting script. Calling this function is optional, but
 // will greatly reduce the network traffic to the Redis cluster since it only
 // needs to pass a hash of the script and not the full script content.
-func (tb *TokenBucket) Load(ctx context.Context) error {
-	client := withClientContext(ctx, tb.c)
-	return updateTokenBucketScript.Load(client).Err()
-}
+func (tb *TokenBucket) Load(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
 // Reset resets the token bucket for the given prefix.
 func (tb *TokenBucket) Reset(ctx context.Context, prefix string) error {
-	client := withClientContext(ctx, tb.c)
-
-	// Use `EVAL` so that deleting all keys is atomic.
-	resp := client.Eval(
-		`redis.call("del", KEYS[1]); redis.call("del", KEYS[2]); redis.call("del", KEYS[3])`,
-		tokenBucketKeys(prefix),
-	)
-	return resp.Err()
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// Use `EVAL` so that deleting all keys is atomic.
 
 // Call implements the actual token bucket algorithm. Given a bucket with
 // capacity `capacity` and replenishment rate of `replenishRate` tokens per
@@ -91,69 +77,28 @@ func (tb *TokenBucket) Call(
 	replenishRate float64,
 	numTokens int,
 ) (bool, int64, error) {
-	client := withClientContext(ctx, tb.c)
-
-	var (
-		now   int64
-		nowUs int64
-	)
-	if tb.testing {
-		now, nowUs = timeToRedisPair(tb.timeSource.Now())
-	}
-
-	args := []interface{}{
-		replenishRate,
-		capacity,
-		numTokens,
-
-		// The script allows us to inject the current time for testing,
-		// but it's superseded by Redis's time in production to protect
-		// against clock drift.
-		now,
-		nowUs,
-		tb.testing,
-	}
-
-	resp := updateTokenBucketScript.Run(
-		client,
-		tokenBucketKeys(prefix),
-		args...,
-	)
-	result, err := resp.Result()
-	if err != nil {
-		return false, 0, err
-	}
-
-	returnVals, ok := result.([]interface{})
-	if !ok {
-		return false, 0, fmt.Errorf("redistb: invalid return type %T (expected []interface{})", result)
-	}
-
-	// The script returns:
-	//    allowed       Whether the operation was allowed
-	//    remaining     The remaining tokens in the bucket
-	//    now_new       The script's view of the current time
-	//    now_new_us    The script's view of the current time (microseconds)
-	//
-	// We don't use the last two arguments here.
-
-	// Deserializing turns Lua 'true' into '1', and 'false' into 'nil'
-	var allowed bool
-	if returnVals[0] == nil {
-		allowed = false
-	} else if i, ok := returnVals[0].(int64); ok {
-		allowed = i == 1
-	} else {
-		return false, 0, fmt.Errorf("redistb: invalid 'allowed' type %T", returnVals[0])
-	}
-
-	remaining := returnVals[1].(int64)
-	return allowed, remaining, nil
+	_ = "STUB: not implemented"
+	return false, 0, nil
 }
+
+// The script allows us to inject the current time for testing,
+// but it's superseded by Redis's time in production to protect
+// against clock drift.
+
+// The script returns:
+//    allowed       Whether the operation was allowed
+//    remaining     The remaining tokens in the bucket
+//    now_new       The script's view of the current time
+//    now_new_us    The script's view of the current time (microseconds)
+//
+// We don't use the last two arguments here.
+
+// Deserializing turns Lua 'true' into '1', and 'false' into 'nil'
 
 // tokenBucketKeys returns the keys used for the token bucket script, given a
 // prefix.
 func tokenBucketKeys(prefix string) []string {
+	_ = "STUB: not implemented"
 	// Redis Cluster uses a hashing algorithm on keys to determine which slot
 	// they map to in its backend. Normally this is a problem for EVAL/EVALSHA
 	// because multiple keys in a script will likely map to different slots
@@ -171,52 +116,34 @@ func tokenBucketKeys(prefix string) []string {
 	//
 	// We take advantage of this idea here by making sure to hash only the
 	// common identifier in these keys by using "{}".
-	return []string{
-		fmt.Sprintf("{%s}.tokens", prefix),
-		fmt.Sprintf("{%s}.refreshed", prefix),
-		fmt.Sprintf("{%s}.refreshed_us", prefix),
-	}
+	return nil
 }
 
 // timeToRedisPair converts a Go time.Time into a seconds and microseconds
 // component, which can be passed to our Redis script.
 func timeToRedisPair(t time.Time) (int64, int64) {
+	_ = "STUB: not implemented"
 	// The first number in the pair is the number of seconds since the Unix
 	// epoch.
-	timeSec := t.Unix()
-
-	// The second number is any additional number of microseconds; we can
-	// get this by obtaining any sub-second Nanoseconds and simply dividing
-	// to get the number in microseconds.
-	timeMicros := int64(t.Nanosecond()) / int64(time.Microsecond)
-
-	return timeSec, timeMicros
+	return 0, 0
 }
+
+// The second number is any additional number of microseconds; we can
+// get this by obtaining any sub-second Nanoseconds and simply dividing
+// to get the number in microseconds.
 
 // Because each Redis client type in the Go package has a `WithContext` method
 // that returns a concrete type, we can't simply put that method in the
 // RedisClient interface. This method performs type assertions to try and call
 // the `WithContext` method on the appropriate concrete type.
 func withClientContext(ctx context.Context, client RedisClient) RedisClient {
-	type withContextable interface {
-		WithContext(context.Context) RedisClient
-	}
-
-	switch c := client.(type) {
-	// The three major Redis clients
-	case *redis.Client:
-		return c.WithContext(ctx)
-	case *redis.ClusterClient:
-		return c.WithContext(ctx)
-	case *redis.Ring:
-		return c.WithContext(ctx)
-
-	// Let's also support the case where someone implements a custom client
-	// that returns the RedisClient interface type (e.g. good for tests).
-	case withContextable:
-		return c.WithContext(ctx)
-	}
-
-	// If we can't determine a type, just return it unchanged.
-	return client
+	_ = "STUB: not implemented"
+	return *new(RedisClient)
 }
+
+// The three major Redis clients
+
+// Let's also support the case where someone implements a custom client
+// that returns the RedisClient interface type (e.g. good for tests).
+
+// If we can't determine a type, just return it unchanged.

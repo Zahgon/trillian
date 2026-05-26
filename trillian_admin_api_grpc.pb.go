@@ -22,9 +22,8 @@ package trillian
 
 import (
 	context "context"
+
 	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -75,67 +74,38 @@ type trillianAdminClient struct {
 }
 
 func NewTrillianAdminClient(cc grpc.ClientConnInterface) TrillianAdminClient {
-	return &trillianAdminClient{cc}
+	_ = "STUB: not implemented"
+	return *new(TrillianAdminClient)
 }
 
 func (c *trillianAdminClient) ListTrees(ctx context.Context, in *ListTreesRequest, opts ...grpc.CallOption) (*ListTreesResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListTreesResponse)
-	err := c.cc.Invoke(ctx, TrillianAdmin_ListTrees_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *trillianAdminClient) GetTree(ctx context.Context, in *GetTreeRequest, opts ...grpc.CallOption) (*Tree, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Tree)
-	err := c.cc.Invoke(ctx, TrillianAdmin_GetTree_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *trillianAdminClient) CreateTree(ctx context.Context, in *CreateTreeRequest, opts ...grpc.CallOption) (*Tree, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Tree)
-	err := c.cc.Invoke(ctx, TrillianAdmin_CreateTree_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *trillianAdminClient) UpdateTree(ctx context.Context, in *UpdateTreeRequest, opts ...grpc.CallOption) (*Tree, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Tree)
-	err := c.cc.Invoke(ctx, TrillianAdmin_UpdateTree_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *trillianAdminClient) DeleteTree(ctx context.Context, in *DeleteTreeRequest, opts ...grpc.CallOption) (*Tree, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Tree)
-	err := c.cc.Invoke(ctx, TrillianAdmin_DeleteTree_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *trillianAdminClient) UndeleteTree(ctx context.Context, in *UndeleteTreeRequest, opts ...grpc.CallOption) (*Tree, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Tree)
-	err := c.cc.Invoke(ctx, TrillianAdmin_UndeleteTree_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TrillianAdminServer is the server API for TrillianAdmin service.
@@ -175,149 +145,85 @@ type TrillianAdminServer interface {
 type UnimplementedTrillianAdminServer struct{}
 
 func (UnimplementedTrillianAdminServer) ListTrees(context.Context, *ListTreesRequest) (*ListTreesResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method ListTrees not implemented")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (UnimplementedTrillianAdminServer) GetTree(context.Context, *GetTreeRequest) (*Tree, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetTree not implemented")
-}
-func (UnimplementedTrillianAdminServer) CreateTree(context.Context, *CreateTreeRequest) (*Tree, error) {
-	return nil, status.Error(codes.Unimplemented, "method CreateTree not implemented")
-}
-func (UnimplementedTrillianAdminServer) UpdateTree(context.Context, *UpdateTreeRequest) (*Tree, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateTree not implemented")
-}
-func (UnimplementedTrillianAdminServer) DeleteTree(context.Context, *DeleteTreeRequest) (*Tree, error) {
-	return nil, status.Error(codes.Unimplemented, "method DeleteTree not implemented")
-}
-func (UnimplementedTrillianAdminServer) UndeleteTree(context.Context, *UndeleteTreeRequest) (*Tree, error) {
-	return nil, status.Error(codes.Unimplemented, "method UndeleteTree not implemented")
-}
-func (UnimplementedTrillianAdminServer) testEmbeddedByValue() {}
 
-// UnsafeTrillianAdminServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to TrillianAdminServer will
-// result in compilation errors.
+func (UnimplementedTrillianAdminServer) GetTree(context.Context, *GetTreeRequest) (*Tree, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedTrillianAdminServer) CreateTree(context.Context, *CreateTreeRequest) (*Tree, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedTrillianAdminServer) UpdateTree(context.Context, *UpdateTreeRequest) (*Tree, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedTrillianAdminServer) DeleteTree(context.Context, *DeleteTreeRequest) (*Tree, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedTrillianAdminServer) UndeleteTree(context.Context, *UndeleteTreeRequest) (*Tree, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedTrillianAdminServer) testEmbeddedByValue() {
+	_ = "STUB: not implemented"
+
+	// UnsafeTrillianAdminServer may be embedded to opt out of forward compatibility for this service.
+	// Use of this interface is not recommended, as added methods to TrillianAdminServer will
+	// result in compilation errors.
+	return
+}
+
 type UnsafeTrillianAdminServer interface {
 	mustEmbedUnimplementedTrillianAdminServer()
 }
 
 func RegisterTrillianAdminServer(s grpc.ServiceRegistrar, srv TrillianAdminServer) {
+	_ = "STUB: not implemented"
 	// If the following call panics, it indicates UnimplementedTrillianAdminServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&TrillianAdmin_ServiceDesc, srv)
+	return
 }
 
 func _TrillianAdmin_ListTrees_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListTreesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrillianAdminServer).ListTrees(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrillianAdmin_ListTrees_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrillianAdminServer).ListTrees(ctx, req.(*ListTreesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _TrillianAdmin_GetTree_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetTreeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrillianAdminServer).GetTree(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrillianAdmin_GetTree_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrillianAdminServer).GetTree(ctx, req.(*GetTreeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _TrillianAdmin_CreateTree_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateTreeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrillianAdminServer).CreateTree(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrillianAdmin_CreateTree_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrillianAdminServer).CreateTree(ctx, req.(*CreateTreeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _TrillianAdmin_UpdateTree_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateTreeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrillianAdminServer).UpdateTree(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrillianAdmin_UpdateTree_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrillianAdminServer).UpdateTree(ctx, req.(*UpdateTreeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _TrillianAdmin_DeleteTree_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteTreeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrillianAdminServer).DeleteTree(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrillianAdmin_DeleteTree_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrillianAdminServer).DeleteTree(ctx, req.(*DeleteTreeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _TrillianAdmin_UndeleteTree_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UndeleteTreeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrillianAdminServer).UndeleteTree(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrillianAdmin_UndeleteTree_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrillianAdminServer).UndeleteTree(ctx, req.(*UndeleteTreeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TrillianAdmin_ServiceDesc is the grpc.ServiceDesc for TrillianAdmin service.

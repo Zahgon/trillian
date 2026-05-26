@@ -22,9 +22,8 @@ package trillian
 
 import (
 	context "context"
+
 	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -128,97 +127,53 @@ type trillianLogClient struct {
 }
 
 func NewTrillianLogClient(cc grpc.ClientConnInterface) TrillianLogClient {
-	return &trillianLogClient{cc}
+	_ = "STUB: not implemented"
+	return *new(TrillianLogClient)
 }
 
 func (c *trillianLogClient) QueueLeaf(ctx context.Context, in *QueueLeafRequest, opts ...grpc.CallOption) (*QueueLeafResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(QueueLeafResponse)
-	err := c.cc.Invoke(ctx, TrillianLog_QueueLeaf_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *trillianLogClient) GetInclusionProof(ctx context.Context, in *GetInclusionProofRequest, opts ...grpc.CallOption) (*GetInclusionProofResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetInclusionProofResponse)
-	err := c.cc.Invoke(ctx, TrillianLog_GetInclusionProof_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *trillianLogClient) GetInclusionProofByHash(ctx context.Context, in *GetInclusionProofByHashRequest, opts ...grpc.CallOption) (*GetInclusionProofByHashResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetInclusionProofByHashResponse)
-	err := c.cc.Invoke(ctx, TrillianLog_GetInclusionProofByHash_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *trillianLogClient) GetConsistencyProof(ctx context.Context, in *GetConsistencyProofRequest, opts ...grpc.CallOption) (*GetConsistencyProofResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetConsistencyProofResponse)
-	err := c.cc.Invoke(ctx, TrillianLog_GetConsistencyProof_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *trillianLogClient) GetLatestSignedLogRoot(ctx context.Context, in *GetLatestSignedLogRootRequest, opts ...grpc.CallOption) (*GetLatestSignedLogRootResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetLatestSignedLogRootResponse)
-	err := c.cc.Invoke(ctx, TrillianLog_GetLatestSignedLogRoot_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *trillianLogClient) GetEntryAndProof(ctx context.Context, in *GetEntryAndProofRequest, opts ...grpc.CallOption) (*GetEntryAndProofResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetEntryAndProofResponse)
-	err := c.cc.Invoke(ctx, TrillianLog_GetEntryAndProof_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *trillianLogClient) InitLog(ctx context.Context, in *InitLogRequest, opts ...grpc.CallOption) (*InitLogResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(InitLogResponse)
-	err := c.cc.Invoke(ctx, TrillianLog_InitLog_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *trillianLogClient) AddSequencedLeaves(ctx context.Context, in *AddSequencedLeavesRequest, opts ...grpc.CallOption) (*AddSequencedLeavesResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AddSequencedLeavesResponse)
-	err := c.cc.Invoke(ctx, TrillianLog_AddSequencedLeaves_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *trillianLogClient) GetLeavesByRange(ctx context.Context, in *GetLeavesByRangeRequest, opts ...grpc.CallOption) (*GetLeavesByRangeResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetLeavesByRangeResponse)
-	err := c.cc.Invoke(ctx, TrillianLog_GetLeavesByRange_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TrillianLogServer is the server API for TrillianLog service.
@@ -308,212 +263,115 @@ type TrillianLogServer interface {
 type UnimplementedTrillianLogServer struct{}
 
 func (UnimplementedTrillianLogServer) QueueLeaf(context.Context, *QueueLeafRequest) (*QueueLeafResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method QueueLeaf not implemented")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
-func (UnimplementedTrillianLogServer) GetInclusionProof(context.Context, *GetInclusionProofRequest) (*GetInclusionProofResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetInclusionProof not implemented")
-}
-func (UnimplementedTrillianLogServer) GetInclusionProofByHash(context.Context, *GetInclusionProofByHashRequest) (*GetInclusionProofByHashResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetInclusionProofByHash not implemented")
-}
-func (UnimplementedTrillianLogServer) GetConsistencyProof(context.Context, *GetConsistencyProofRequest) (*GetConsistencyProofResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetConsistencyProof not implemented")
-}
-func (UnimplementedTrillianLogServer) GetLatestSignedLogRoot(context.Context, *GetLatestSignedLogRootRequest) (*GetLatestSignedLogRootResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetLatestSignedLogRoot not implemented")
-}
-func (UnimplementedTrillianLogServer) GetEntryAndProof(context.Context, *GetEntryAndProofRequest) (*GetEntryAndProofResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetEntryAndProof not implemented")
-}
-func (UnimplementedTrillianLogServer) InitLog(context.Context, *InitLogRequest) (*InitLogResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method InitLog not implemented")
-}
-func (UnimplementedTrillianLogServer) AddSequencedLeaves(context.Context, *AddSequencedLeavesRequest) (*AddSequencedLeavesResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method AddSequencedLeaves not implemented")
-}
-func (UnimplementedTrillianLogServer) GetLeavesByRange(context.Context, *GetLeavesByRangeRequest) (*GetLeavesByRangeResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetLeavesByRange not implemented")
-}
-func (UnimplementedTrillianLogServer) testEmbeddedByValue() {}
 
-// UnsafeTrillianLogServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to TrillianLogServer will
-// result in compilation errors.
+func (UnimplementedTrillianLogServer) GetInclusionProof(context.Context, *GetInclusionProofRequest) (*GetInclusionProofResponse, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedTrillianLogServer) GetInclusionProofByHash(context.Context, *GetInclusionProofByHashRequest) (*GetInclusionProofByHashResponse, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedTrillianLogServer) GetConsistencyProof(context.Context, *GetConsistencyProofRequest) (*GetConsistencyProofResponse, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedTrillianLogServer) GetLatestSignedLogRoot(context.Context, *GetLatestSignedLogRootRequest) (*GetLatestSignedLogRootResponse, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedTrillianLogServer) GetEntryAndProof(context.Context, *GetEntryAndProofRequest) (*GetEntryAndProofResponse, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedTrillianLogServer) InitLog(context.Context, *InitLogRequest) (*InitLogResponse, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedTrillianLogServer) AddSequencedLeaves(context.Context, *AddSequencedLeavesRequest) (*AddSequencedLeavesResponse, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedTrillianLogServer) GetLeavesByRange(context.Context, *GetLeavesByRangeRequest) (*GetLeavesByRangeResponse, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
+
+func (UnimplementedTrillianLogServer) testEmbeddedByValue() {
+	_ = "STUB: not implemented"
+
+	// UnsafeTrillianLogServer may be embedded to opt out of forward compatibility for this service.
+	// Use of this interface is not recommended, as added methods to TrillianLogServer will
+	// result in compilation errors.
+	return
+}
+
 type UnsafeTrillianLogServer interface {
 	mustEmbedUnimplementedTrillianLogServer()
 }
 
 func RegisterTrillianLogServer(s grpc.ServiceRegistrar, srv TrillianLogServer) {
+	_ = "STUB: not implemented"
 	// If the following call panics, it indicates UnimplementedTrillianLogServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&TrillianLog_ServiceDesc, srv)
+	return
 }
 
 func _TrillianLog_QueueLeaf_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueueLeafRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrillianLogServer).QueueLeaf(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrillianLog_QueueLeaf_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrillianLogServer).QueueLeaf(ctx, req.(*QueueLeafRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _TrillianLog_GetInclusionProof_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetInclusionProofRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrillianLogServer).GetInclusionProof(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrillianLog_GetInclusionProof_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrillianLogServer).GetInclusionProof(ctx, req.(*GetInclusionProofRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _TrillianLog_GetInclusionProofByHash_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetInclusionProofByHashRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrillianLogServer).GetInclusionProofByHash(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrillianLog_GetInclusionProofByHash_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrillianLogServer).GetInclusionProofByHash(ctx, req.(*GetInclusionProofByHashRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _TrillianLog_GetConsistencyProof_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetConsistencyProofRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrillianLogServer).GetConsistencyProof(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrillianLog_GetConsistencyProof_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrillianLogServer).GetConsistencyProof(ctx, req.(*GetConsistencyProofRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _TrillianLog_GetLatestSignedLogRoot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetLatestSignedLogRootRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrillianLogServer).GetLatestSignedLogRoot(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrillianLog_GetLatestSignedLogRoot_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrillianLogServer).GetLatestSignedLogRoot(ctx, req.(*GetLatestSignedLogRootRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _TrillianLog_GetEntryAndProof_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetEntryAndProofRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrillianLogServer).GetEntryAndProof(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrillianLog_GetEntryAndProof_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrillianLogServer).GetEntryAndProof(ctx, req.(*GetEntryAndProofRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _TrillianLog_InitLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InitLogRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrillianLogServer).InitLog(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrillianLog_InitLog_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrillianLogServer).InitLog(ctx, req.(*InitLogRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _TrillianLog_AddSequencedLeaves_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddSequencedLeavesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrillianLogServer).AddSequencedLeaves(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrillianLog_AddSequencedLeaves_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrillianLogServer).AddSequencedLeaves(ctx, req.(*AddSequencedLeavesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _TrillianLog_GetLeavesByRange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetLeavesByRangeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TrillianLogServer).GetLeavesByRange(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TrillianLog_GetLeavesByRange_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TrillianLogServer).GetLeavesByRange(ctx, req.(*GetLeavesByRangeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TrillianLog_ServiceDesc is the grpc.ServiceDesc for TrillianLog service.

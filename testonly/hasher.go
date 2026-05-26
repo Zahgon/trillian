@@ -17,28 +17,13 @@ package testonly
 // This file implements the hashing functions that are part of a Trillian
 // personality.
 
-import "crypto/sha256"
-
 // HashKey converts a map key into a map index using SHA256.
 // This preserves tests that precomputed indexes based on SHA256.
-func HashKey(key string) []byte {
-	h := sha256.New()
-	h.Write([]byte(key))
-	return h.Sum(nil)
-}
+func HashKey(key string) []byte { _ = "STUB: not implemented"; return nil }
 
 // TransparentHash returns a key that can be visually inspected.
 // This supports testing where it was nice to see what the key was.
-func TransparentHash(key string) []byte {
-	const prefixLen = 8
-	if prefixLen+len(key) > sha256.Size {
-		panic("key too long")
-	}
-	b := make([]byte, sha256.Size)
-	// Put some hashed bytes before the key so that key values are
-	// a bit more widely distributed around the Merkle tree.
-	h := HashKey(key)
-	copy(b[0:prefixLen], h[0:prefixLen])
-	copy(b[prefixLen:], key)
-	return b
-}
+func TransparentHash(key string) []byte { _ = "STUB: not implemented"; return nil }
+
+// Put some hashed bytes before the key so that key values are
+// a bit more widely distributed around the Merkle tree.

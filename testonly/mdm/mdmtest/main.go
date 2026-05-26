@@ -18,20 +18,8 @@ package main
 import (
 	"context"
 	"flag"
-	"fmt"
-	"net/http"
 	"time"
 
-	"github.com/google/trillian"
-	"github.com/google/trillian/client"
-	"github.com/google/trillian/monitoring"
-	"github.com/google/trillian/monitoring/prometheus"
-	"github.com/google/trillian/testonly/mdm"
-	"github.com/google/trillian/util"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
-	"google.golang.org/protobuf/types/known/durationpb"
 	"k8s.io/klog/v2"
 )
 
@@ -56,80 +44,6 @@ func main() {
 	}
 }
 
-func innerMain(ctx context.Context) error {
-	var mf monitoring.MetricFactory
-	if *metricsEndpoint != "" {
-		mf = prometheus.MetricFactory{}
-		http.Handle("/metrics", promhttp.Handler())
-		server := http.Server{Addr: *metricsEndpoint, Handler: nil}
-		klog.Infof("Serving metrics at %v", *metricsEndpoint)
-		go func() {
-			err := server.ListenAndServe()
-			klog.Warningf("Metrics server exited: %v", err)
-		}()
-	}
+func innerMain(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
-	dialOpts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-	c, err := grpc.Dial(*rpcServer, dialOpts...)
-	if err != nil {
-		klog.Exitf("Failed to create log client conn: %v", err)
-	}
-	cl := trillian.NewTrillianLogClient(c)
-
-	ac := c
-	if len(*adminServer) > 0 {
-		ac, err = grpc.Dial(*adminServer, dialOpts...)
-		if err != nil {
-			klog.Exitf("Failed to create admin client conn: %v", err)
-		}
-	}
-	adminCl := trillian.NewTrillianAdminClient(ac)
-
-	if *logID <= 0 {
-		// No logID provided, so create an ephemeral tree to test against.
-		req := trillian.CreateTreeRequest{
-			Tree: &trillian.Tree{
-				TreeState:       trillian.TreeState_ACTIVE,
-				TreeType:        trillian.TreeType_LOG,
-				DisplayName:     fmt.Sprintf("mdmtest-%d", time.Now().UnixNano()/int64(time.Second)),
-				Description:     "Transient tree for mdmtest",
-				MaxRootDuration: durationpb.New(time.Second * 3600),
-			},
-		}
-		tree, err := client.CreateAndInitTree(ctx, &req, adminCl, cl)
-		if err != nil {
-			klog.Exitf("failed to create ephemeral tree: %v", err)
-		}
-		*logID = tree.TreeId
-		klog.Infof("testing against ephemeral tree %d", *logID)
-		defer func() {
-			req := &trillian.DeleteTreeRequest{TreeId: *logID}
-			klog.Infof("Soft-delete transient Trillian Log with TreeID=%d", *logID)
-			if _, err := adminCl.DeleteTree(ctx, req); err != nil {
-				klog.Errorf("failed to DeleteTree(%d): %v", *logID, err)
-			}
-		}()
-	}
-
-	opts := mdm.MergeDelayOptions{
-		ParallelAdds:  *checkers,
-		LeafSize:      int(*leafSize),
-		NewLeafChance: int(*newLeafChance),
-		EmitInterval:  *emitInterval,
-		Deadline:      *deadline,
-		MinMergeDelay: *minMergeDelay,
-		MetricFactory: mf,
-	}
-	monitor, err := mdm.NewMonitor(ctx, *logID, cl, adminCl, opts)
-	if err != nil {
-		return fmt.Errorf("failed to build merge delay monitor: %v", err)
-	}
-
-	cctx, cancel := context.WithCancel(ctx)
-	defer cancel()
-	go util.AwaitSignal(ctx, cancel)
-	if err := monitor.Monitor(cctx); err != nil {
-		return fmt.Errorf("merge delay monitoring failed: %v", err)
-	}
-	return nil
-}
+// No logID provided, so create an ephemeral tree to test against.

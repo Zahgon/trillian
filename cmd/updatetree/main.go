@@ -23,20 +23,12 @@ package main
 
 import (
 	"context"
-	"errors"
 	"flag"
 	"fmt"
 	"time"
 
 	"github.com/google/trillian"
-	"github.com/google/trillian/client/rpcflags"
-	"google.golang.org/genproto/protobuf/field_mask"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/encoding/prototext"
-	"google.golang.org/protobuf/reflect/protoreflect"
-	"google.golang.org/protobuf/reflect/protoregistry"
 	"k8s.io/klog/v2"
 )
 
@@ -51,79 +43,12 @@ var (
 
 // TODO(Martin2112): Pass everything needed into this and don't refer to flags.
 func updateTree(ctx context.Context) (*trillian.Tree, error) {
-	if *adminServerAddr == "" {
-		return nil, errors.New("empty --admin_server, please provide the Admin server host:port")
-	}
-
-	tree := &trillian.Tree{TreeId: *treeID}
-	paths := make([]string, 0)
-
-	if len(*treeState) > 0 {
-		m, err := protoregistry.GlobalTypes.FindEnumByName("trillian.TreeState")
-		if err != nil {
-			return nil, fmt.Errorf("can't find enum value map for states: %w", err)
-		}
-		newState := m.Descriptor().Values().ByName(protoreflect.Name(*treeState))
-		if newState == nil {
-			return nil, fmt.Errorf("invalid tree state: %v", *treeState)
-		}
-		tree.TreeState = trillian.TreeState(newState.Number())
-		paths = append(paths, "tree_state")
-	}
-
-	if len(*treeType) > 0 {
-		m, err := protoregistry.GlobalTypes.FindEnumByName("trillian.TreeType")
-		if err != nil {
-			return nil, fmt.Errorf("can't find enum value map for types: %w", err)
-		}
-		newType := m.Descriptor().Values().ByName(protoreflect.Name(*treeType))
-		if newType == nil {
-			return nil, fmt.Errorf("invalid tree type: %v", *treeType)
-		}
-		tree.TreeType = trillian.TreeType(newType.Number())
-		paths = append(paths, "tree_type")
-	}
-
-	if len(paths) == 0 {
-		return nil, errors.New("nothing to change")
-	}
-
-	// We only want to update certain fields of the tree, which means we
-	// need a field mask on the request.
-	req := &trillian.UpdateTreeRequest{
-		Tree:       tree,
-		UpdateMask: &field_mask.FieldMask{Paths: paths},
-	}
-
-	dialOpts, err := rpcflags.NewClientDialOptionsFromFlags()
-	if err != nil {
-		return nil, fmt.Errorf("failed to determine dial options: %v", err)
-	}
-
-	conn, err := grpc.Dial(*adminServerAddr, dialOpts...)
-	if err != nil {
-		return nil, fmt.Errorf("failed to dial %v: %v", *adminServerAddr, err)
-	}
-	defer func() {
-		if err := conn.Close(); err != nil {
-			klog.Errorf("Close(): %v", err)
-		}
-	}()
-
-	client := trillian.NewTrillianAdminClient(conn)
-	for {
-		tree, err := client.UpdateTree(ctx, req)
-		if err == nil {
-			return tree, nil
-		}
-		if s, ok := status.FromError(err); ok && s.Code() == codes.Unavailable {
-			klog.Errorf("Admin server unavailable, trying again: %v", err)
-			time.Sleep(100 * time.Millisecond)
-			continue
-		}
-		return nil, fmt.Errorf("failed to UpdateTree(%+v): %T %v", req, err, err)
-	}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// We only want to update certain fields of the tree, which means we
+// need a field mask on the request.
 
 func main() {
 	klog.InitFlags(nil)

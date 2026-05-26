@@ -15,14 +15,10 @@
 package testonly
 
 import (
-	"bytes"
 	"context"
-	"fmt"
 
 	"github.com/google/trillian/storage/tree"
 	"github.com/transparency-dev/merkle/compact"
-	"github.com/transparency-dev/merkle/rfc6962"
-	"k8s.io/klog/v2"
 )
 
 // This is a fake implementation of a NodeReader intended for use in testing Merkle path code.
@@ -40,38 +36,17 @@ type FakeNodeReader struct {
 // NewFakeNodeReader creates and returns a FakeNodeReader with the supplied nodes
 // assuming that all the nodes are at a specified tree revision. All the node IDs
 // must be distinct.
-func NewFakeNodeReader(nodes []tree.Node) *FakeNodeReader {
-	nodeMap := make(map[compact.NodeID]tree.Node)
+func NewFakeNodeReader(nodes []tree.Node) *FakeNodeReader { _ = "STUB: not implemented"; return nil }
 
-	for _, node := range nodes {
-		id := node.ID
-		if _, ok := nodeMap[id]; ok {
-			// Duplicate mapping - the test data is invalid so don't continue.
-			klog.Fatalf("NewFakeNodeReader duplicate mapping for: %+v in:\n%v", id, nodes)
-		}
-		nodeMap[id] = node
-	}
-
-	return &FakeNodeReader{nodeMap: nodeMap}
-}
+// Duplicate mapping - the test data is invalid so don't continue.
 
 // GetMerkleNodes implements the corresponding NodeReader API.
 func (f FakeNodeReader) GetMerkleNodes(ids []compact.NodeID) ([]tree.Node, error) {
-	nodes := make([]tree.Node, 0, len(ids))
-	for _, id := range ids {
-		node, ok := f.nodeMap[id]
-		if !ok {
-			return nil, fmt.Errorf("GetMerkleNodes() unknown node ID: %v", id)
-		}
-		nodes = append(nodes, node)
-	}
-	return nodes, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (f FakeNodeReader) hasID(id compact.NodeID) bool {
-	_, ok := f.nodeMap[id]
-	return ok
-}
+func (f FakeNodeReader) hasID(id compact.NodeID) bool { _ = "STUB: not implemented"; return false }
 
 // MultiFakeNodeReader can provide nodes at multiple revisions. It delegates to a number of
 // FakeNodeReaders, each set up to handle one revision.
@@ -91,7 +66,8 @@ type LeafBatch struct {
 
 // NewMultiFakeNodeReader creates a MultiFakeNodeReader delegating to a number of FakeNodeReaders
 func NewMultiFakeNodeReader(readers []FakeNodeReader) *MultiFakeNodeReader {
-	return &MultiFakeNodeReader{readers: readers}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // NewMultiFakeNodeReaderFromLeaves uses a compact Merkle tree to set up the nodes at various
@@ -101,83 +77,29 @@ func NewMultiFakeNodeReader(readers []FakeNodeReader) *MultiFakeNodeReader {
 // code. To help guard against this we check the tree root hash after each batch has been
 // processed. The supplied batches should be in ascending order of tree revision.
 func NewMultiFakeNodeReaderFromLeaves(batches []LeafBatch) *MultiFakeNodeReader {
-	hasher := rfc6962.DefaultHasher
-	fact := compact.RangeFactory{Hash: hasher.HashChildren}
-	cr := fact.NewEmptyRange(0)
-
-	readers := make([]FakeNodeReader, 0, len(batches))
-
-	lastBatchRevision := int64(0)
-	for _, batch := range batches {
-		if batch.TreeRevision <= lastBatchRevision {
-			klog.Fatalf("Batches out of order revision: %d, last: %d in:\n%v", batch.TreeRevision,
-				lastBatchRevision, batches)
-		}
-
-		lastBatchRevision = batch.TreeRevision
-		nodeMap := make(map[compact.NodeID][]byte)
-		store := func(id compact.NodeID, hash []byte) { nodeMap[id] = hash }
-		for _, leaf := range batch.Leaves {
-			hash := hasher.HashLeaf([]byte(leaf))
-			// Store the new leaf node, and all new perfect nodes.
-			if err := cr.Append(hash, store); err != nil {
-				panic(fmt.Errorf("append: %v", err))
-			}
-		}
-		// TODO(pavelkalinnikov): Use testing.T.Fatalf instead of panics.
-		root, err := cr.GetRootHash(nil)
-		if err != nil {
-			panic(fmt.Errorf("GetRootHash: %v", err))
-		}
-		if cr.End() == 0 {
-			root = hasher.EmptyRoot()
-		}
-		// Sanity check the tree root hash against the one we expect to see.
-		if got, want := root, batch.ExpectedRoot; !bytes.Equal(got, want) {
-			panic(fmt.Errorf("NewMultiFakeNodeReaderFromLeaves() got root: %x, want: %x (%v)", got, want, batch))
-		}
-
-		// Unroll the update map to []tree.Node to retain the most recent node update within
-		// the batch for each ID. Use that to create a new FakeNodeReader.
-		nodes := make([]tree.Node, 0, len(nodeMap))
-		for id, hash := range nodeMap {
-			nodes = append(nodes, tree.Node{ID: id, Hash: hash})
-		}
-
-		readers = append(readers, *NewFakeNodeReader(nodes))
-	}
-
-	return NewMultiFakeNodeReader(readers)
+	_ = "STUB: not implemented"
+	return nil
 }
 
+// Store the new leaf node, and all new perfect nodes.
+
+// TODO(pavelkalinnikov): Use testing.T.Fatalf instead of panics.
+
+// Sanity check the tree root hash against the one we expect to see.
+
+// Unroll the update map to []tree.Node to retain the most recent node update within
+// the batch for each ID. Use that to create a new FakeNodeReader.
+
 func (m MultiFakeNodeReader) readerForNodeID(id compact.NodeID) *FakeNodeReader {
+	_ = "STUB: not implemented"
 	// Work backwards and use the first reader where the node is present.
-	for i := len(m.readers) - 1; i >= 0; i-- {
-		if m.readers[i].hasID(id) {
-			return &m.readers[i]
-		}
-	}
 	return nil
 }
 
 // GetMerkleNodes implements the corresponding NodeReader API.
 func (m MultiFakeNodeReader) GetMerkleNodes(ctx context.Context, ids []compact.NodeID) ([]tree.Node, error) {
+	_ = "STUB: not implemented"
 	// Find the correct reader for the supplied tree revision. This must be done for each node
 	// as earlier revisions may still be relevant
-	nodes := make([]tree.Node, 0, len(ids))
-	for _, id := range ids {
-		reader := m.readerForNodeID(id)
-
-		if reader == nil {
-			return nil,
-				fmt.Errorf("want nodeID %v, but no reader has it\n%v", id, m)
-		}
-
-		node, err := reader.GetMerkleNodes([]compact.NodeID{id})
-		if err != nil {
-			return nil, err
-		}
-		nodes = append(nodes, node[0])
-	}
-	return nodes, nil
+	return nil, nil
 }

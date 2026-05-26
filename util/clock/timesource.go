@@ -19,8 +19,6 @@ package clock
 import (
 	"sync"
 	"time"
-
-	"k8s.io/klog/v2"
 )
 
 // System is a default TimeSource that provides system time.
@@ -37,21 +35,22 @@ type TimeSource interface {
 
 // SecondsSince returns the time in seconds elapsed since t until now, as
 // measured by the TimeSource.
-func SecondsSince(ts TimeSource, t time.Time) float64 {
-	return ts.Now().Sub(t).Seconds()
-}
+func SecondsSince(ts TimeSource, t time.Time) float64 { _ = "STUB: not implemented"; return 0 }
 
 // systemTimeSource provides the current system local time.
 type systemTimeSource struct{}
 
 // Now returns the true current local time.
 func (s systemTimeSource) Now() time.Time {
-	return time.Now()
+	_ = "STUB: not implemented"
+
+	// NewTimer returns a real timer.
+	return *new(time.Time)
 }
 
-// NewTimer returns a real timer.
 func (s systemTimeSource) NewTimer(d time.Duration) Timer {
-	return systemTimer{time.NewTimer(d)}
+	_ = "STUB: not implemented"
+	return *new(Timer)
 }
 
 // FakeTimeSource provides time that can be arbitrarily set. For tests only.
@@ -63,52 +62,23 @@ type FakeTimeSource struct {
 }
 
 // NewFake creates a FakeTimeSource instance.
-func NewFake(t time.Time) *FakeTimeSource {
-	timers := make(map[int]*fakeTimer)
-	return &FakeTimeSource{now: t, timers: timers}
-}
+func NewFake(t time.Time) *FakeTimeSource { _ = "STUB: not implemented"; return nil }
 
 // Now returns the time value this instance contains.
-func (f *FakeTimeSource) Now() time.Time {
-	f.mu.RLock()
-	defer f.mu.RUnlock()
-	return f.now
-}
+func (f *FakeTimeSource) Now() time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // NewTimer returns a fake Timer.
 func (f *FakeTimeSource) NewTimer(d time.Duration) Timer {
-	f.mu.Lock()
-	defer f.mu.Unlock()
-	id := f.nextID
-	f.nextID++
-	timer := newFakeTimer(f, id, f.now.Add(d))
-	f.timers[id] = timer
-	return timer
+	_ = "STUB: not implemented"
+	return *new(Timer)
 }
 
 // unsubscribe removes the Timer with the specified ID if it exists, and
 // returns the existence bit.
-func (f *FakeTimeSource) unsubscribe(id int) bool {
-	f.mu.Lock()
-	defer f.mu.Unlock()
-	_, ok := f.timers[id]
-	if ok {
-		delete(f.timers, id)
-	}
-	return ok
-}
+func (f *FakeTimeSource) unsubscribe(id int) bool { _ = "STUB: not implemented"; return false }
 
 // Set updates the time that this instance will report.
-func (f *FakeTimeSource) Set(t time.Time) {
-	f.mu.Lock()
-	defer f.mu.Unlock()
-	f.now = t
-	for id, timer := range f.timers {
-		if timer.tryFire(t) {
-			delete(f.timers, id)
-		}
-	}
-}
+func (f *FakeTimeSource) Set(t time.Time) { _ = "STUB: not implemented"; return }
 
 // PredefinedFake is a TimeSource that returns a predefined set of times
 // computed as base time + delays[i]. Delays don't have to be monotonic.
@@ -120,14 +90,10 @@ type PredefinedFake struct {
 
 // Now returns the current time, which depends on how many times this method
 // has already been invoked. Must not be called more than len(delays) times.
-func (p *PredefinedFake) Now() time.Time {
-	adjustedTime := p.Base.Add(p.Delays[p.Next])
-	p.Next++
-	return adjustedTime
-}
+func (p *PredefinedFake) Now() time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // NewTimer creates a timer with the specified delay. Not implemented.
 func (p *PredefinedFake) NewTimer(d time.Duration) Timer {
-	klog.Exitf("PredefinedFake.NewTimer is not implemented")
-	return nil
+	_ = "STUB: not implemented"
+	return *new(Timer)
 }

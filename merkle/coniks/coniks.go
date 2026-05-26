@@ -18,11 +18,8 @@ package coniks
 import (
 	"bytes"
 	"crypto"
-	"encoding/binary"
-	"fmt"
 
 	"github.com/google/trillian/merkle/smt/node"
-	"k8s.io/klog/v2"
 )
 
 // Domain separation prefixes
@@ -41,73 +38,34 @@ type Hasher struct {
 }
 
 // New creates a new hashers.TreeHasher using the passed in hash function.
-func New(h crypto.Hash) *Hasher {
-	return &Hasher{Hash: h}
-}
+func New(h crypto.Hash) *Hasher { _ = "STUB: not implemented"; return nil }
 
 // EmptyRoot returns the root of an empty tree.
-func (m *Hasher) EmptyRoot() []byte {
-	panic("EmptyRoot() not defined for coniks.Hasher")
-}
+func (m *Hasher) EmptyRoot() []byte { _ = "STUB: not implemented"; return nil }
 
 // HashEmpty returns the hash of an empty subtree with the given root.
 func (m *Hasher) HashEmpty(treeID int64, root node.ID) []byte {
-	depth := int(root.BitLen())
+	_ = "STUB: not implemented"
+	return nil
 
 	// bytes.Buffer never returns errors so we can ignore them below.
-	buf := bytes.NewBuffer(make([]byte, 0, 32))
-	h := m.New()
-	buf.Write(emptyIdentifier)
-	_ = binary.Write(buf, binary.BigEndian, uint64(treeID))
-	m.writeMaskedNodeID(buf, root)
-	_ = binary.Write(buf, binary.BigEndian, uint32(depth))
-	h.Write(buf.Bytes())
-	r := h.Sum(nil)
-	if klog.V(5).Enabled() {
-		klog.Infof("HashEmpty(%v): %x", root, r)
-	}
-	return r
 }
 
 // HashLeaf calculate the merkle tree leaf value:
 // H(Identifier || treeID || depth || index || dataHash)
 func (m *Hasher) HashLeaf(treeID int64, id node.ID, leaf []byte) []byte {
-	depth := int(id.BitLen())
+	_ = "STUB: not implemented"
+	return nil
+
 	// bytes.Buffer never returns errors so we can ignore them below.
-	buf := bytes.NewBuffer(make([]byte, 0, 32+len(leaf)))
-	h := m.New()
-	buf.Write(leafIdentifier)
-	_ = binary.Write(buf, binary.BigEndian, uint64(treeID))
-	m.writeMaskedNodeID(buf, id)
-	_ = binary.Write(buf, binary.BigEndian, uint32(depth))
-	buf.Write(leaf)
-	h.Write(buf.Bytes())
-	p := h.Sum(nil)
-	if klog.V(5).Enabled() {
-		klog.Infof("HashLeaf(%v, %s): %x", id, leaf, p)
-	}
-	return p
 }
 
 // HashChildren returns the internal Merkle tree node hash of the two child nodes l and r.
 // The hashed structure is  H(l || r).
-func (m *Hasher) HashChildren(l, r []byte) []byte {
-	buf := bytes.NewBuffer(make([]byte, 0, 32+len(l)+len(r)))
-	h := m.New()
-	buf.Write(l)
-	buf.Write(r)
-	h.Write(buf.Bytes())
-	p := h.Sum(nil)
-	if klog.V(5).Enabled() {
-		klog.Infof("HashChildren(%x, %x): %x", l, r, p)
-	}
-	return p
-}
+func (m *Hasher) HashChildren(l, r []byte) []byte { _ = "STUB: not implemented"; return nil }
 
 // BitLen returns the number of bits in the hash function.
-func (m *Hasher) BitLen() int {
-	return m.Size() * 8
-}
+func (m *Hasher) BitLen() int { _ = "STUB: not implemented"; return 0 }
 
 // writeMaskedNodeID writes the node ID bits to the buffer, padded with zero
 // bits to the byte Size() of the hashes in use by this hasher.
@@ -116,33 +74,14 @@ func (m *Hasher) BitLen() int {
 // The tree height and hash size could be different.
 // TODO(pavelkalinnikov): Padding with zeroes doesn't buy us anything, as the
 // depth is also written to the Buffer.
-func (m *Hasher) writeMaskedNodeID(b *bytes.Buffer, id node.ID) {
-	depth := int(id.BitLen())
-	if got, want := depth, m.BitLen(); got > want {
-		panic(fmt.Sprintf("depth: %d, want <= %d", got, want))
-	}
+func (m *Hasher) writeMaskedNodeID(b *bytes.Buffer, id node.ID) { _ = "STUB: not implemented"; return }
 
-	prevLen := b.Len()
-	if depth > 0 {
-		// Write the complete bytes.
-		if full := id.FullBytes(); len(full) > 0 {
-			b.WriteString(full)
-		}
-		// Mask off unwanted bits in the last byte, if there is an incomplete one.
-		if last, bits := id.LastByte(); bits != 0 {
-			b.WriteByte(last)
-		}
-	}
-	// Pad to the correct length with zeroes. Allow for future hashers that might
-	// be > 256 bits.
-	// TODO(pavelkalinnikov): YAGNI. Simplify this until that actually happens.
-	for need := prevLen + m.Size() - b.Len(); need > 0; {
-		chunkSize := need
-		if chunkSize > 32 {
-			chunkSize = 32
-		}
-		// Use the pre-allocated zeroes to avoid allocating them each time.
-		b.Write(zeroes[:chunkSize])
-		need -= chunkSize
-	}
-}
+// Write the complete bytes.
+
+// Mask off unwanted bits in the last byte, if there is an incomplete one.
+
+// Pad to the correct length with zeroes. Allow for future hashers that might
+// be > 256 bits.
+// TODO(pavelkalinnikov): YAGNI. Simplify this until that actually happens.
+
+// Use the pre-allocated zeroes to avoid allocating them each time.

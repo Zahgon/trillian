@@ -18,83 +18,36 @@ package der
 import (
 	"context"
 	"crypto"
-	"crypto/ecdsa"
-	"crypto/rsa"
-	"crypto/x509"
-	"fmt"
 
-	"crypto/ed25519"
-
-	"github.com/google/trillian/crypto/keyspb"
 	"google.golang.org/protobuf/proto"
 )
 
 // FromProto builds a crypto.Signer from a proto.Message, which must be of type PrivateKey.
 func FromProto(_ context.Context, pb proto.Message) (crypto.Signer, error) {
-	if pb, ok := pb.(*keyspb.PrivateKey); ok {
-		return UnmarshalPrivateKey(pb.GetDer())
-	}
-	return nil, fmt.Errorf("der: got %T, want *keyspb.PrivateKey", pb)
+	_ = "STUB: not implemented"
+	return *new(crypto.Signer), nil
 }
 
 // UnmarshalPrivateKey reads a DER-encoded private key.
 func UnmarshalPrivateKey(keyDER []byte) (crypto.Signer, error) {
-	key1, err1 := x509.ParseECPrivateKey(keyDER)
-	if err1 == nil {
-		return key1, nil
-	}
-
-	key2, err2 := x509.ParsePKCS8PrivateKey(keyDER)
-	if err2 == nil {
-		switch key2 := key2.(type) {
-		case *ecdsa.PrivateKey:
-			return key2, nil
-		case *rsa.PrivateKey:
-			return key2, nil
-		case ed25519.PrivateKey:
-			return key2, nil
-		}
-		return nil, fmt.Errorf("der: unsupported private key type: %T", key2)
-	}
-
-	key3, err3 := x509.ParsePKCS1PrivateKey(keyDER)
-	if err3 == nil {
-		return key3, nil
-	}
-
-	return nil, fmt.Errorf("der: could not parse private key as SEC1 (%v), PKCS8 (%v) or PKCS1 (%v)", err1, err2, err3)
+	_ = "STUB: not implemented"
+	return *new(crypto.Signer), nil
 }
 
 // UnmarshalPublicKey reads a DER-encoded public key.
 func UnmarshalPublicKey(keyDER []byte) (crypto.PublicKey, error) {
-	key, err := x509.ParsePKIXPublicKey(keyDER)
-	if err != nil {
-		return nil, fmt.Errorf("der: could not parse public key as PKIX (%v)", err)
-	}
-
-	return key, nil
+	_ = "STUB: not implemented"
+	return *new(crypto.PublicKey), nil
 }
 
 // MarshalPublicKey serializes an RSA or ECDSA public key as DER.
 func MarshalPublicKey(pubKey crypto.PublicKey) ([]byte, error) {
-	der, err := x509.MarshalPKIXPublicKey(pubKey)
-	if err != nil {
-		return nil, fmt.Errorf("der: could not marshal public key as PKIX (%v)", err)
-	}
-
-	return der, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // MarshalPrivateKey serializes an RSA or ECDSA private key as DER.
 func MarshalPrivateKey(key crypto.Signer) ([]byte, error) {
-	switch key := key.(type) {
-	case *ecdsa.PrivateKey:
-		return x509.MarshalECPrivateKey(key)
-	case *rsa.PrivateKey:
-		return x509.MarshalPKCS1PrivateKey(key), nil
-	case ed25519.PrivateKey:
-		return x509.MarshalPKCS8PrivateKey(key)
-	}
-
-	return nil, fmt.Errorf("der: unsupported key type: %T", key)
+	_ = "STUB: not implemented"
+	return nil, nil
 }

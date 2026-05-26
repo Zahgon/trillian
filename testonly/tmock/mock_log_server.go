@@ -6,7 +6,6 @@ package tmock
 
 import (
 	context "context"
-	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
 	trillian "github.com/google/trillian"
@@ -25,147 +24,121 @@ type MockTrillianLogServerMockRecorder struct {
 
 // NewMockTrillianLogServer creates a new mock instance.
 func NewMockTrillianLogServer(ctrl *gomock.Controller) *MockTrillianLogServer {
-	mock := &MockTrillianLogServer{ctrl: ctrl}
-	mock.recorder = &MockTrillianLogServerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockTrillianLogServer) EXPECT() *MockTrillianLogServerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// AddSequencedLeaves mocks base method.
+	return nil
 }
 
-// AddSequencedLeaves mocks base method.
 func (m *MockTrillianLogServer) AddSequencedLeaves(arg0 context.Context, arg1 *trillian.AddSequencedLeavesRequest) (*trillian.AddSequencedLeavesResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AddSequencedLeaves", arg0, arg1)
-	ret0, _ := ret[0].(*trillian.AddSequencedLeavesResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddSequencedLeaves indicates an expected call of AddSequencedLeaves.
 func (mr *MockTrillianLogServerMockRecorder) AddSequencedLeaves(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddSequencedLeaves", reflect.TypeOf((*MockTrillianLogServer)(nil).AddSequencedLeaves), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetConsistencyProof mocks base method.
 func (m *MockTrillianLogServer) GetConsistencyProof(arg0 context.Context, arg1 *trillian.GetConsistencyProofRequest) (*trillian.GetConsistencyProofResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetConsistencyProof", arg0, arg1)
-	ret0, _ := ret[0].(*trillian.GetConsistencyProofResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetConsistencyProof indicates an expected call of GetConsistencyProof.
 func (mr *MockTrillianLogServerMockRecorder) GetConsistencyProof(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetConsistencyProof", reflect.TypeOf((*MockTrillianLogServer)(nil).GetConsistencyProof), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetEntryAndProof mocks base method.
 func (m *MockTrillianLogServer) GetEntryAndProof(arg0 context.Context, arg1 *trillian.GetEntryAndProofRequest) (*trillian.GetEntryAndProofResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetEntryAndProof", arg0, arg1)
-	ret0, _ := ret[0].(*trillian.GetEntryAndProofResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetEntryAndProof indicates an expected call of GetEntryAndProof.
 func (mr *MockTrillianLogServerMockRecorder) GetEntryAndProof(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEntryAndProof", reflect.TypeOf((*MockTrillianLogServer)(nil).GetEntryAndProof), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetInclusionProof mocks base method.
 func (m *MockTrillianLogServer) GetInclusionProof(arg0 context.Context, arg1 *trillian.GetInclusionProofRequest) (*trillian.GetInclusionProofResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetInclusionProof", arg0, arg1)
-	ret0, _ := ret[0].(*trillian.GetInclusionProofResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetInclusionProof indicates an expected call of GetInclusionProof.
 func (mr *MockTrillianLogServerMockRecorder) GetInclusionProof(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetInclusionProof", reflect.TypeOf((*MockTrillianLogServer)(nil).GetInclusionProof), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetInclusionProofByHash mocks base method.
 func (m *MockTrillianLogServer) GetInclusionProofByHash(arg0 context.Context, arg1 *trillian.GetInclusionProofByHashRequest) (*trillian.GetInclusionProofByHashResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetInclusionProofByHash", arg0, arg1)
-	ret0, _ := ret[0].(*trillian.GetInclusionProofByHashResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetInclusionProofByHash indicates an expected call of GetInclusionProofByHash.
 func (mr *MockTrillianLogServerMockRecorder) GetInclusionProofByHash(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetInclusionProofByHash", reflect.TypeOf((*MockTrillianLogServer)(nil).GetInclusionProofByHash), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetLatestSignedLogRoot mocks base method.
 func (m *MockTrillianLogServer) GetLatestSignedLogRoot(arg0 context.Context, arg1 *trillian.GetLatestSignedLogRootRequest) (*trillian.GetLatestSignedLogRootResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetLatestSignedLogRoot", arg0, arg1)
-	ret0, _ := ret[0].(*trillian.GetLatestSignedLogRootResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetLatestSignedLogRoot indicates an expected call of GetLatestSignedLogRoot.
 func (mr *MockTrillianLogServerMockRecorder) GetLatestSignedLogRoot(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLatestSignedLogRoot", reflect.TypeOf((*MockTrillianLogServer)(nil).GetLatestSignedLogRoot), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetLeavesByRange mocks base method.
 func (m *MockTrillianLogServer) GetLeavesByRange(arg0 context.Context, arg1 *trillian.GetLeavesByRangeRequest) (*trillian.GetLeavesByRangeResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetLeavesByRange", arg0, arg1)
-	ret0, _ := ret[0].(*trillian.GetLeavesByRangeResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetLeavesByRange indicates an expected call of GetLeavesByRange.
 func (mr *MockTrillianLogServerMockRecorder) GetLeavesByRange(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLeavesByRange", reflect.TypeOf((*MockTrillianLogServer)(nil).GetLeavesByRange), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // InitLog mocks base method.
 func (m *MockTrillianLogServer) InitLog(arg0 context.Context, arg1 *trillian.InitLogRequest) (*trillian.InitLogResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "InitLog", arg0, arg1)
-	ret0, _ := ret[0].(*trillian.InitLogResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // InitLog indicates an expected call of InitLog.
 func (mr *MockTrillianLogServerMockRecorder) InitLog(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InitLog", reflect.TypeOf((*MockTrillianLogServer)(nil).InitLog), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // QueueLeaf mocks base method.
 func (m *MockTrillianLogServer) QueueLeaf(arg0 context.Context, arg1 *trillian.QueueLeafRequest) (*trillian.QueueLeafResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "QueueLeaf", arg0, arg1)
-	ret0, _ := ret[0].(*trillian.QueueLeafResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // QueueLeaf indicates an expected call of QueueLeaf.
 func (mr *MockTrillianLogServerMockRecorder) QueueLeaf(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueLeaf", reflect.TypeOf((*MockTrillianLogServer)(nil).QueueLeaf), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }

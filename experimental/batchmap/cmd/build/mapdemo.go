@@ -19,21 +19,16 @@ package main
 import (
 	"context"
 	"crypto"
-	"encoding/json"
 	"flag"
-	"fmt"
 	"os"
 	"path/filepath"
 	"reflect"
 
 	"github.com/apache/beam/sdks/v2/go/pkg/beam"
-	"github.com/apache/beam/sdks/v2/go/pkg/beam/io/filesystem/local"
 	"github.com/apache/beam/sdks/v2/go/pkg/beam/x/beamx"
 	"k8s.io/klog/v2"
 
 	"github.com/google/trillian/experimental/batchmap"
-	"github.com/google/trillian/merkle/coniks"
-	"github.com/google/trillian/merkle/smt/node"
 )
 
 const hash = crypto.SHA512_256
@@ -102,17 +97,8 @@ type mapEntryFn struct {
 }
 
 func (fn *mapEntryFn) ProcessElement(i int64) *batchmap.Entry {
-	h := hash.New()
-	_, _ = fmt.Fprintf(h, "%d", i)
-	kbs := h.Sum(nil)
-	leafID := node.NewID(string(kbs), uint(len(kbs)*8))
-
-	data := []byte(fmt.Sprintf("[%s]%d", fn.Salt, i))
-
-	return &batchmap.Entry{
-		HashKey:   kbs,
-		HashValue: coniks.Default.HashLeaf(fn.TreeID, leafID, data),
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // writeTileFn serializes the tile into the given directory, using the tile
@@ -126,33 +112,14 @@ type writeTileFn struct {
 }
 
 func (fn *writeTileFn) ProcessElement(ctx context.Context, t *batchmap.Tile) error {
-	fs := local.New(ctx)
-	w, err := fs.OpenWrite(ctx, fmt.Sprintf("%s/path_%x", fn.Directory, t.Path))
-	if err != nil {
-		return err
-	}
-
-	defer func() {
-		if err := w.Close(); err != nil {
-			klog.Errorf("Close(): %v", err)
-		}
-	}()
-
-	bs, err := json.Marshal(t)
-	if err != nil {
-		return err
-	}
-	_, err = w.Write(bs)
-	return err
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // createRange simply generates a PCollection of int64 which is used to seed the demo
 // pipeline.
 func createRange(s beam.Scope, start, count int64) beam.PCollection {
+	_ = "STUB: not implemented"
 	// TODO(mhutchinson): make this parallel
-	values := make([]int64, count)
-	for i := int64(0); i < count; i++ {
-		values[i] = start + i
-	}
-	return beam.CreateList(s, values)
+	return *new(beam.PCollection)
 }

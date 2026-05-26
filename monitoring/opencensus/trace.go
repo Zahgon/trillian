@@ -17,14 +17,10 @@ package opencensus
 
 import (
 	"context"
-	"errors"
 	"net/http"
 
-	"contrib.go.opencensus.io/exporter/stackdriver"
-	"go.opencensus.io/plugin/ocgrpc"
 	"go.opencensus.io/plugin/ochttp"
 	"go.opencensus.io/stats/view"
-	"go.opencensus.io/trace"
 	"google.golang.org/grpc"
 )
 
@@ -47,19 +43,11 @@ var serverViews = []*view.View{
 // of traced requests can be set between 0 and 100. Note that 0 does not
 // disable tracing entirely but causes the default configuration to be used.
 func EnableRPCServerTracing(projectID string, percent int) ([]grpc.ServerOption, error) {
-	if err := exporter(projectID); err != nil {
-		return nil, err
-	}
-	if err := applyConfig(percent); err != nil {
-		return nil, err
-	}
-	// Register the views to collect server request count.
-	if err := view.Register(ocgrpc.DefaultServerViews...); err != nil {
-		return nil, err
-	}
-
-	return []grpc.ServerOption{grpc.StatsHandler(&ocgrpc.ServerHandler{})}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// Register the views to collect server request count.
 
 // EnableHTTPServerTracing turns on Stackdriver tracing for HTTP requests
 // on the default ServeMux. The returned handler must be passed to the HTTP
@@ -69,47 +57,20 @@ func EnableRPCServerTracing(projectID string, percent int) ([]grpc.ServerOption,
 // does not disable tracing entirely but causes the default configuration to be
 // used.
 func EnableHTTPServerTracing(projectID string, percent int) (http.Handler, error) {
-	if err := exporter(projectID); err != nil {
-		return nil, err
-	}
-	if err := applyConfig(percent); err != nil {
-		return nil, err
-	}
-	if err := view.Register(serverViews...); err != nil {
-		return nil, err
-	}
-	return &ochttp.Handler{}, nil
+	_ = "STUB: not implemented"
+	return *new(http.Handler), nil
 }
 
-func exporter(projectID string) error {
-	sde, err := stackdriver.NewExporter(stackdriver.Options{ProjectID: projectID})
-	if err != nil {
-		return err
-	}
-	view.RegisterExporter(sde)
-	trace.RegisterExporter(sde)
+func exporter(projectID string) error { _ = "STUB: not implemented"; return nil }
 
-	return nil
-}
+func applyConfig(percent int) error { _ = "STUB: not implemented"; return nil }
 
-func applyConfig(percent int) error {
-	switch {
-	case percent == 0:
-		// Use the default config, which traces relatively few requests.
-	case percent == 100:
-		trace.ApplyConfig(trace.Config{DefaultSampler: trace.AlwaysSample()})
-	case percent > 100:
-		return errors.New("cannot trace more than 100 percent of requests")
-	default:
-		trace.ApplyConfig(trace.Config{DefaultSampler: trace.ProbabilitySampler(float64(percent) / 100.0)})
-	}
-	return nil
-}
+// Use the default config, which traces relatively few requests.
 
 // StartSpan starts a new tracing span.
 // The returned context should be used for all child calls within the span, and
 // the returned func should be called to close the span.
 func StartSpan(ctx context.Context, name string) (context.Context, func()) {
-	ctx, span := trace.StartSpan(ctx, name)
-	return ctx, span.End
+	_ = "STUB: not implemented"
+	return *new(context.Context), nil
 }

@@ -22,30 +22,20 @@ import (
 // SleepContext sleeps for at least the specified duration. Returns ctx.Err()
 // iff the context is done before the deadline.
 func SleepContext(ctx context.Context, d time.Duration) error {
-	if !sleepImpl(ctx.Done(), d, System) {
-		return ctx.Err()
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // SleepSource sleeps for at least the specified duration, as measured by the
 // TimeSource. Returns ctx.Err() iff the context is done before the deadline.
 func SleepSource(ctx context.Context, d time.Duration, s TimeSource) error {
-	if !sleepImpl(ctx.Done(), d, s) {
-		return ctx.Err()
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // sleepImpl sleeps for at least the specified duration, as measured by the
 // TimeSource. Returns false iff done is closed before the deadline.
 func sleepImpl(done <-chan struct{}, d time.Duration, s TimeSource) bool {
-	timer := s.NewTimer(d)
-	defer timer.Stop()
-	select {
-	case <-timer.Chan():
-		return true
-	case <-done:
-		return false
-	}
+	_ = "STUB: not implemented"
+	return false
 }

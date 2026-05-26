@@ -15,20 +15,14 @@
 package mysql
 
 import (
-	"crypto/tls"
-	"crypto/x509"
 	"database/sql"
-	"errors"
 	"flag"
-	"os"
 	"sync"
 
 	"github.com/google/trillian/monitoring"
 	"github.com/google/trillian/storage"
 	"k8s.io/klog/v2"
-
 	// Load MySQL driver
-	"github.com/go-sql-driver/mysql"
 )
 
 var (
@@ -48,11 +42,7 @@ var (
 //
 // TODO(pavelkalinnikov): Make the dependency of MySQL quota provider from
 // MySQL storage provider explicit.
-func GetDatabase() (*sql.DB, error) {
-	mysqlMu.Lock()
-	defer mysqlMu.Unlock()
-	return getMySQLDatabaseLocked()
-}
+func GetDatabase() (*sql.DB, error) { _ = "STUB: not implemented"; return nil, nil }
 
 func init() {
 	if err := storage.RegisterProvider("mysql", newMySQLStorageProvider); err != nil {
@@ -66,80 +56,26 @@ type mysqlProvider struct {
 }
 
 func newMySQLStorageProvider(mf monitoring.MetricFactory) (storage.Provider, error) {
-	mysqlMu.Lock()
-	defer mysqlMu.Unlock()
-	if mysqlStorageInstance == nil {
-		db, err := getMySQLDatabaseLocked()
-		if err != nil {
-			return nil, err
-		}
-		mysqlStorageInstance = &mysqlProvider{
-			db: db,
-			mf: mf,
-		}
-	}
-	return mysqlStorageInstance, nil
+	_ = "STUB: not implemented"
+	return *new(storage.Provider), nil
 }
 
 // getMySQLDatabaseLocked returns an instance of MySQL database, or creates
 // one. Requires mysqlMu to be locked.
-func getMySQLDatabaseLocked() (*sql.DB, error) {
-	if mysqlDB != nil || mysqlErr != nil {
-		return mysqlDB, mysqlErr
-	}
-	dsn := *mySQLURI
-	if *mySQLTLSCA != "" {
-		if err := registerMySQLTLSConfig(); err != nil {
-			return nil, err
-		}
-		dsn += "?tls=custom"
-	}
-	db, err := OpenDB(dsn)
-	if err != nil {
-		mysqlErr = err
-		return nil, err
-	}
-	if *maxConns > 0 {
-		db.SetMaxOpenConns(*maxConns)
-	}
-	if *maxIdle >= 0 {
-		db.SetMaxIdleConns(*maxIdle)
-	}
-	mysqlDB, mysqlErr = db, nil
-	return db, nil
-}
+func getMySQLDatabaseLocked() (*sql.DB, error) { _ = "STUB: not implemented"; return nil, nil }
 
 func (s *mysqlProvider) LogStorage() storage.LogStorage {
-	return NewLogStorage(s.db, s.mf)
+	_ = "STUB: not implemented"
+	return *new(storage.LogStorage)
 }
 
 func (s *mysqlProvider) AdminStorage() storage.AdminStorage {
-	return NewAdminStorage(s.db)
+	_ = "STUB: not implemented"
+	return *new(storage.AdminStorage)
 }
 
-func (s *mysqlProvider) Close() error {
-	return s.db.Close()
-}
+func (s *mysqlProvider) Close() error { _ = "STUB: not implemented"; return nil }
 
 // registerMySQLTLSConfig registers a custom TLS config for MySQL using a provided CA certificate and optional server name.
 // Returns an error if the CA certificate can't be read or added to the root cert pool, or when the registration of the TLS config fails.
-func registerMySQLTLSConfig() error {
-	if *mySQLTLSCA == "" {
-		return nil
-	}
-	rootCertPool := x509.NewCertPool()
-	pem, err := os.ReadFile(*mySQLTLSCA)
-	if err != nil {
-		return err
-	}
-	if ok := rootCertPool.AppendCertsFromPEM(pem); !ok {
-		return errors.New("failed to append PEM")
-	}
-	tlsConfig := &tls.Config{
-		RootCAs: rootCertPool,
-	}
-	if *mySQLServerName != "" {
-		tlsConfig.ServerName = *mySQLServerName
-	}
-	return mysql.RegisterTLSConfig("custom", tlsConfig)
-}
+func registerMySQLTLSConfig() error { _ = "STUB: not implemented"; return nil }

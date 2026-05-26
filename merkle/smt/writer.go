@@ -16,8 +16,6 @@ package smt
 
 import (
 	"context"
-	"errors"
-	"fmt"
 
 	"github.com/google/trillian/merkle/smt/node"
 )
@@ -47,33 +45,20 @@ type Writer struct {
 // NewWriter creates a new Writer for the specified tree of the given height,
 // with two levels of sharding, where the upper shard is `split` levels high.
 func NewWriter(treeID int64, hasher Hasher, height, split uint) *Writer {
-	if split > height {
-		panic(fmt.Errorf("NewWriter: split(%d) > height(%d)", split, height))
-	}
-	return &Writer{h: bindHasher(hasher, treeID), height: height, split: split}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Split sorts and splits the given list of node hash updates into shards, i.e.
 // the subsets belonging to different subtrees. The nodes must belong to the
 // same tree level which is equal to the tree height.
-func (w *Writer) Split(nodes []Node) ([][]Node, error) {
-	if err := Prepare(nodes, w.height); err != nil {
-		return nil, err
-	}
-	// TODO(pavelkalinnikov): Try estimating the capacity for this slice.
-	var shards [][]Node
-	// The nodes are sorted, so we can split them by prefix.
-	for begin, i := 0, 0; i < len(nodes); i++ {
-		pref := nodes[i].ID.Prefix(w.split)
-		next := i + 1
-		// Check if this ID ends the shard.
-		if next == len(nodes) || nodes[next].ID.Prefix(w.split) != pref {
-			shards = append(shards, nodes[begin:next])
-			begin = next
-		}
-	}
-	return shards, nil
-}
+func (w *Writer) Split(nodes []Node) ([][]Node, error) { _ = "STUB: not implemented"; return nil, nil }
+
+// TODO(pavelkalinnikov): Try estimating the capacity for this slice.
+
+// The nodes are sorted, so we can split them by prefix.
+
+// Check if this ID ends the shard.
 
 // Write applies the given list of node updates to a single shard, and returns
 // the resulting update of the shard root. It uses the given node accessor for
@@ -86,57 +71,22 @@ func (w *Writer) Split(nodes []Node) ([][]Node, error) {
 // In another case, Write can be performed without Split if the shard split
 // depth is 0, which effectively means that there is only one "global" shard.
 func (w *Writer) Write(ctx context.Context, nodes []Node, acc NodeBatchAccessor) (Node, error) {
-	if len(nodes) == 0 {
-		return Node{}, errors.New("nothing to write")
-	}
-	depth := nodes[0].ID.BitLen()
-	top, err := w.shardTop(depth)
-	if err != nil {
-		return Node{}, err
-	}
-
-	hs, err := NewHStar3(nodes, w.h.mh.HashChildren, depth, top)
-	if err != nil {
-		return Node{}, err
-	}
-	hashes, err := acc.Get(ctx, hs.Prepare())
-	if err != nil {
-		return Node{}, err
-	}
-	sa := w.newAccessor(hashes)
-	topUpd, err := hs.Update(sa)
-	if err != nil {
-		return Node{}, err
-	} else if ln := len(topUpd); ln != 1 {
-		return Node{}, fmt.Errorf("writing across %d shards, want 1", ln)
-	}
-	if err := acc.Set(ctx, sa.writes); err != nil {
-		return Node{}, err
-	}
-
-	return topUpd[0], nil
+	_ = "STUB: not implemented"
+	return *new(Node), nil
 }
 
 // shardTop returns the depth of a shard top based on its bottom depth.
-func (w *Writer) shardTop(depth uint) (uint, error) {
-	switch depth {
-	case w.height:
-		return w.split, nil
-	case w.split:
-		return 0, nil
-	}
-	return 0, fmt.Errorf("unexpected depth %d", depth)
-}
+func (w *Writer) shardTop(depth uint) (uint, error) { _ = "STUB: not implemented"; return 0, nil }
 
 // newAccessor returns a NodeAccessor for HStar3 algorithm based on the set of
 // preloaded node hashes.
 func (w *Writer) newAccessor(nodes map[node.ID][]byte) *shardAccessor {
+	_ = "STUB: not implemented"
 	// For any node that HStar3 reads, it also writes its sibling. Therefore we
 	// can pre-allocate this many items for the writes slice.
 	// TODO(pavelkalinnikov): The actual number of written nodes will be slightly
 	// bigger by at most the number of written leaves. Try allocating precisely.
-	writes := make([]Node, 0, len(nodes))
-	return &shardAccessor{w: w, reads: nodes, writes: writes}
+	return nil
 }
 
 // shardAccessor provides read and write access to nodes used by HStar3. It
@@ -149,14 +99,7 @@ type shardAccessor struct {
 
 // Get returns the hash of the given node from the preloaded map, or a hash of
 // an empty subtree at this position if such node is not found.
-func (s *shardAccessor) Get(id node.ID) ([]byte, error) {
-	if hash, ok := s.reads[id]; ok && hash != nil {
-		return hash, nil
-	}
-	return s.w.h.hashEmpty(id), nil
-}
+func (s *shardAccessor) Get(id node.ID) ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Set adds the given node hash update to the list of writes.
-func (s *shardAccessor) Set(id node.ID, hash []byte) {
-	s.writes = append(s.writes, Node{ID: id, Hash: hash})
-}
+func (s *shardAccessor) Set(id node.ID, hash []byte) { _ = "STUB: not implemented"; return }

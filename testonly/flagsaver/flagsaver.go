@@ -23,51 +23,22 @@
 //	} // flags are reset to their original values here.
 package flagsaver
 
-import (
-	"flag"
-	"strings"
-
-	"k8s.io/klog/v2"
-)
-
 // Stash holds flag values so that they can be restored at the end of a test.
 type Stash struct {
 	flags map[string]string
 }
 
 // Restore sets all non-hidden flags to the values they had when the Stash was created.
-func (s *Stash) Restore() error {
-	for name, value := range s.flags {
-		if err := flag.Set(name, value); err != nil {
-			return err
-		}
-	}
-	return nil
-}
+func (s *Stash) Restore() error { _ = "STUB: not implemented"; return nil }
 
 // Save returns a Stash that captures the current value of all non-hidden flags.
-func Save() *Stash {
-	s := Stash{
-		flags: make(map[string]string, flag.NFlag()),
-	}
+func Save() *Stash { _ = "STUB: not implemented"; return nil }
 
-	// Exclude the go test related flags. Also exclude log_backtrace_at because
-	// while it may have an empty value it can't be set to one without an
-	// error.
-	flag.VisitAll(func(f *flag.Flag) {
-		if !strings.HasPrefix(f.Name, "test.") && f.Name != "log_backtrace_at" {
-			s.flags[f.Name] = f.Value.String()
-		}
-	})
-
-	return &s
-}
+// Exclude the go test related flags. Also exclude log_backtrace_at because
+// while it may have an empty value it can't be set to one without an
+// error.
 
 // MustRestore calls Restore and exits on failure. It can be used in a defer for
 // tests. If Restore fails then the flags may be in an arbitrary
 // state that could cause subsequent tests to misbehave.
-func (s *Stash) MustRestore() {
-	if err := s.Restore(); err != nil {
-		klog.Fatalf("MustRestore(): failed to restore flags: %v %v", err, *s)
-	}
-}
+func (s *Stash) MustRestore() { _ = "STUB: not implemented"; return }

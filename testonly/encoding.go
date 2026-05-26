@@ -15,36 +15,19 @@
 package testonly
 
 import (
-	"encoding/base64"
-	"encoding/hex"
 	"time"
 
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // MustDecodeBase64 expects a base 64 encoded string input and panics if it cannot be decoded
-func MustDecodeBase64(b64 string) []byte {
-	r, err := base64.StdEncoding.DecodeString(b64)
-	if err != nil {
-		panic(r)
-	}
-	return r
-}
+func MustDecodeBase64(b64 string) []byte { _ = "STUB: not implemented"; return nil }
 
 // MustHexDecode decodes its input string from hex and panics if this fails
-func MustHexDecode(b string) []byte {
-	r, err := hex.DecodeString(b)
-	if err != nil {
-		panic(err)
-	}
-	return r
-}
+func MustHexDecode(b string) []byte { _ = "STUB: not implemented"; return nil }
 
 // MustToTimestampProto converts t to a Timestamp protobuf, or panics if this fails.
 func MustToTimestampProto(t time.Time) *timestamppb.Timestamp {
-	ts := timestamppb.New(t)
-	if err := ts.CheckValid(); err != nil {
-		panic(err)
-	}
-	return ts
+	_ = "STUB: not implemented"
+	return nil
 }

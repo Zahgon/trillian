@@ -15,7 +15,6 @@
 package quota
 
 import (
-	"fmt"
 	"sync"
 
 	"github.com/google/trillian/monitoring"
@@ -40,39 +39,24 @@ type m struct {
 }
 
 // IncAcquired increments the AcquiredTokens metric.
-func (m *m) IncAcquired(tokens int, specs []Spec, success bool) {
-	m.add(m.AcquiredTokens, tokens, specs, success)
-}
+func (m *m) IncAcquired(tokens int, specs []Spec, success bool) { _ = "STUB: not implemented"; return }
 
 // IncReturned increments the ReturnedTokens metric.
-func (m *m) IncReturned(tokens int, specs []Spec, success bool) {
-	m.add(m.ReturnedTokens, tokens, specs, success)
-}
+func (m *m) IncReturned(tokens int, specs []Spec, success bool) { _ = "STUB: not implemented"; return }
 
 // IncReplenished increments the ReplenishedTokens metric.
 func (m *m) IncReplenished(tokens int, specs []Spec, success bool) {
-	m.add(m.ReplenishedTokens, tokens, specs, success)
+	_ = "STUB: not implemented"
+	return
 }
 
 func (m *m) add(c monitoring.Counter, tokens int, specs []Spec, success bool) {
-	if c == nil {
-		return
-	}
-	for _, spec := range specs {
-		if spec.Group == User {
-			// Don't populate per-user labels.
-			continue
-		}
-		c.Add(float64(tokens), spec.Name(), fmt.Sprint(success))
-	}
+	_ = "STUB: not implemented"
+	return
 }
+
+// Don't populate per-user labels.
 
 // InitMetrics initializes Metrics using mf to create the monitoring objects.
 // May be called multiple times. If so, the first call is the one that counts.
-func InitMetrics(mf monitoring.MetricFactory) {
-	metricsOnce.Do(func() {
-		Metrics.AcquiredTokens = mf.NewCounter("quota_acquired_tokens", "Number of acquired quota tokens", "spec", "success")
-		Metrics.ReturnedTokens = mf.NewCounter("quota_returned_tokens", "Number of quota tokens returned due to overcharging (bad requests, duplicates, etc)", "spec", "success")
-		Metrics.ReplenishedTokens = mf.NewCounter("quota_replenished_tokens", "Number of quota tokens replenished due to sequencer progress", "spec", "success")
-	})
-}
+func InitMetrics(mf monitoring.MetricFactory) { _ = "STUB: not implemented"; return }

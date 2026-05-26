@@ -18,14 +18,9 @@ package etcd
 
 import (
 	"flag"
-	"fmt"
-	"strings"
-	"time"
 
 	"github.com/google/trillian/quota"
 	"github.com/google/trillian/quota/cacheqm"
-	"github.com/google/trillian/quota/etcd/etcdqm"
-	clientv3 "go.etcd.io/etcd/client/v3"
 	"k8s.io/klog/v2"
 )
 
@@ -49,25 +44,6 @@ func init() {
 }
 
 func newEtcdQuotaManager() (quota.Manager, error) {
-	if *Servers == "" {
-		return nil, fmt.Errorf("can't create etcd quotamanager - etcd_servers flag is unset")
-	}
-	client, err := clientv3.New(clientv3.Config{
-		Endpoints:   strings.Split(*Servers, ","),
-		DialTimeout: 5 * time.Second,
-	})
-	if err != nil {
-		return nil, fmt.Errorf("failed to connect to etcd at %v: %v", *Servers, err)
-	}
-
-	var qm quota.Manager = etcdqm.New(client)
-	if *quotaMinBatchSize > 0 && *quotaMaxCacheEntries > 0 {
-		cachedQM, err := cacheqm.NewCachedManager(qm, *quotaMinBatchSize, *quotaMaxCacheEntries)
-		if err != nil {
-			return nil, err
-		}
-		qm = cachedQM
-	}
-	klog.Info("Using Etcd QuotaManager")
-	return qm, nil
+	_ = "STUB: not implemented"
+	return *new(quota.Manager), nil
 }

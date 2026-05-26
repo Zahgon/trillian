@@ -34,11 +34,7 @@ import (
 	"time"
 
 	"github.com/google/trillian"
-	"github.com/google/trillian/client"
-	"github.com/google/trillian/client/rpcflags"
 	"github.com/google/trillian/cmd"
-	"google.golang.org/grpc"
-	"google.golang.org/protobuf/types/known/durationpb"
 	"k8s.io/klog/v2"
 )
 
@@ -59,58 +55,11 @@ var (
 
 // TODO(Martin2112): Pass everything needed into this and don't refer to flags.
 func createTree(ctx context.Context) (*trillian.Tree, error) {
-	if *adminServerAddr == "" {
-		return nil, errAdminAddrNotSet
-	}
-
-	req, err := newRequest()
-	if err != nil {
-		return nil, err
-	}
-
-	dialOpts, err := rpcflags.NewClientDialOptionsFromFlags()
-	if err != nil {
-		return nil, fmt.Errorf("failed to determine dial options: %v", err)
-	}
-
-	conn, err := grpc.Dial(*adminServerAddr, dialOpts...)
-	if err != nil {
-		return nil, fmt.Errorf("failed to dial %v: %v", *adminServerAddr, err)
-	}
-	defer func() {
-		if err := conn.Close(); err != nil {
-			klog.Errorf("Close(): %v", err)
-		}
-	}()
-
-	adminClient := trillian.NewTrillianAdminClient(conn)
-	logClient := trillian.NewTrillianLogClient(conn)
-
-	return client.CreateAndInitTree(ctx, req, adminClient, logClient)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func newRequest() (*trillian.CreateTreeRequest, error) {
-	ts, ok := trillian.TreeState_value[*treeState]
-	if !ok {
-		return nil, fmt.Errorf("unknown TreeState: %v", *treeState)
-	}
-
-	tt, ok := trillian.TreeType_value[*treeType]
-	if !ok {
-		return nil, fmt.Errorf("unknown TreeType: %v", *treeType)
-	}
-
-	ctr := &trillian.CreateTreeRequest{Tree: &trillian.Tree{
-		TreeState:       trillian.TreeState(ts),
-		TreeType:        trillian.TreeType(tt),
-		DisplayName:     *displayName,
-		Description:     *description,
-		MaxRootDuration: durationpb.New(*maxRootDuration),
-	}}
-	klog.Infof("Creating tree %+v", ctr.Tree)
-
-	return ctr, nil
-}
+func newRequest() (*trillian.CreateTreeRequest, error) { _ = "STUB: not implemented"; return nil, nil }
 
 func main() {
 	klog.InitFlags(nil)

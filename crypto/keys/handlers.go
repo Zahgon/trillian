@@ -18,12 +18,10 @@ package keys
 import (
 	"context"
 	"crypto"
-	"fmt"
 	"sync"
 
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
-	"k8s.io/klog/v2"
 )
 
 // ProtoHandler uses the information in a protobuf message to obtain a crypto.Signer.
@@ -43,40 +41,19 @@ var (
 // If a handler for this type of protobuf message has already been added, it will
 // be replaced.
 func RegisterHandler(keyProto proto.Message, handler ProtoHandler) {
-	handlersMu.Lock()
-	defer handlersMu.Unlock()
-	keyProtoType := keyProto.ProtoReflect().Descriptor().FullName()
-
-	if _, alreadyExists := handlers[keyProtoType]; alreadyExists {
-		klog.Warningf("Overridding ProtoHandler for protobuf %q", keyProtoType)
-	}
-
-	handlers[keyProtoType] = handler
+	_ = "STUB: not implemented"
+	return
 }
 
 // unregisterHandler removes a previously-added protobuf message handler.
 // See RegisterHandler().
-func unregisterHandler(keyProto proto.Message) {
-	handlersMu.Lock()
-	defer handlersMu.Unlock()
-	delete(handlers, keyProto.ProtoReflect().Descriptor().FullName())
-}
+func unregisterHandler(keyProto proto.Message) { _ = "STUB: not implemented"; return }
 
 // NewSigner uses a registered ProtoHandler (see RegisterHandler()) to convert a
 // protobuf message into a crypto.Signer.
 // If there is no ProtoHandler registered for this type of protobuf message, an
 // error will be returned.
 func NewSigner(ctx context.Context, keyProto proto.Message) (crypto.Signer, error) {
-	handlersMu.RLock()
-	defer handlersMu.RUnlock()
-	if keyProto == nil {
-		return nil, fmt.Errorf("nil keyProto")
-	}
-	keyProtoType := keyProto.ProtoReflect().Descriptor().FullName()
-
-	if handler, ok := handlers[keyProtoType]; ok {
-		return handler(ctx, keyProto)
-	}
-
-	return nil, fmt.Errorf("no ProtoHandler registered for protobuf %q", keyProtoType)
+	_ = "STUB: not implemented"
+	return *new(crypto.Signer), nil
 }

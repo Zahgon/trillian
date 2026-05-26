@@ -22,7 +22,6 @@ package batchmap
 import (
 	"context"
 	"crypto"
-	"fmt"
 
 	"github.com/apache/beam/sdks/v2/go/pkg/beam"
 	"github.com/apache/beam/sdks/v2/go/pkg/beam/register"
@@ -63,25 +62,13 @@ func init() {
 // prefixStrata is the number of 8-bit prefix strata. Any path from root to leaf
 // will have prefixStrata+1 tiles.
 func Create(s beam.Scope, entries beam.PCollection, treeID int64, hash crypto.Hash, prefixStrata int) (beam.PCollection, error) {
-	s = s.Scope("batchmap.Create")
-	if prefixStrata < 0 || prefixStrata >= 32 {
-		return beam.PCollection{}, fmt.Errorf("prefixStrata must be in [0, 32), got %d", prefixStrata)
-	}
-
-	// Construct the map pipeline starting with the leaf tiles.
-	nodeHashes := beam.ParDo(s, entryToNodeHashFn, entries)
-	lastStratum := createStratum(s, nodeHashes, treeID, hash, prefixStrata)
-	allTiles := make([]beam.PCollection, 0, prefixStrata+1)
-	allTiles = append(allTiles, lastStratum)
-	for d := prefixStrata - 1; d >= 0; d-- {
-		nodeHashes = beam.ParDo(s, tileToNodeHashFn, lastStratum)
-		lastStratum = createStratum(s, nodeHashes, treeID, hash, d)
-		allTiles = append(allTiles, lastStratum)
-	}
-
-	// Collate all of the strata together and return them.
-	return beam.Flatten(s, allTiles...), nil
+	_ = "STUB: not implemented"
+	return *new(beam.PCollection), nil
 }
+
+// Construct the map pipeline starting with the leaf tiles.
+
+// Collate all of the strata together and return them.
 
 // Update takes an existing base map (PCollection of *Tile), applies the
 // delta (PCollection of *Entry) and returns the resulting map as a
@@ -92,37 +79,23 @@ func Create(s beam.Scope, entries beam.PCollection, treeID int64, hash crypto.Ha
 // treeID, hash, and prefixStrata must match the values passed into the
 // original call to Create that started the base map.
 func Update(s beam.Scope, base, delta beam.PCollection, treeID int64, hash crypto.Hash, prefixStrata int) (beam.PCollection, error) {
-	s = s.Scope("batchmap.Update")
-	if prefixStrata < 0 || prefixStrata >= 32 {
-		return beam.PCollection{}, fmt.Errorf("prefixStrata must be in [0, 32), got %d", prefixStrata)
-	}
-
-	// Tile sets returned from this library have tiles present at all byte
-	// lengths from [0..prefixStrata]. This makes this a perfect partition fn.
-	baseStrata := beam.Partition(s, prefixStrata+1, partitionByPrefixLenFn, base)
-	// Construct the map pipeline starting with the leaf tiles.
-	nodeHashes := beam.ParDo(s, entryToNodeHashFn, delta)
-	lastStratum := updateStratum(s, baseStrata[prefixStrata], nodeHashes, treeID, hash, prefixStrata)
-
-	allTiles := make([]beam.PCollection, 0, prefixStrata+1)
-	allTiles = append(allTiles, lastStratum)
-	for d := prefixStrata - 1; d >= 0; d-- {
-		nodeHashes = beam.ParDo(s, tileToNodeHashFn, lastStratum)
-		lastStratum = updateStratum(s, baseStrata[d], nodeHashes, treeID, hash, d)
-		allTiles = append(allTiles, lastStratum)
-	}
-
-	// Collate all of the strata together and return them.
-	return beam.Flatten(s, allTiles...), nil
+	_ = "STUB: not implemented"
+	return *new(beam.PCollection), nil
 }
+
+// Tile sets returned from this library have tiles present at all byte
+// lengths from [0..prefixStrata]. This makes this a perfect partition fn.
+
+// Construct the map pipeline starting with the leaf tiles.
+
+// Collate all of the strata together and return them.
 
 // createStratum creates the tiles for the stratum at the given rootDepth bytes.
 // leaves is a PCollection of nodeHash that are the leaves of this layer.
 // output is a PCollection of *Tile.
 func createStratum(s beam.Scope, leaves beam.PCollection, treeID int64, hash crypto.Hash, rootDepth int) beam.PCollection {
-	s = s.Scope(fmt.Sprintf("createStratum-%d", rootDepth))
-	shardedLeaves := beam.ParDo(s, &leafShardFn{RootDepthBytes: rootDepth}, leaves)
-	return beam.ParDo(s, &tileHashFn{TreeID: treeID, Hash: hash}, beam.GroupByKey(s, shardedLeaves))
+	_ = "STUB: not implemented"
+	return *new(beam.PCollection)
 }
 
 // updateStratum updates the tiles for the stratum at the given bytes depth.
@@ -131,18 +104,20 @@ func createStratum(s beam.Scope, leaves beam.PCollection, treeID int64, hash cry
 // deltas is a PCollection of nodeHash that are the updated leaves of this layer.
 // output is a PCollection of *Tile.
 func updateStratum(s beam.Scope, base, deltas beam.PCollection, treeID int64, hash crypto.Hash, rootDepth int) beam.PCollection {
-	s = s.Scope(fmt.Sprintf("updateStratum-%d", rootDepth))
-	shardedBase := beam.ParDo(s, tilePathFn, base)
-	shardedDelta := beam.ParDo(s, &leafShardFn{RootDepthBytes: rootDepth}, deltas)
-	return beam.ParDo(s, &tileUpdateFn{TreeID: treeID, Hash: hash}, beam.CoGroupByKey(s, shardedBase, shardedDelta))
+	_ = "STUB: not implemented"
+	return *new(beam.PCollection)
 }
 
-func tilePathFn(t *Tile) ([]byte, *Tile) { return t.Path, t }
+func tilePathFn(t *Tile) ([]byte, *Tile) {
+	_ = "STUB: not implemented"
 
-// nodeHash describes a leaf to be included in a tile.
-// This is logically the same as smt.Node however it has public fields so is
-// serializable by the default Beam coder. Also, it allows changes to be made
-// to smt.Node without affecting this, which improves decoupling.
+	// nodeHash describes a leaf to be included in a tile.
+	// This is logically the same as smt.Node however it has public fields so is
+	// serializable by the default Beam coder. Also, it allows changes to be made
+	// to smt.Node without affecting this, which improves decoupling.
+	return nil, nil
+}
+
 type nodeHash struct {
 	// Path from root of the map to this node. Equivalent to node.ID, but with
 	// the significant benefit that it will be serialized properly without
@@ -151,17 +126,11 @@ type nodeHash struct {
 	Hash []byte
 }
 
-func partitionByPrefixLenFn(t *Tile) int {
-	return len(t.Path)
-}
+func partitionByPrefixLenFn(t *Tile) int { _ = "STUB: not implemented"; return 0 }
 
-func tileToNodeHashFn(t *Tile) nodeHash {
-	return nodeHash{Path: t.Path, Hash: t.RootHash}
-}
+func tileToNodeHashFn(t *Tile) nodeHash { _ = "STUB: not implemented"; return *new(nodeHash) }
 
-func entryToNodeHashFn(e *Entry) nodeHash {
-	return nodeHash{Path: e.HashKey, Hash: e.HashValue}
-}
+func entryToNodeHashFn(e *Entry) nodeHash { _ = "STUB: not implemented"; return *new(nodeHash) }
 
 // leafShardFn groups nodeHashs together based on the first RootDepthBytes
 // bytes of their path. This groups all leaves from the same tile together.
@@ -170,7 +139,8 @@ type leafShardFn struct {
 }
 
 func (fn *leafShardFn) ProcessElement(leaf nodeHash) ([]byte, nodeHash) {
-	return leaf.Path[:fn.RootDepthBytes], leaf
+	_ = "STUB: not implemented"
+	return nil, *new(nodeHash)
 }
 
 type tileHashFn struct {
@@ -179,17 +149,11 @@ type tileHashFn struct {
 	th     *tileHasher
 }
 
-func (fn *tileHashFn) Setup() {
-	fn.th = &tileHasher{fn.TreeID, coniks.New(fn.Hash)}
-}
+func (fn *tileHashFn) Setup() { _ = "STUB: not implemented"; return }
 
 func (fn *tileHashFn) ProcessElement(ctx context.Context, rootPath []byte, leaves func(*nodeHash) bool) (*Tile, error) {
-	nodes, err := convertNodes(leaves)
-	if err != nil {
-		return nil, err
-	}
-	cntTilesHashed.Inc(ctx, 1)
-	return fn.th.construct(rootPath, nodes)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // convertNodes consumes the Beam-style iterator of nodeHash and returns the
@@ -199,16 +163,8 @@ func (fn *tileHashFn) ProcessElement(ctx context.Context, rootPath []byte, leave
 // to configure the map with an appropriate number of prefix strata such that
 // this does not occur.
 func convertNodes(leaves func(*nodeHash) bool) ([]smt.Node, error) {
-	nodes := []smt.Node{}
-	var leaf nodeHash
-	for leaves(&leaf) {
-		lid, err := nodeID2Decode(leaf.Path)
-		if err != nil {
-			return nil, fmt.Errorf("failed to decode leaf ID: %v", err)
-		}
-		nodes = append(nodes, smt.Node{ID: lid, Hash: leaf.Hash})
-	}
-	return nodes, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // tileUpdateFn merges the base tile from the original map with the deltas that
@@ -220,47 +176,18 @@ type tileUpdateFn struct {
 	th     *tileHasher
 }
 
-func (fn *tileUpdateFn) Setup() {
-	fn.th = &tileHasher{fn.TreeID, coniks.New(fn.Hash)}
-}
+func (fn *tileUpdateFn) Setup() { _ = "STUB: not implemented"; return }
 
 func (fn *tileUpdateFn) ProcessElement(ctx context.Context, rootPath []byte, bases func(**Tile) bool, deltas func(*nodeHash) bool) (*Tile, error) {
-	base, err := getOptionalTile(bases)
-	if err != nil {
-		return nil, fmt.Errorf("failed precondition getOptionalTile at %x: %v", rootPath, err)
-	}
-
-	nodes, err := convertNodes(deltas)
-	if err != nil {
-		return nil, err
-	}
-
-	if len(nodes) == 0 {
-		// If there are no deltas, then the base tile is unchanged.
-		cntTilesCopied.Inc(ctx, 1)
-		return base, nil
-	}
-	if base == nil {
-		cntTilesCreated.Inc(ctx, 1)
-		return fn.th.construct(rootPath, nodes)
-	}
-
-	cntTilesUpdated.Inc(ctx, 1)
-	return fn.updateTile(rootPath, base, nodes)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (fn *tileUpdateFn) updateTile(rootPath []byte, base *Tile, deltas []smt.Node) (*Tile, error) {
-	baseNodes := make([]smt.Node, 0, len(base.Leaves))
-	for _, l := range base.Leaves {
-		leafPath := append(rootPath, l.Path...)
-		lidx, err := nodeID2Decode(leafPath)
-		if err != nil {
-			return nil, fmt.Errorf("failed to decode leaf ID: %v", err)
-		}
-		baseNodes = append(baseNodes, smt.Node{ID: lidx, Hash: l.Hash})
-	}
+// If there are no deltas, then the base tile is unchanged.
 
-	return fn.th.update(rootPath, baseNodes, deltas)
+func (fn *tileUpdateFn) updateTile(rootPath []byte, base *Tile, deltas []smt.Node) (*Tile, error) {
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // tileHasher is an smt.NodeAccessor used for computing node hashes of a tile.
@@ -271,98 +198,38 @@ type tileHasher struct {
 }
 
 func (th *tileHasher) construct(rootPath []byte, nodes []smt.Node) (*Tile, error) {
-	rootDepthBytes := len(rootPath)
-	if err := smt.Prepare(nodes, nodes[0].ID.BitLen()); err != nil {
-		return nil, fmt.Errorf("smt.Prepare: %v", err)
-	}
-
-	// N.B. This needs to be done after Prepare but BEFORE HStar3 because it
-	// fiddles around with the nodes and makes their IDs invalid afterwards.
-	tls := make([]*TileLeaf, len(nodes))
-	for i, n := range nodes {
-		nPath, err := nodeID2Encode(n.ID)
-		if err != nil {
-			return nil, fmt.Errorf("failed to encode leaf ID: %v", err)
-		}
-		tls[i] = &TileLeaf{
-			Path: nPath[rootDepthBytes:],
-			Hash: n.Hash,
-		}
-	}
-
-	rootHash, err := th.hashTile(uint(8*rootDepthBytes), nodes)
-	if err != nil {
-		return nil, fmt.Errorf("failed to hash tile: %v", err)
-	}
-
-	return &Tile{
-		Path:     rootPath,
-		Leaves:   tls,
-		RootHash: rootHash,
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// N.B. This needs to be done after Prepare but BEFORE HStar3 because it
+// fiddles around with the nodes and makes their IDs invalid afterwards.
 
 func (th *tileHasher) update(rootPath []byte, baseNodes, deltaNodes []smt.Node) (*Tile, error) {
+	_ = "STUB: not implemented"
 	// We add new values first and then update with base to easily check for duplicates in deltas.
-	m := make(map[node.ID]smt.Node)
-	for _, leaf := range deltaNodes {
-		if v, found := m[leaf.ID]; found {
-			return nil, fmt.Errorf("found duplicate values at leaf tile position %s: {%x, %x}", leaf.ID, v.Hash, leaf.Hash)
-		}
-		m[leaf.ID] = leaf
-	}
-
-	for _, leaf := range baseNodes {
-		if _, found := m[leaf.ID]; !found {
-			// Only add base values if they haven't been updated.
-			m[leaf.ID] = leaf
-		}
-	}
-
-	nodes := make([]smt.Node, 0, len(m))
-	for _, v := range m {
-		nodes = append(nodes, v)
-	}
-	return th.construct(rootPath, nodes)
+	return nil, nil
 }
+
+// Only add base values if they haven't been updated.
 
 // hashTile computes the root hash of the root given the prepared leaves.
 // The leaves slice MUST NOT be used after calling this method.
 func (th *tileHasher) hashTile(depthBits uint, leaves []smt.Node) ([]byte, error) {
-	h, err := smt.NewHStar3(leaves, th.h.HashChildren, uint(leaves[0].ID.BitLen()), depthBits)
-	if err != nil {
-		return nil, err
-	}
-	r, err := h.Update(th)
-	if err != nil {
-		return nil, err
-	}
-	if len(r) != 1 {
-		return nil, fmt.Errorf("expected single root but got %d", len(r))
-	}
-	return r[0].Hash, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Get returns hash of an empty subtree for the given root node ID.
-func (th tileHasher) Get(id node.ID) ([]byte, error) {
-	return th.h.HashEmpty(th.treeID, id), nil
-}
+func (th tileHasher) Get(id node.ID) ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (th tileHasher) Set(id node.ID, hash []byte) {}
+func (th tileHasher) Set(id node.ID, hash []byte) { _ = "STUB: not implemented"; return }
 
-func nodeID2Encode(n node.ID) ([]byte, error) {
-	b, c := n.LastByte()
-	if c == 0 {
-		return []byte{}, nil
-	}
-	if c == 8 {
-		return append([]byte(n.FullBytes()), b), nil
-	}
-	return nil, fmt.Errorf("node ID bit length is not aligned to bytes: %d", n.BitLen())
-}
+func nodeID2Encode(n node.ID) ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
 func nodeID2Decode(bs []byte) (node.ID, error) {
-	return node.NewID(string(bs), 8*uint(len(bs))), nil
+	_ = "STUB: not implemented"
+	return *new(node.ID), nil
 }
 
 // getOptionalTile consumes the Beam-style iterator and returns:
@@ -370,9 +237,9 @@ func nodeID2Decode(bs []byte) (node.ID, error) {
 // - the single tile if there was only one entry
 // - an error if there were multiple entries
 func getOptionalTile(iter func(**Tile) bool) (*Tile, error) {
-	var t1, t2 *Tile
-	if !iter(&t1) || !iter(&t2) { // Only at most one entry is found.
-		return t1, nil // Note: Returns nil if found nothing.
-	}
-	return nil, fmt.Errorf("unexpectedly found multiple tiles at %x", t1.Path)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// Only at most one entry is found.
+// Note: Returns nil if found nothing.

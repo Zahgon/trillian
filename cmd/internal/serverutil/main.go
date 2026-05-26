@@ -17,27 +17,13 @@ package serverutil
 
 import (
 	"context"
-	"errors"
-	"fmt"
-	"net"
 	"net/http"
 	"time"
 
 	"github.com/google/trillian"
 	"github.com/google/trillian/extension"
-	"github.com/google/trillian/monitoring"
-	"github.com/google/trillian/server/admin"
-	"github.com/google/trillian/server/interceptor"
-	"github.com/google/trillian/util/clock"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"go.etcd.io/etcd/client/v3/naming/endpoints"
-	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
-	"google.golang.org/grpc/reflection"
-	"k8s.io/klog/v2"
 
-	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	clientv3 "go.etcd.io/etcd/client/v3"
 )
 
@@ -93,251 +79,50 @@ type Main struct {
 }
 
 func (m *Main) healthz(rw http.ResponseWriter, req *http.Request) {
-	if m.IsHealthy != nil {
-		ctx, cancel := context.WithTimeout(req.Context(), m.HealthyDeadline)
-		defer cancel()
-		if err := m.IsHealthy(ctx); err != nil {
-			rw.WriteHeader(http.StatusServiceUnavailable)
-			if _, err := rw.Write([]byte(err.Error())); err != nil {
-				klog.Errorf("Write(): %v", err)
-			}
-			return
-		}
-	}
-	if _, err := rw.Write([]byte("ok")); err != nil {
-		klog.Errorf("Write(): %v", err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // Run starts the configured server. Blocks until the server exits.
-func (m *Main) Run(ctx context.Context) error {
-	klog.CopyStandardLogTo("WARNING")
+func (m *Main) Run(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
-	if m.HealthyDeadline == 0 {
-		m.HealthyDeadline = 5 * time.Second
-	}
+// Let http.ListenAndServeTLS handle the error case when only one of the flags is set.
 
-	srv, err := m.newGRPCServer()
-	if err != nil {
-		klog.Exitf("Error creating gRPC server: %v", err)
-	}
-	defer srv.GracefulStop()
+// 15 second exit time limit
 
-	defer func() {
-		if err := m.DBClose(); err != nil {
-			klog.Errorf("DBClose(): %v", err)
-		}
-	}()
+// wait for all jobs to exit gracefully
 
-	if err := m.RegisterServerFn(srv, m.Registry); err != nil {
-		return err
-	}
-	trillian.RegisterTrillianAdminServer(srv, admin.New(m.Registry, m.AllowedTreeTypes))
-	reflection.Register(srv)
-
-	g, ctx := errgroup.WithContext(ctx)
-
-	if endpoint := m.HTTPEndpoint; endpoint != "" {
-		http.Handle("/metrics", promhttp.Handler())
-		http.HandleFunc("/healthz", m.healthz)
-
-		s := &http.Server{
-			Addr: endpoint,
-		}
-
-		run := func() error {
-			klog.Infof("HTTP server starting on %v", endpoint)
-
-			var err error
-			// Let http.ListenAndServeTLS handle the error case when only one of the flags is set.
-			if m.TLSCertFile != "" || m.TLSKeyFile != "" {
-				err = s.ListenAndServeTLS(m.TLSCertFile, m.TLSKeyFile)
-			} else {
-				err = s.ListenAndServe()
-			}
-
-			if err != nil {
-				if errors.Is(err, http.ErrServerClosed) {
-					return nil
-				}
-
-				err = fmt.Errorf("HTTP server stopped: %v", err)
-			}
-
-			return err
-		}
-
-		shutdown := func() {
-			klog.Infof("Stopping HTTP server...")
-			klog.Flush()
-
-			// 15 second exit time limit
-			ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
-			defer cancel()
-
-			if err := s.Shutdown(ctx); err != nil {
-				klog.Errorf("Failed to http server shutdown: %v", err)
-			}
-		}
-
-		g.Go(func() error {
-			return srvRun(ctx, run, shutdown)
-		})
-	}
-
-	klog.Infof("RPC server starting on %v", m.RPCEndpoint)
-	lis, err := net.Listen("tcp", m.RPCEndpoint)
-	if err != nil {
-		return err
-	}
-
-	if m.TreeGCEnabled {
-		g.Go(func() error {
-			klog.Info("Deleted tree GC started")
-			gc := admin.NewDeletedTreeGC(
-				m.Registry.AdminStorage,
-				m.TreeDeleteThreshold,
-				m.TreeDeleteMinInterval,
-				m.Registry.MetricFactory)
-			gc.Run(ctx)
-			return nil
-		})
-	}
-
-	run := func() error {
-		if err := srv.Serve(lis); err != nil {
-			return fmt.Errorf("RPC server terminated: %v", err)
-		}
-
-		return nil
-	}
-
-	shutdown := func() {
-		klog.Infof("Stopping RPC server...")
-		klog.Flush()
-
-		srv.GracefulStop()
-	}
-
-	g.Go(func() error {
-		return srvRun(ctx, run, shutdown)
-	})
-
-	// wait for all jobs to exit gracefully
-	err = g.Wait()
-
-	// Give things a few seconds to tidy up
-	time.Sleep(time.Second * 5)
-
-	return err
-}
+// Give things a few seconds to tidy up
 
 // newGRPCServer starts a new Trillian gRPC server.
-func (m *Main) newGRPCServer() (*grpc.Server, error) {
-	stats := monitoring.NewRPCStatsInterceptor(clock.System, m.StatsPrefix, m.Registry.MetricFactory)
-	ti := interceptor.New(m.Registry.AdminStorage, m.Registry.QuotaManager, m.QuotaDryRun, m.Registry.MetricFactory)
+func (m *Main) newGRPCServer() (*grpc.Server, error) { _ = "STUB: not implemented"; return nil, nil }
 
-	serverOpts := []grpc.ServerOption{
-		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
-			stats.Interceptor(),
-			interceptor.ErrorWrapper,
-			ti.UnaryInterceptor,
-		)),
-	}
-	serverOpts = append(serverOpts, m.ExtraOptions...)
-
-	// Let credentials.NewServerTLSFromFile handle the error case when only one of the flags is set.
-	if m.TLSCertFile != "" || m.TLSKeyFile != "" {
-		serverCreds, err := credentials.NewServerTLSFromFile(m.TLSCertFile, m.TLSKeyFile)
-		if err != nil {
-			return nil, err
-		}
-		serverOpts = append(serverOpts, grpc.Creds(serverCreds))
-	}
-
-	s := grpc.NewServer(serverOpts...)
-
-	return s, nil
-}
+// Let credentials.NewServerTLSFromFile handle the error case when only one of the flags is set.
 
 // AnnounceSelf announces this binary's presence to etcd. This calls the cancel
 // function if the keepalive lease with etcd expires.  Returns a function that
 // should be called on process exit.
 // AnnounceSelf does nothing if client is nil.
 func AnnounceSelf(ctx context.Context, client *clientv3.Client, etcdService, endpoint string, cancel func()) func() {
-	if client == nil {
-		return func() {}
-	}
-
-	// Get a lease so our entry self-destructs.
-	leaseRsp, err := client.Grant(ctx, 30)
-	if err != nil {
-		klog.Exitf("Failed to get lease from etcd: %v", err)
-	}
-
-	keepAliveRspCh, err := client.KeepAlive(ctx, leaseRsp.ID)
-	if err != nil {
-		klog.Exitf("Failed to keep lease alive from etcd: %v", err)
-	}
-	go listenKeepAliveRsp(ctx, keepAliveRspCh, cancel)
-
-	em, err := endpoints.NewManager(client, etcdService)
-	if err != nil {
-		klog.Exitf("Failed to create etcd manager: %v", err)
-	}
-	fullEndpoint := fmt.Sprintf("%s/%s", etcdService, endpoint)
-	if err := em.AddEndpoint(ctx, fullEndpoint, endpoints.Endpoint{Addr: endpoint}); err != nil {
-		klog.Exitf("Failed to add endpoint: %v", err)
-	}
-	klog.Infof("Announcing our presence in %v", etcdService)
-
-	return func() {
-		// Use a background context because the original context may have been cancelled.
-		klog.Infof("Removing our presence in %v", etcdService)
-		ctx := context.Background()
-		if err := em.DeleteEndpoint(ctx, fullEndpoint); err != nil {
-			klog.Exitf("Failed to delete endpoint: %v", err)
-		}
-		if _, err := client.Revoke(ctx, leaseRsp.ID); err != nil {
-			klog.Exitf("Failed to revoke lease: %v", err)
-		}
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// Get a lease so our entry self-destructs.
+
+// Use a background context because the original context may have been cancelled.
 
 // listenKeepAliveRsp listens to `keepAliveRspCh` channel, and calls the cancel function
 // to notify the lease expired.
 func listenKeepAliveRsp(ctx context.Context, keepAliveRspCh <-chan *clientv3.LeaseKeepAliveResponse, cancel func()) {
-	for {
-		select {
-		case <-ctx.Done():
-			klog.Infof("listenKeepAliveRsp canceled: %v", ctx.Err())
-			return
-		case _, ok := <-keepAliveRspCh:
-			if !ok {
-				klog.Errorf("listenKeepAliveRsp canceled: unexpected lease expired")
-				cancel()
-				return
-			}
-		}
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // srvRun run the server and call `shutdown` when the context has been cancelled
 func srvRun(ctx context.Context, run func() error, shutdown func()) error {
-	exit := make(chan struct{})
-	var err error
-	go func() {
-		defer close(exit)
-		err = run()
-	}()
-
-	select {
-	case <-ctx.Done():
-		shutdown()
-		// wait for run to return
-		<-exit
-	case <-exit:
-	}
-
-	return err
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// wait for run to return

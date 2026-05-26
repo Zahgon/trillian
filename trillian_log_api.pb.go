@@ -21,13 +21,12 @@
 package trillian
 
 import (
+	sync "sync"
+
 	status "google.golang.org/genproto/googleapis/rpc/status"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
 )
 
 const (
@@ -60,42 +59,21 @@ type ChargeTo struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ChargeTo) Reset() {
-	*x = ChargeTo{}
-	mi := &file_trillian_log_api_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *ChargeTo) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *ChargeTo) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *ChargeTo) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*ChargeTo) ProtoMessage() {}
+func (*ChargeTo) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *ChargeTo) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use ChargeTo.ProtoReflect.Descriptor instead.
-func (*ChargeTo) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{0}
-}
+func (*ChargeTo) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *ChargeTo) GetUser() []string {
-	if x != nil {
-		return x.User
-	}
-	return nil
-}
+func (x *ChargeTo) GetUser() []string { _ = "STUB: not implemented"; return nil }
 
 type QueueLeafRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -106,56 +84,25 @@ type QueueLeafRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *QueueLeafRequest) Reset() {
-	*x = QueueLeafRequest{}
-	mi := &file_trillian_log_api_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *QueueLeafRequest) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *QueueLeafRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *QueueLeafRequest) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*QueueLeafRequest) ProtoMessage() {}
+func (*QueueLeafRequest) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *QueueLeafRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use QueueLeafRequest.ProtoReflect.Descriptor instead.
-func (*QueueLeafRequest) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{1}
-}
+func (*QueueLeafRequest) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *QueueLeafRequest) GetLogId() int64 {
-	if x != nil {
-		return x.LogId
-	}
-	return 0
-}
+func (x *QueueLeafRequest) GetLogId() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *QueueLeafRequest) GetLeaf() *LogLeaf {
-	if x != nil {
-		return x.Leaf
-	}
-	return nil
-}
+func (x *QueueLeafRequest) GetLeaf() *LogLeaf { _ = "STUB: not implemented"; return nil }
 
-func (x *QueueLeafRequest) GetChargeTo() *ChargeTo {
-	if x != nil {
-		return x.ChargeTo
-	}
-	return nil
-}
+func (x *QueueLeafRequest) GetChargeTo() *ChargeTo { _ = "STUB: not implemented"; return nil }
 
 type QueueLeafResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -168,42 +115,21 @@ type QueueLeafResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *QueueLeafResponse) Reset() {
-	*x = QueueLeafResponse{}
-	mi := &file_trillian_log_api_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *QueueLeafResponse) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *QueueLeafResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *QueueLeafResponse) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*QueueLeafResponse) ProtoMessage() {}
+func (*QueueLeafResponse) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *QueueLeafResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use QueueLeafResponse.ProtoReflect.Descriptor instead.
-func (*QueueLeafResponse) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{2}
-}
+func (*QueueLeafResponse) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *QueueLeafResponse) GetQueuedLeaf() *QueuedLogLeaf {
-	if x != nil {
-		return x.QueuedLeaf
-	}
-	return nil
-}
+func (x *QueueLeafResponse) GetQueuedLeaf() *QueuedLogLeaf { _ = "STUB: not implemented"; return nil }
 
 type GetInclusionProofRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -215,63 +141,30 @@ type GetInclusionProofRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetInclusionProofRequest) Reset() {
-	*x = GetInclusionProofRequest{}
-	mi := &file_trillian_log_api_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *GetInclusionProofRequest) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *GetInclusionProofRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *GetInclusionProofRequest) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*GetInclusionProofRequest) ProtoMessage() {}
+func (*GetInclusionProofRequest) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *GetInclusionProofRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use GetInclusionProofRequest.ProtoReflect.Descriptor instead.
 func (*GetInclusionProofRequest) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{3}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (x *GetInclusionProofRequest) GetLogId() int64 {
-	if x != nil {
-		return x.LogId
-	}
-	return 0
-}
+func (x *GetInclusionProofRequest) GetLogId() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *GetInclusionProofRequest) GetLeafIndex() int64 {
-	if x != nil {
-		return x.LeafIndex
-	}
-	return 0
-}
+func (x *GetInclusionProofRequest) GetLeafIndex() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *GetInclusionProofRequest) GetTreeSize() int64 {
-	if x != nil {
-		return x.TreeSize
-	}
-	return 0
-}
+func (x *GetInclusionProofRequest) GetTreeSize() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *GetInclusionProofRequest) GetChargeTo() *ChargeTo {
-	if x != nil {
-		return x.ChargeTo
-	}
-	return nil
-}
+func (x *GetInclusionProofRequest) GetChargeTo() *ChargeTo { _ = "STUB: not implemented"; return nil }
 
 type GetInclusionProofResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -287,47 +180,27 @@ type GetInclusionProofResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetInclusionProofResponse) Reset() {
-	*x = GetInclusionProofResponse{}
-	mi := &file_trillian_log_api_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *GetInclusionProofResponse) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *GetInclusionProofResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *GetInclusionProofResponse) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*GetInclusionProofResponse) ProtoMessage() {}
+func (*GetInclusionProofResponse) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *GetInclusionProofResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use GetInclusionProofResponse.ProtoReflect.Descriptor instead.
 func (*GetInclusionProofResponse) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{4}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (x *GetInclusionProofResponse) GetProof() *Proof {
-	if x != nil {
-		return x.Proof
-	}
-	return nil
-}
+func (x *GetInclusionProofResponse) GetProof() *Proof { _ = "STUB: not implemented"; return nil }
 
 func (x *GetInclusionProofResponse) GetSignedLogRoot() *SignedLogRoot {
-	if x != nil {
-		return x.SignedLogRoot
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -344,68 +217,39 @@ type GetInclusionProofByHashRequest struct {
 	sizeCache       protoimpl.SizeCache
 }
 
-func (x *GetInclusionProofByHashRequest) Reset() {
-	*x = GetInclusionProofByHashRequest{}
-	mi := &file_trillian_log_api_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *GetInclusionProofByHashRequest) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *GetInclusionProofByHashRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *GetInclusionProofByHashRequest) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*GetInclusionProofByHashRequest) ProtoMessage() {}
+func (*GetInclusionProofByHashRequest) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *GetInclusionProofByHashRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use GetInclusionProofByHashRequest.ProtoReflect.Descriptor instead.
 func (*GetInclusionProofByHashRequest) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{5}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (x *GetInclusionProofByHashRequest) GetLogId() int64 {
-	if x != nil {
-		return x.LogId
-	}
-	return 0
-}
+func (x *GetInclusionProofByHashRequest) GetLogId() int64 { _ = "STUB: not implemented"; return 0 }
 
 func (x *GetInclusionProofByHashRequest) GetLeafHash() []byte {
-	if x != nil {
-		return x.LeafHash
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (x *GetInclusionProofByHashRequest) GetTreeSize() int64 {
-	if x != nil {
-		return x.TreeSize
-	}
-	return 0
-}
+func (x *GetInclusionProofByHashRequest) GetTreeSize() int64 { _ = "STUB: not implemented"; return 0 }
 
 func (x *GetInclusionProofByHashRequest) GetOrderBySequence() bool {
-	if x != nil {
-		return x.OrderBySequence
-	}
+	_ = "STUB: not implemented"
 	return false
 }
 
 func (x *GetInclusionProofByHashRequest) GetChargeTo() *ChargeTo {
-	if x != nil {
-		return x.ChargeTo
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -421,47 +265,30 @@ type GetInclusionProofByHashResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetInclusionProofByHashResponse) Reset() {
-	*x = GetInclusionProofByHashResponse{}
-	mi := &file_trillian_log_api_proto_msgTypes[6]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *GetInclusionProofByHashResponse) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *GetInclusionProofByHashResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *GetInclusionProofByHashResponse) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*GetInclusionProofByHashResponse) ProtoMessage() {}
+func (*GetInclusionProofByHashResponse) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *GetInclusionProofByHashResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[6]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use GetInclusionProofByHashResponse.ProtoReflect.Descriptor instead.
 func (*GetInclusionProofByHashResponse) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{6}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (x *GetInclusionProofByHashResponse) GetProof() []*Proof {
-	if x != nil {
-		return x.Proof
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (x *GetInclusionProofByHashResponse) GetSignedLogRoot() *SignedLogRoot {
-	if x != nil {
-		return x.SignedLogRoot
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -475,63 +302,30 @@ type GetConsistencyProofRequest struct {
 	sizeCache      protoimpl.SizeCache
 }
 
-func (x *GetConsistencyProofRequest) Reset() {
-	*x = GetConsistencyProofRequest{}
-	mi := &file_trillian_log_api_proto_msgTypes[7]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *GetConsistencyProofRequest) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *GetConsistencyProofRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *GetConsistencyProofRequest) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*GetConsistencyProofRequest) ProtoMessage() {}
+func (*GetConsistencyProofRequest) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *GetConsistencyProofRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[7]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use GetConsistencyProofRequest.ProtoReflect.Descriptor instead.
 func (*GetConsistencyProofRequest) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{7}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (x *GetConsistencyProofRequest) GetLogId() int64 {
-	if x != nil {
-		return x.LogId
-	}
-	return 0
-}
+func (x *GetConsistencyProofRequest) GetLogId() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *GetConsistencyProofRequest) GetFirstTreeSize() int64 {
-	if x != nil {
-		return x.FirstTreeSize
-	}
-	return 0
-}
+func (x *GetConsistencyProofRequest) GetFirstTreeSize() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *GetConsistencyProofRequest) GetSecondTreeSize() int64 {
-	if x != nil {
-		return x.SecondTreeSize
-	}
-	return 0
-}
+func (x *GetConsistencyProofRequest) GetSecondTreeSize() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *GetConsistencyProofRequest) GetChargeTo() *ChargeTo {
-	if x != nil {
-		return x.ChargeTo
-	}
-	return nil
-}
+func (x *GetConsistencyProofRequest) GetChargeTo() *ChargeTo { _ = "STUB: not implemented"; return nil }
 
 type GetConsistencyProofResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -547,47 +341,27 @@ type GetConsistencyProofResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetConsistencyProofResponse) Reset() {
-	*x = GetConsistencyProofResponse{}
-	mi := &file_trillian_log_api_proto_msgTypes[8]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *GetConsistencyProofResponse) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *GetConsistencyProofResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *GetConsistencyProofResponse) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*GetConsistencyProofResponse) ProtoMessage() {}
+func (*GetConsistencyProofResponse) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *GetConsistencyProofResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[8]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use GetConsistencyProofResponse.ProtoReflect.Descriptor instead.
 func (*GetConsistencyProofResponse) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{8}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (x *GetConsistencyProofResponse) GetProof() *Proof {
-	if x != nil {
-		return x.Proof
-	}
-	return nil
-}
+func (x *GetConsistencyProofResponse) GetProof() *Proof { _ = "STUB: not implemented"; return nil }
 
 func (x *GetConsistencyProofResponse) GetSignedLogRoot() *SignedLogRoot {
-	if x != nil {
-		return x.SignedLogRoot
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -602,54 +376,32 @@ type GetLatestSignedLogRootRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetLatestSignedLogRootRequest) Reset() {
-	*x = GetLatestSignedLogRootRequest{}
-	mi := &file_trillian_log_api_proto_msgTypes[9]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *GetLatestSignedLogRootRequest) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *GetLatestSignedLogRootRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *GetLatestSignedLogRootRequest) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*GetLatestSignedLogRootRequest) ProtoMessage() {}
+func (*GetLatestSignedLogRootRequest) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *GetLatestSignedLogRootRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[9]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use GetLatestSignedLogRootRequest.ProtoReflect.Descriptor instead.
 func (*GetLatestSignedLogRootRequest) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{9}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (x *GetLatestSignedLogRootRequest) GetLogId() int64 {
-	if x != nil {
-		return x.LogId
-	}
-	return 0
-}
+func (x *GetLatestSignedLogRootRequest) GetLogId() int64 { _ = "STUB: not implemented"; return 0 }
 
 func (x *GetLatestSignedLogRootRequest) GetChargeTo() *ChargeTo {
-	if x != nil {
-		return x.ChargeTo
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (x *GetLatestSignedLogRootRequest) GetFirstTreeSize() int64 {
-	if x != nil {
-		return x.FirstTreeSize
-	}
+	_ = "STUB: not implemented"
 	return 0
 }
 
@@ -664,49 +416,29 @@ type GetLatestSignedLogRootResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetLatestSignedLogRootResponse) Reset() {
-	*x = GetLatestSignedLogRootResponse{}
-	mi := &file_trillian_log_api_proto_msgTypes[10]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *GetLatestSignedLogRootResponse) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *GetLatestSignedLogRootResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *GetLatestSignedLogRootResponse) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*GetLatestSignedLogRootResponse) ProtoMessage() {}
+func (*GetLatestSignedLogRootResponse) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *GetLatestSignedLogRootResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[10]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use GetLatestSignedLogRootResponse.ProtoReflect.Descriptor instead.
 func (*GetLatestSignedLogRootResponse) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{10}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (x *GetLatestSignedLogRootResponse) GetSignedLogRoot() *SignedLogRoot {
-	if x != nil {
-		return x.SignedLogRoot
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (x *GetLatestSignedLogRootResponse) GetProof() *Proof {
-	if x != nil {
-		return x.Proof
-	}
-	return nil
-}
+func (x *GetLatestSignedLogRootResponse) GetProof() *Proof { _ = "STUB: not implemented"; return nil }
 
 type GetEntryAndProofRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -718,63 +450,30 @@ type GetEntryAndProofRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetEntryAndProofRequest) Reset() {
-	*x = GetEntryAndProofRequest{}
-	mi := &file_trillian_log_api_proto_msgTypes[11]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *GetEntryAndProofRequest) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *GetEntryAndProofRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *GetEntryAndProofRequest) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*GetEntryAndProofRequest) ProtoMessage() {}
+func (*GetEntryAndProofRequest) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *GetEntryAndProofRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[11]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use GetEntryAndProofRequest.ProtoReflect.Descriptor instead.
 func (*GetEntryAndProofRequest) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{11}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (x *GetEntryAndProofRequest) GetLogId() int64 {
-	if x != nil {
-		return x.LogId
-	}
-	return 0
-}
+func (x *GetEntryAndProofRequest) GetLogId() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *GetEntryAndProofRequest) GetLeafIndex() int64 {
-	if x != nil {
-		return x.LeafIndex
-	}
-	return 0
-}
+func (x *GetEntryAndProofRequest) GetLeafIndex() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *GetEntryAndProofRequest) GetTreeSize() int64 {
-	if x != nil {
-		return x.TreeSize
-	}
-	return 0
-}
+func (x *GetEntryAndProofRequest) GetTreeSize() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *GetEntryAndProofRequest) GetChargeTo() *ChargeTo {
-	if x != nil {
-		return x.ChargeTo
-	}
-	return nil
-}
+func (x *GetEntryAndProofRequest) GetChargeTo() *ChargeTo { _ = "STUB: not implemented"; return nil }
 
 type GetEntryAndProofResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -785,54 +484,29 @@ type GetEntryAndProofResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetEntryAndProofResponse) Reset() {
-	*x = GetEntryAndProofResponse{}
-	mi := &file_trillian_log_api_proto_msgTypes[12]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *GetEntryAndProofResponse) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *GetEntryAndProofResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *GetEntryAndProofResponse) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*GetEntryAndProofResponse) ProtoMessage() {}
+func (*GetEntryAndProofResponse) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *GetEntryAndProofResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[12]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use GetEntryAndProofResponse.ProtoReflect.Descriptor instead.
 func (*GetEntryAndProofResponse) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{12}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (x *GetEntryAndProofResponse) GetProof() *Proof {
-	if x != nil {
-		return x.Proof
-	}
-	return nil
-}
+func (x *GetEntryAndProofResponse) GetProof() *Proof { _ = "STUB: not implemented"; return nil }
 
-func (x *GetEntryAndProofResponse) GetLeaf() *LogLeaf {
-	if x != nil {
-		return x.Leaf
-	}
-	return nil
-}
+func (x *GetEntryAndProofResponse) GetLeaf() *LogLeaf { _ = "STUB: not implemented"; return nil }
 
 func (x *GetEntryAndProofResponse) GetSignedLogRoot() *SignedLogRoot {
-	if x != nil {
-		return x.SignedLogRoot
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -844,49 +518,23 @@ type InitLogRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *InitLogRequest) Reset() {
-	*x = InitLogRequest{}
-	mi := &file_trillian_log_api_proto_msgTypes[13]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *InitLogRequest) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *InitLogRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *InitLogRequest) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*InitLogRequest) ProtoMessage() {}
+func (*InitLogRequest) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *InitLogRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[13]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use InitLogRequest.ProtoReflect.Descriptor instead.
-func (*InitLogRequest) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{13}
-}
+func (*InitLogRequest) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *InitLogRequest) GetLogId() int64 {
-	if x != nil {
-		return x.LogId
-	}
-	return 0
-}
+func (x *InitLogRequest) GetLogId() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *InitLogRequest) GetChargeTo() *ChargeTo {
-	if x != nil {
-		return x.ChargeTo
-	}
-	return nil
-}
+func (x *InitLogRequest) GetChargeTo() *ChargeTo { _ = "STUB: not implemented"; return nil }
 
 type InitLogResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -895,42 +543,21 @@ type InitLogResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *InitLogResponse) Reset() {
-	*x = InitLogResponse{}
-	mi := &file_trillian_log_api_proto_msgTypes[14]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *InitLogResponse) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *InitLogResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *InitLogResponse) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*InitLogResponse) ProtoMessage() {}
+func (*InitLogResponse) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *InitLogResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[14]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use InitLogResponse.ProtoReflect.Descriptor instead.
-func (*InitLogResponse) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{14}
-}
+func (*InitLogResponse) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *InitLogResponse) GetCreated() *SignedLogRoot {
-	if x != nil {
-		return x.Created
-	}
-	return nil
-}
+func (x *InitLogResponse) GetCreated() *SignedLogRoot { _ = "STUB: not implemented"; return nil }
 
 type AddSequencedLeavesRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -941,56 +568,28 @@ type AddSequencedLeavesRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *AddSequencedLeavesRequest) Reset() {
-	*x = AddSequencedLeavesRequest{}
-	mi := &file_trillian_log_api_proto_msgTypes[15]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *AddSequencedLeavesRequest) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *AddSequencedLeavesRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *AddSequencedLeavesRequest) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*AddSequencedLeavesRequest) ProtoMessage() {}
+func (*AddSequencedLeavesRequest) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *AddSequencedLeavesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[15]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use AddSequencedLeavesRequest.ProtoReflect.Descriptor instead.
 func (*AddSequencedLeavesRequest) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{15}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (x *AddSequencedLeavesRequest) GetLogId() int64 {
-	if x != nil {
-		return x.LogId
-	}
-	return 0
-}
+func (x *AddSequencedLeavesRequest) GetLogId() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *AddSequencedLeavesRequest) GetLeaves() []*LogLeaf {
-	if x != nil {
-		return x.Leaves
-	}
-	return nil
-}
+func (x *AddSequencedLeavesRequest) GetLeaves() []*LogLeaf { _ = "STUB: not implemented"; return nil }
 
-func (x *AddSequencedLeavesRequest) GetChargeTo() *ChargeTo {
-	if x != nil {
-		return x.ChargeTo
-	}
-	return nil
-}
+func (x *AddSequencedLeavesRequest) GetChargeTo() *ChargeTo { _ = "STUB: not implemented"; return nil }
 
 type AddSequencedLeavesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -1000,40 +599,25 @@ type AddSequencedLeavesResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *AddSequencedLeavesResponse) Reset() {
-	*x = AddSequencedLeavesResponse{}
-	mi := &file_trillian_log_api_proto_msgTypes[16]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *AddSequencedLeavesResponse) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *AddSequencedLeavesResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *AddSequencedLeavesResponse) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*AddSequencedLeavesResponse) ProtoMessage() {}
+func (*AddSequencedLeavesResponse) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *AddSequencedLeavesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[16]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use AddSequencedLeavesResponse.ProtoReflect.Descriptor instead.
 func (*AddSequencedLeavesResponse) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{16}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (x *AddSequencedLeavesResponse) GetResults() []*QueuedLogLeaf {
-	if x != nil {
-		return x.Results
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -1047,63 +631,30 @@ type GetLeavesByRangeRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetLeavesByRangeRequest) Reset() {
-	*x = GetLeavesByRangeRequest{}
-	mi := &file_trillian_log_api_proto_msgTypes[17]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *GetLeavesByRangeRequest) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *GetLeavesByRangeRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *GetLeavesByRangeRequest) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*GetLeavesByRangeRequest) ProtoMessage() {}
+func (*GetLeavesByRangeRequest) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *GetLeavesByRangeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[17]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use GetLeavesByRangeRequest.ProtoReflect.Descriptor instead.
 func (*GetLeavesByRangeRequest) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{17}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (x *GetLeavesByRangeRequest) GetLogId() int64 {
-	if x != nil {
-		return x.LogId
-	}
-	return 0
-}
+func (x *GetLeavesByRangeRequest) GetLogId() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *GetLeavesByRangeRequest) GetStartIndex() int64 {
-	if x != nil {
-		return x.StartIndex
-	}
-	return 0
-}
+func (x *GetLeavesByRangeRequest) GetStartIndex() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *GetLeavesByRangeRequest) GetCount() int64 {
-	if x != nil {
-		return x.Count
-	}
-	return 0
-}
+func (x *GetLeavesByRangeRequest) GetCount() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *GetLeavesByRangeRequest) GetChargeTo() *ChargeTo {
-	if x != nil {
-		return x.ChargeTo
-	}
-	return nil
-}
+func (x *GetLeavesByRangeRequest) GetChargeTo() *ChargeTo { _ = "STUB: not implemented"; return nil }
 
 type GetLeavesByRangeResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -1117,47 +668,27 @@ type GetLeavesByRangeResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetLeavesByRangeResponse) Reset() {
-	*x = GetLeavesByRangeResponse{}
-	mi := &file_trillian_log_api_proto_msgTypes[18]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *GetLeavesByRangeResponse) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *GetLeavesByRangeResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *GetLeavesByRangeResponse) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*GetLeavesByRangeResponse) ProtoMessage() {}
+func (*GetLeavesByRangeResponse) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *GetLeavesByRangeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[18]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use GetLeavesByRangeResponse.ProtoReflect.Descriptor instead.
 func (*GetLeavesByRangeResponse) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{18}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (x *GetLeavesByRangeResponse) GetLeaves() []*LogLeaf {
-	if x != nil {
-		return x.Leaves
-	}
-	return nil
-}
+func (x *GetLeavesByRangeResponse) GetLeaves() []*LogLeaf { _ = "STUB: not implemented"; return nil }
 
 func (x *GetLeavesByRangeResponse) GetSignedLogRoot() *SignedLogRoot {
-	if x != nil {
-		return x.SignedLogRoot
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -1182,49 +713,23 @@ type QueuedLogLeaf struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *QueuedLogLeaf) Reset() {
-	*x = QueuedLogLeaf{}
-	mi := &file_trillian_log_api_proto_msgTypes[19]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *QueuedLogLeaf) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *QueuedLogLeaf) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *QueuedLogLeaf) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*QueuedLogLeaf) ProtoMessage() {}
+func (*QueuedLogLeaf) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *QueuedLogLeaf) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[19]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use QueuedLogLeaf.ProtoReflect.Descriptor instead.
-func (*QueuedLogLeaf) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{19}
-}
+func (*QueuedLogLeaf) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *QueuedLogLeaf) GetLeaf() *LogLeaf {
-	if x != nil {
-		return x.Leaf
-	}
-	return nil
-}
+func (x *QueuedLogLeaf) GetLeaf() *LogLeaf { _ = "STUB: not implemented"; return nil }
 
-func (x *QueuedLogLeaf) GetStatus() *status.Status {
-	if x != nil {
-		return x.Status
-	}
-	return nil
-}
+func (x *QueuedLogLeaf) GetStatus() *status.Status { _ = "STUB: not implemented"; return nil }
 
 // LogLeaf describes a leaf in the Log's Merkle tree, corresponding to a single log entry.
 // Each leaf has a unique leaf index in the scope of this tree.  Clients submitting new
@@ -1295,82 +800,34 @@ type LogLeaf struct {
 	sizeCache          protoimpl.SizeCache
 }
 
-func (x *LogLeaf) Reset() {
-	*x = LogLeaf{}
-	mi := &file_trillian_log_api_proto_msgTypes[20]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *LogLeaf) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *LogLeaf) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *LogLeaf) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*LogLeaf) ProtoMessage() {}
+func (*LogLeaf) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *LogLeaf) ProtoReflect() protoreflect.Message {
-	mi := &file_trillian_log_api_proto_msgTypes[20]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use LogLeaf.ProtoReflect.Descriptor instead.
-func (*LogLeaf) Descriptor() ([]byte, []int) {
-	return file_trillian_log_api_proto_rawDescGZIP(), []int{20}
-}
+func (*LogLeaf) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *LogLeaf) GetMerkleLeafHash() []byte {
-	if x != nil {
-		return x.MerkleLeafHash
-	}
-	return nil
-}
+func (x *LogLeaf) GetMerkleLeafHash() []byte { _ = "STUB: not implemented"; return nil }
 
-func (x *LogLeaf) GetLeafValue() []byte {
-	if x != nil {
-		return x.LeafValue
-	}
-	return nil
-}
+func (x *LogLeaf) GetLeafValue() []byte { _ = "STUB: not implemented"; return nil }
 
-func (x *LogLeaf) GetExtraData() []byte {
-	if x != nil {
-		return x.ExtraData
-	}
-	return nil
-}
+func (x *LogLeaf) GetExtraData() []byte { _ = "STUB: not implemented"; return nil }
 
-func (x *LogLeaf) GetLeafIndex() int64 {
-	if x != nil {
-		return x.LeafIndex
-	}
-	return 0
-}
+func (x *LogLeaf) GetLeafIndex() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (x *LogLeaf) GetLeafIdentityHash() []byte {
-	if x != nil {
-		return x.LeafIdentityHash
-	}
-	return nil
-}
+func (x *LogLeaf) GetLeafIdentityHash() []byte { _ = "STUB: not implemented"; return nil }
 
-func (x *LogLeaf) GetQueueTimestamp() *timestamppb.Timestamp {
-	if x != nil {
-		return x.QueueTimestamp
-	}
-	return nil
-}
+func (x *LogLeaf) GetQueueTimestamp() *timestamppb.Timestamp { _ = "STUB: not implemented"; return nil }
 
 func (x *LogLeaf) GetIntegrateTimestamp() *timestamppb.Timestamp {
-	if x != nil {
-		return x.IntegrateTimestamp
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -1482,12 +939,7 @@ var (
 	file_trillian_log_api_proto_rawDescData []byte
 )
 
-func file_trillian_log_api_proto_rawDescGZIP() []byte {
-	file_trillian_log_api_proto_rawDescOnce.Do(func() {
-		file_trillian_log_api_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_trillian_log_api_proto_rawDesc), len(file_trillian_log_api_proto_rawDesc)))
-	})
-	return file_trillian_log_api_proto_rawDescData
-}
+func file_trillian_log_api_proto_rawDescGZIP() []byte { _ = "STUB: not implemented"; return nil }
 
 var file_trillian_log_api_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_trillian_log_api_proto_goTypes = []any{
@@ -1574,27 +1026,5 @@ var file_trillian_log_api_proto_depIdxs = []int32{
 	0,  // [0:31] is the sub-list for field type_name
 }
 
-func init() { file_trillian_log_api_proto_init() }
-func file_trillian_log_api_proto_init() {
-	if File_trillian_log_api_proto != nil {
-		return
-	}
-	file_trillian_proto_init()
-	type x struct{}
-	out := protoimpl.TypeBuilder{
-		File: protoimpl.DescBuilder{
-			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_trillian_log_api_proto_rawDesc), len(file_trillian_log_api_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   21,
-			NumExtensions: 0,
-			NumServices:   1,
-		},
-		GoTypes:           file_trillian_log_api_proto_goTypes,
-		DependencyIndexes: file_trillian_log_api_proto_depIdxs,
-		MessageInfos:      file_trillian_log_api_proto_msgTypes,
-	}.Build()
-	File_trillian_log_api_proto = out.File
-	file_trillian_log_api_proto_goTypes = nil
-	file_trillian_log_api_proto_depIdxs = nil
-}
+func init()                             { file_trillian_log_api_proto_init() }
+func file_trillian_log_api_proto_init() { _ = "STUB: not implemented"; return }

@@ -21,11 +21,10 @@
 package mysqlpb
 
 import (
+	sync "sync"
+
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
 )
 
 const (
@@ -47,42 +46,21 @@ type StorageOptions struct {
 	sizeCache        protoimpl.SizeCache
 }
 
-func (x *StorageOptions) Reset() {
-	*x = StorageOptions{}
-	mi := &file_options_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
+func (x *StorageOptions) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *StorageOptions) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *StorageOptions) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*StorageOptions) ProtoMessage() {}
+func (*StorageOptions) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *StorageOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_options_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use StorageOptions.ProtoReflect.Descriptor instead.
-func (*StorageOptions) Descriptor() ([]byte, []int) {
-	return file_options_proto_rawDescGZIP(), []int{0}
-}
+func (*StorageOptions) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *StorageOptions) GetSubtreeRevisions() bool {
-	if x != nil {
-		return x.SubtreeRevisions
-	}
-	return false
-}
+func (x *StorageOptions) GetSubtreeRevisions() bool { _ = "STUB: not implemented"; return false }
 
 var File_options_proto protoreflect.FileDescriptor
 
@@ -97,12 +75,7 @@ var (
 	file_options_proto_rawDescData []byte
 )
 
-func file_options_proto_rawDescGZIP() []byte {
-	file_options_proto_rawDescOnce.Do(func() {
-		file_options_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_options_proto_rawDesc), len(file_options_proto_rawDesc)))
-	})
-	return file_options_proto_rawDescData
-}
+func file_options_proto_rawDescGZIP() []byte { _ = "STUB: not implemented"; return nil }
 
 var file_options_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_options_proto_goTypes = []any{
@@ -116,26 +89,5 @@ var file_options_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_options_proto_init() }
-func file_options_proto_init() {
-	if File_options_proto != nil {
-		return
-	}
-	type x struct{}
-	out := protoimpl.TypeBuilder{
-		File: protoimpl.DescBuilder{
-			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_options_proto_rawDesc), len(file_options_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   1,
-			NumExtensions: 0,
-			NumServices:   0,
-		},
-		GoTypes:           file_options_proto_goTypes,
-		DependencyIndexes: file_options_proto_depIdxs,
-		MessageInfos:      file_options_proto_msgTypes,
-	}.Build()
-	File_options_proto = out.File
-	file_options_proto_goTypes = nil
-	file_options_proto_depIdxs = nil
-}
+func init()                    { file_options_proto_init() }
+func file_options_proto_init() { _ = "STUB: not implemented"; return }

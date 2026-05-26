@@ -19,10 +19,8 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"fmt"
 
 	"github.com/google/trillian/quota"
-	"k8s.io/klog/v2"
 )
 
 const (
@@ -63,76 +61,44 @@ type QuotaManager struct {
 // It doesn't actually reserve or retrieve tokens, instead it allows access based on the number of
 // rows in the Unsequenced table.
 func (m *QuotaManager) GetTokens(ctx context.Context, numTokens int, specs []quota.Spec) error {
-	for _, spec := range specs {
-		if spec.Group != quota.Global || spec.Kind != quota.Write {
-			continue
-		}
-		// Only allow global writes if Unsequenced is under the expected limit
-		count, err := m.countUnsequenced(ctx)
-		if err != nil {
-			return err
-		}
-		if count+numTokens > m.MaxUnsequencedRows {
-			return ErrTooManyUnsequencedRows
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
+
+// Only allow global writes if Unsequenced is under the expected limit
 
 // PutTokens implements quota.Manager.PutTokens.
 // It's a noop for QuotaManager.
 func (m *QuotaManager) PutTokens(ctx context.Context, numTokens int, specs []quota.Spec) error {
+	_ = "STUB: not implemented"
+
+	// ResetQuota implements quota.Manager.ResetQuota.
+	// It's a noop for QuotaManager.
 	return nil
 }
 
-// ResetQuota implements quota.Manager.ResetQuota.
-// It's a noop for QuotaManager.
 func (m *QuotaManager) ResetQuota(ctx context.Context, specs []quota.Spec) error {
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *QuotaManager) countUnsequenced(ctx context.Context) (int, error) {
-	if m.UseSelectCount {
-		return countFromTable(ctx, m.DB)
-	}
-	return countFromInformationSchema(ctx, m.DB)
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 func countFromInformationSchema(ctx context.Context, db *sql.DB) (int, error) {
+	_ = "STUB: not implemented"
 	// turn off statistics caching for MySQL 8
-	if err := turnOffInformationSchemaCache(ctx, db); err != nil {
-		return 0, err
-	}
-	// information_schema.tables doesn't have an explicit PK, so let's play it safe and ensure
-	// the cursor returns a single row.
-	rows, err := db.QueryContext(ctx, countFromInformationSchemaQuery, "Unsequenced", "BASE TABLE")
-	if err != nil {
-		return 0, err
-	}
-	defer func() {
-		if err := rows.Close(); err != nil {
-			klog.Errorf("Close(): %v", err)
-		}
-	}()
-	if !rows.Next() {
-		return 0, errors.New("cursor has no rows after information_schema query")
-	}
-	var count int
-	if err := rows.Scan(&count); err != nil {
-		return 0, err
-	}
-	if rows.Next() {
-		return 0, errors.New("too many rows returned from information_schema query")
-	}
-	return count, nil
+	return 0, nil
 }
 
+// information_schema.tables doesn't have an explicit PK, so let's play it safe and ensure
+// the cursor returns a single row.
+
 func countFromTable(ctx context.Context, db *sql.DB) (int, error) {
-	var count int
-	if err := db.QueryRowContext(ctx, countFromUnsequencedQuery).Scan(&count); err != nil {
-		return 0, err
-	}
-	return count, nil
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // turnOffInformationSchemaCache turn off statistics caching for MySQL 8
@@ -140,25 +106,8 @@ func countFromTable(ctx context.Context, db *sql.DB) (int, error) {
 // See https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_information_schema_stats_expiry
 // MySQL versions prior to 8 will fail safely.
 func turnOffInformationSchemaCache(ctx context.Context, db *sql.DB) error {
-	opt := "information_schema_stats_expiry"
-	res := db.QueryRowContext(ctx, "SHOW VARIABLES LIKE '"+opt+"'")
-	var none string
-	var expiry int
-
-	if err := res.Scan(&none, &expiry); err != nil {
-		// fail safely for all versions of MySQL prior to 8
-		if errors.Is(err, sql.ErrNoRows) {
-			return nil
-		}
-
-		return fmt.Errorf("failed to get variable %q: %v", opt, err)
-	}
-
-	if expiry != 0 {
-		if _, err := db.ExecContext(ctx, "SET SESSION "+opt+"=0"); err != nil {
-			return fmt.Errorf("failed to set variable %q: %v", opt, err)
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
+
+// fail safely for all versions of MySQL prior to 8

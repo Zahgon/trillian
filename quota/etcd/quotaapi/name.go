@@ -17,8 +17,6 @@ package quotaapi
 import (
 	"fmt"
 	"regexp"
-	"strconv"
-	"strings"
 )
 
 const (
@@ -64,46 +62,14 @@ func init() {
 type nameFilter []string
 
 func newNameFilter(name string) (nameFilter, error) {
-	if !globalRE.MatchString(name) && !treesUsersRE.MatchString(name) {
-		return nil, fmt.Errorf("invalid name filter: %q", name)
-	}
-
-	nf := strings.Split(name, "/")
-
-	// Guard against some ambiguous / incorrect wildcards that the regexes won't protect against
-	switch collection := nf[1]; collection {
-	case collectionTrees:
-		id := nf[2]
-		if id == wildcard {
-			break
-		}
-		// treeID must be an int64
-		if _, err := strconv.ParseInt(id, 10, 64); err != nil {
-			return nil, fmt.Errorf("invalid name filter: %q, ID %q is not a valid 64-bit integer", name, id)
-		}
-	case wildcard:
-		id := nf[2]
-		if id != wildcard {
-			return nil, fmt.Errorf("invalid name filter: %q, ambiguous ID %q received", name, id)
-		}
-	}
-	return nf, nil
+	_ = "STUB: not implemented"
+	return *new(nameFilter), nil
 }
 
-func (nf nameFilter) matches(path string) bool {
-	segments := strings.Split(path, "/")
+// Guard against some ambiguous / incorrect wildcards that the regexes won't protect against
 
-	l := len(nf)
-	if l != len(segments) {
-		return false
-	}
+// treeID must be an int64
 
-	// Skip first and last tokens (they're always "quotas" and "config").
-	for i := 1; i < l-1; i++ {
-		if nf[i] != wildcard && nf[i] != segments[i] {
-			return false
-		}
-	}
+func (nf nameFilter) matches(path string) bool { _ = "STUB: not implemented"; return false }
 
-	return true
-}
+// Skip first and last tokens (they're always "quotas" and "config").

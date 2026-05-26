@@ -15,10 +15,8 @@
 package cloudspanner
 
 import (
-	"bytes"
 	"context"
 	"errors"
-	"fmt"
 	"sync"
 	"time"
 
@@ -30,11 +28,9 @@ import (
 	"github.com/google/trillian/storage/storagepb"
 	"github.com/google/trillian/storage/tree"
 	"github.com/transparency-dev/merkle/compact"
-	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/proto"
-	"k8s.io/klog/v2"
 )
 
 var (
@@ -84,7 +80,8 @@ type TreeStorageOptions struct {
 }
 
 func newTreeStorageWithOpts(client *spanner.Client, opts TreeStorageOptions) *treeStorage {
-	return &treeStorage{client: client, admin: nil, opts: opts}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type spanRead interface {
@@ -97,80 +94,26 @@ type spanRead interface {
 
 // latestSTH reads and returns the newest STH.
 func (t *treeStorage) latestSTH(ctx context.Context, stx spanRead, treeID int64) (*spannerpb.TreeHead, error) {
-	query := spanner.NewStatement(
-		"SELECT TreeID, TimestampNanos, TreeSize, RootHash, RootSignature, TreeRevision, TreeMetadata FROM TreeHeads" +
-			"   WHERE TreeID = @tree_id" +
-			"   ORDER BY TreeRevision DESC " +
-			"   LIMIT 1")
-	query.Params["tree_id"] = treeID
-
-	var th *spannerpb.TreeHead
-	rows := stx.Query(ctx, query)
-	defer rows.Stop()
-	err := rows.Do(func(r *spanner.Row) error {
-		tth := &spannerpb.TreeHead{}
-		if err := r.Columns(&tth.TreeId, &tth.TsNanos, &tth.TreeSize, &tth.RootHash, &tth.Signature, &tth.TreeRevision, &tth.Metadata); err != nil {
-			return err
-		}
-
-		th = tth
-		return nil
-	})
-	if err != nil {
-		return nil, err
-	}
-	if th == nil {
-		klog.Warningf("no head found for treeID %v", treeID)
-		return nil, storage.ErrTreeNeedsInit
-	}
-	return th, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type newCacheFn func(*trillian.Tree) (*cache.SubtreeCache, error)
 
 func (t *treeStorage) getTreeAndConfig(ctx context.Context, tree *trillian.Tree) (*trillian.Tree, proto.Message, error) {
-	config, err := unmarshalSettings(tree)
-	if err != nil {
-		return nil, nil, err
-	}
-	return tree, config, nil
+	_ = "STUB: not implemented"
+	return nil, *new(proto.Message), nil
 }
 
 // begin returns a newly started tree transaction for the specified tree.
 func (t *treeStorage) begin(ctx context.Context, tree *trillian.Tree, newCache newCacheFn, stx spanRead) (*treeTX, error) {
-	tree, config, err := t.getTreeAndConfig(ctx, tree)
-	if err != nil {
-		return nil, err
-	}
-	subtreeCache, err := newCache(tree)
-	if err != nil {
-		return nil, err
-	}
-	treeTX := &treeTX{
-		treeID:    tree.TreeId,
-		treeType:  tree.TreeType,
-		ts:        t,
-		stx:       stx,
-		cache:     subtreeCache,
-		config:    config,
-		_writeRev: -1,
-	}
-
-	return treeTX, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // getLatestRoot populates this TX with the newest tree root visible (when
 // taking read-staleness into account) by this transaction.
-func (t *treeTX) getLatestRoot(ctx context.Context) error {
-	t.getLatestRootOnce.Do(func() {
-		t._currentSTH, t._currentSTHErr = t.ts.latestSTH(ctx, t.stx, t.treeID)
-		if t._currentSTH != nil {
-			t._writeRev = t._currentSTH.TreeRevision + 1
-		}
-	})
-
-	return t._currentSTHErr
-}
+func (t *treeTX) getLatestRoot(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
 // treeTX is a concrete implementation of the part of storage.LogTreeTX
 // interface formerly known as storage.TreeTX.
@@ -204,231 +147,83 @@ type treeTX struct {
 }
 
 func (t *treeTX) currentSTH(ctx context.Context) (*spannerpb.TreeHead, error) {
-	if err := t.getLatestRoot(ctx); err != nil {
-		return nil, err
-	}
-	return t._currentSTH, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (t *treeTX) writeRev(ctx context.Context) (int64, error) {
-	if err := t.getLatestRoot(ctx); err == storage.ErrTreeNeedsInit {
-		return 0, nil
-	} else if err != nil {
-		return -1, fmt.Errorf("writeRev(): %v", err)
-	}
-	return t._writeRev, nil
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // storeSubtrees adds buffered writes to the in-flight transaction to store the
 // passed in subtrees.
 func (t *treeTX) storeSubtrees(ctx context.Context, sts []*storagepb.SubtreeProto) error {
-	stx, ok := t.stx.(*spanner.ReadWriteTransaction)
-	if !ok {
-		return ErrWrongTXType
-	}
-	for _, st := range sts {
-		if st == nil {
-			continue
-		}
-		stBytes, err := proto.Marshal(st)
-		if err != nil {
-			return err
-		}
-		m := spanner.Insert(
-			subtreeTbl,
-			[]string{colTreeID, colSubtreeID, colRevision, colSubtree},
-			[]interface{}{t.treeID, st.Prefix, t._writeRev, stBytes},
-		)
-		if err := stx.BufferWrite([]*spanner.Mutation{m}); err != nil {
-			return err
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (t *treeTX) flushSubtrees(ctx context.Context) error {
-	tiles, err := t.cache.UpdatedTiles()
-	if err != nil {
-		return err
-	}
-	return t.storeSubtrees(ctx, tiles)
-}
+func (t *treeTX) flushSubtrees(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
 // Commit attempts to apply all actions perfomed to the underlying Spanner
 // transaction.  If this call returns an error, any values READ via this
 // transaction MUST NOT be used.
 // On return from the call, this transaction will be in a closed state.
-func (t *treeTX) Commit(ctx context.Context) error {
-	t.mu.Lock()
-	defer func() {
-		t.stx = nil
-		t.mu.Unlock()
-	}()
-
-	if t.stx == nil {
-		return ErrTransactionClosed
-	}
-	switch stx := t.stx.(type) {
-	case *spanner.ReadOnlyTransaction:
-		klog.V(1).Infof("Closed readonly tx %p", stx)
-		stx.Close()
-		return nil
-	case *spanner.ReadWriteTransaction:
-		return t.flushSubtrees(ctx)
-	default:
-		return fmt.Errorf("internal error: unknown transaction type %T", stx)
-	}
-}
+func (t *treeTX) Commit(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
 // Close aborts any operations perfomed on the underlying Spanner transaction.
 // On return from the call, this transaction will be in a closed state.
-func (t *treeTX) Close() error {
-	t.mu.Lock()
-	defer t.mu.Unlock()
-	if t.stx == nil {
-		return ErrTransactionClosed
-	}
-	if stx, ok := t.stx.(*spanner.ReadOnlyTransaction); ok {
-		klog.V(1).Infof("Closed snapshot %p", stx)
-		stx.Close()
-	}
-	return nil
-}
+func (t *treeTX) Close() error { _ = "STUB: not implemented"; return nil }
 
 // readRevision returns the tree revision at which the currently visible (taking
 // into account read-staleness) STH was stored.
 func (t *treeTX) readRevision(ctx context.Context) (int64, error) {
-	sth, err := t.currentSTH(ctx)
-	if err != nil {
-		return -1, err
-	}
-	return sth.TreeRevision, nil
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // getSubtree retrieves the most recent subtree specified by id at (or below)
 // the requested revision.
 // If no such subtree exists it returns nil.
 func (t *treeTX) getSubtree(ctx context.Context, rev int64, id []byte) (p *storagepb.SubtreeProto, e error) {
-	var ret *storagepb.SubtreeProto
-	stmt := spanner.NewStatement(
-		"SELECT Revision, Subtree FROM SubtreeData" +
-			"  WHERE TreeID = @tree_id" +
-			"  AND   SubtreeID = @subtree_id" +
-			"  AND   Revision <= @revision" +
-			"  ORDER BY Revision DESC" +
-			"  LIMIT 1")
-	stmt.Params["tree_id"] = t.treeID
-	stmt.Params["subtree_id"] = id
-	stmt.Params["revision"] = rev
-
-	rows := t.stx.Query(ctx, stmt)
-	err := rows.Do(func(r *spanner.Row) error {
-		if ret != nil {
-			return nil
-		}
-
-		var rRev int64
-		var st storagepb.SubtreeProto
-		stBytes := make([]byte, 1<<20)
-		if err := r.Columns(&rRev, &stBytes); err != nil {
-			return err
-		}
-		if err := proto.Unmarshal(stBytes, &st); err != nil {
-			return err
-		}
-
-		if rRev > rev {
-			return fmt.Errorf("got subtree with too new a revision %d, want %d", rRev, rev)
-		}
-		if got, want := id, st.Prefix; !bytes.Equal(got, want) {
-			return fmt.Errorf("got subtree with prefix %v, wanted %v", got, want)
-		}
-		if got, want := rRev, rev; got > rev {
-			return fmt.Errorf("got subtree rev %d, wanted <= %d", got, want)
-		}
-		ret = &st
-
-		// If this is a subtree with a zero-length prefix, we'll need to create an
-		// empty Prefix field:
-		if st.Prefix == nil && len(id) == 0 {
-			st.Prefix = []byte{}
-		}
-		return nil
-	})
-	return ret, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// If this is a subtree with a zero-length prefix, we'll need to create an
+// empty Prefix field:
 
 // GetMerkleNodes returns the requested set of nodes at, or before, the
 // transaction read revision.
 func (t *treeTX) GetMerkleNodes(ctx context.Context, ids []compact.NodeID) ([]tree.Node, error) {
-	t.mu.RLock()
-	defer t.mu.RUnlock()
-	if t.stx == nil {
-		return nil, ErrTransactionClosed
-	}
-	rev, err := t.readRevision(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("failed to get read revision: %v", err)
-	}
-	return t.cache.GetNodes(ids, t.getSubtreesAtRev(ctx, rev))
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // getSubtreesAtRev returns a GetSubtreesFunc which reads at the passed in rev.
 func (t *treeTX) getSubtreesAtRev(ctx context.Context, rev int64) cache.GetSubtreesFunc {
-	return func(ids [][]byte) ([]*storagepb.SubtreeProto, error) {
-		// Request the various subtrees in parallel.
-		// c will carry any retrieved subtrees
-		c := make(chan *storagepb.SubtreeProto, len(ids))
-
-		// Spawn goroutines for each request
-		g, gctx := errgroup.WithContext(ctx)
-		for _, id := range ids {
-			id := id
-			g.Go(func() error {
-				st, err := t.getSubtree(gctx, rev, id)
-				if err != nil {
-					return err
-				}
-				c <- st
-				return nil
-			})
-		}
-		if err := g.Wait(); err != nil {
-			return nil, err
-		}
-		close(c)
-
-		// Now wait for the goroutines to signal their completion, and collect
-		// the results.
-		ret := make([]*storagepb.SubtreeProto, 0, len(ids))
-		for st := range c {
-			if st != nil {
-				ret = append(ret, st)
-			}
-		}
-		return ret, nil
-	}
+	_ = "STUB: not implemented"
+	return *new(cache.GetSubtreesFunc)
 }
+
+// Request the various subtrees in parallel.
+// c will carry any retrieved subtrees
+
+// Spawn goroutines for each request
+
+// Now wait for the goroutines to signal their completion, and collect
+// the results.
 
 // SetMerkleNodes stores the provided merkle nodes at the writeRevision of the
 // transaction.
 func (t *treeTX) SetMerkleNodes(ctx context.Context, nodes []tree.Node) error {
-	t.mu.RLock()
-	defer t.mu.RUnlock()
-	if t.stx == nil {
-		return ErrTransactionClosed
-	}
-	writeRev, err := t.writeRev(ctx)
-	if err != nil {
-		return err
-	}
-	return t.cache.SetNodes(nodes, t.getSubtreesAtRev(ctx, writeRev-1))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func checkDatabaseAccessible(ctx context.Context, client *spanner.Client) error {
-	stmt := spanner.NewStatement("SELECT 1")
-	// We don't care about freshness here, being able to read *something* is enough
-	rows := client.Single().Query(ctx, stmt)
-	defer rows.Stop()
-	return rows.Do(func(row *spanner.Row) error { return nil })
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// We don't care about freshness here, being able to read *something* is enough

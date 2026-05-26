@@ -18,7 +18,6 @@ import (
 	"flag"
 
 	"github.com/google/trillian/quota"
-	"github.com/google/trillian/storage/postgresql"
 	"k8s.io/klog/v2"
 )
 
@@ -35,14 +34,6 @@ func init() {
 }
 
 func newPostgreSQLQuotaManager() (quota.Manager, error) {
-	db, err := postgresql.GetDatabase()
-	if err != nil {
-		return nil, err
-	}
-	qm := &QuotaManager{
-		DB:                 db,
-		MaxUnsequencedRows: *maxUnsequencedRows,
-	}
-	klog.Info("Using PostgreSQL QuotaManager")
-	return qm, nil
+	_ = "STUB: not implemented"
+	return *new(quota.Manager), nil
 }

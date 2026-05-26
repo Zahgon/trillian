@@ -28,25 +28,28 @@ type signerStub struct {
 }
 
 // Public returns the public key associated with the signer that this stub is based on.
-func (s *signerStub) Public() crypto.PublicKey { return s.publicKey }
+func (s *signerStub) Public() crypto.PublicKey {
+	_ = "STUB: not implemented"
 
-// Sign will return the signature or error that the signerStub was created to provide.
-func (s *signerStub) Sign(rand io.Reader, digest []byte, opts crypto.SignerOpts) ([]byte, error) {
-	return s.signature, s.err
+	// Sign will return the signature or error that the signerStub was created to provide.
+	return *new(crypto.PublicKey)
 }
 
-// NewSignerWithErr creates a signer that always returns err when Sign() is called.
+func (s *signerStub) Sign(rand io.Reader, digest []byte, opts crypto.SignerOpts) ([]byte, error) {
+	_ = "STUB: not implemented"
+	return nil,
+
+		// NewSignerWithErr creates a signer that always returns err when Sign() is called.
+		nil
+}
+
 func NewSignerWithErr(pubKey crypto.PublicKey, err error) crypto.Signer {
-	return &signerStub{
-		publicKey: pubKey,
-		err:       err,
-	}
+	_ = "STUB: not implemented"
+	return *new(crypto.Signer)
 }
 
 // NewSignerWithFixedSig creates a signer that always return sig when Sign() is called.
 func NewSignerWithFixedSig(pubKey crypto.PublicKey, sig []byte) crypto.Signer {
-	return &signerStub{
-		publicKey: pubKey,
-		signature: sig,
-	}
+	_ = "STUB: not implemented"
+	return *new(crypto.Signer)
 }

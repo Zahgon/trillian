@@ -41,102 +41,25 @@ var (
 // Paths must match the proto name of the fields (e.g., "time_based", not "TimeBased").
 // If fields belong to a oneof (such as "sequencing_based" and "time_based"), then only one field of
 // the oneof may be specified.
-func validateMask(mask *field_mask.FieldMask) error {
-	sequencingBasedFound := false
-	timeBasedFound := false
-	for _, path := range mask.Paths {
-		switch path {
-		case statePath, maxTokensPath:
-			// OK
-		case sequencingBasedPath:
-			if timeBasedFound {
-				return errBothReplenishmentStrategies
-			}
-			sequencingBasedFound = true
-		case timeBasedPath:
-			if sequencingBasedFound {
-				return errBothReplenishmentStrategies
-			}
-			timeBasedFound = true
-		default:
-			return fmt.Errorf("invalid field path for Config: %q", path)
-		}
-	}
-	return nil
-}
+func validateMask(mask *field_mask.FieldMask) error { _ = "STUB: not implemented"; return nil }
+
+// OK
 
 // applyMask copies the fields specified by mask from src to dest. The mask must be first validated
 // by validateMask(), as unknown paths are simply ignored by applyMask.
 // Paths must match the proto name of the fields (e.g., "time_based", not "TimeBased").
 func applyMask(src *quotapb.Config, dest *storagepb.Config, mask *field_mask.FieldMask) {
-	for _, path := range mask.Paths {
-		switch path {
-		case statePath:
-			dest.State = storagepb.Config_State(storagepb.Config_State_value[src.State.String()])
-		case maxTokensPath:
-			dest.MaxTokens = src.MaxTokens
-		case sequencingBasedPath:
-			if src.GetSequencingBased() == nil {
-				dest.ReplenishmentStrategy = nil
-			} else {
-				dest.ReplenishmentStrategy = &storagepb.Config_SequencingBased{
-					SequencingBased: &storagepb.SequencingBasedStrategy{},
-				}
-			}
-		case timeBasedPath:
-			if tb := src.GetTimeBased(); tb == nil {
-				dest.ReplenishmentStrategy = nil
-			} else {
-				dest.ReplenishmentStrategy = &storagepb.Config_TimeBased{
-					TimeBased: &storagepb.TimeBasedStrategy{
-						TokensToReplenish:        tb.GetTokensToReplenish(),
-						ReplenishIntervalSeconds: tb.GetReplenishIntervalSeconds(),
-					},
-				}
-			}
-		}
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // convertToAPI returns the API representation of a storagepb.Config proto.
-func convertToAPI(src *storagepb.Config) *quotapb.Config {
-	dest := &quotapb.Config{
-		Name:      src.Name,
-		State:     quotapb.Config_State(quotapb.Config_State_value[src.State.String()]),
-		MaxTokens: src.MaxTokens,
-	}
-	sb := src.GetSequencingBased()
-	tb := src.GetTimeBased()
-	switch {
-	case sb != nil:
-		dest.ReplenishmentStrategy = &quotapb.Config_SequencingBased{
-			SequencingBased: &quotapb.SequencingBasedStrategy{},
-		}
-	case tb != nil:
-		dest.ReplenishmentStrategy = &quotapb.Config_TimeBased{
-			TimeBased: &quotapb.TimeBasedStrategy{
-				TokensToReplenish:        tb.TokensToReplenish,
-				ReplenishIntervalSeconds: tb.ReplenishIntervalSeconds,
-			},
-		}
-	}
-	return dest
-}
+func convertToAPI(src *storagepb.Config) *quotapb.Config { _ = "STUB: not implemented"; return nil }
 
 // convertToStorage returns the storage representation of a quotapb.Config proto.
 func convertToStorage(src *quotapb.Config) *storagepb.Config {
+	_ = "STUB: not implemented"
 	// Instead of potentially duplicating logic, let's take advantage of applyMask by picking a
 	// pre-made mask that contains all fields we care about and apply it to a new proto.
-	var mask *field_mask.FieldMask
-	switch {
-	case src.GetSequencingBased() != nil:
-		mask = sequencingBasedMask
-	case src.GetTimeBased() != nil:
-		mask = timeBasedMask
-	default:
-		mask = commonMask
-	}
-	dest := &storagepb.Config{Name: src.Name}
-	applyMask(src, dest, mask)
-	return dest
+	return nil
 }
